@@ -1,9 +1,9 @@
 from odoo import fields, models
 
 
-class RealEstateProperty(models.Model):
-    _name = 'real.estate.properties'
-    _description = 'Real Estate Property'
+class CursoCountigoProperty(models.Model):
+    _name = 'curso.countigo.properties'
+    _description = 'Curso Countigo Property'
 
     name = fields.Char(required=True)
     description = fields.Text()
