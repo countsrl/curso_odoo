@@ -2,7 +2,7 @@ from odoo import fields, models
 
 
 class CursoCountigoProperty(models.Model):
-    _name = 'curso.countigo.properties'
+    _name = 'curso.countigo.property'
     _description = 'Curso Countigo Property'
 
     name = fields.Char(required=True)
@@ -18,9 +18,8 @@ class CursoCountigoProperty(models.Model):
     garden = fields.Boolean()
     garden_area = fields.Float()
     garden_orientation = fields.Selection([
-            ('north', 'North'),
-            ('south', 'South'),
-            ('east', 'East'),
-            ('west', 'West'),
-        ], string='Garden Orientation')
-
+        ('north', 'North'),
+        ('south', 'South'),
+        ('east', 'East'),
+        ('west', 'West'),
+    ], string='Garden Orientation')

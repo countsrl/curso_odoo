@@ -10,6 +10,11 @@
     'author': "Rafael V. Barrientos Holder",
     'website': '',
     'depends': ['base', 'web'],
+    'data': [
+        'security/ir.model.access.csv',
+        'view/curso_countigo_property_views.xml',
+        'view/curso_countigo_property_menus.xml'
+    ],
     'application': True,
     'installable': True,
     'auto_install': False,

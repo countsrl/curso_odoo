@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="curso_countigo_property_action" model="ir.actions.act_window">
+            <field name="name">Curso countigo action</field>
+            <field name="res_model">curso.countigo.property</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="curso_countigo_property_menu_root" name="Curso Countigo" action="curso_countigo_property_action"/>
+
+
+        <record id="curso_countigo_property_tree_view" model="ir.ui.view">
+            <field name="name">curso.countigo.property.tree</field>
+            <field name="model">curso.countigo.property</field>
+            <field name="arch" type="xml">
+                <tree>
+                   <field name="name"/>
+                            <field name="description"/>
+                            <field name="postcode"/>
+                            <field name="date_availability"/>
+                            <field name="expected_price"/>
+                            <field name="selling_price"/>
+                            <field name="bedrooms"/>
+                            <field name="living_area"/>
+                            <field name="facades"/>
+                            <field name="garage"/>
+                            <field name="garden"/>
+                            <field name="garden_area"/>
+                            <field name="garden_orientation"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="curso_countigo_property_form_view" model="ir.ui.view">
+            <field name="name">curso.countigo.property.form</field>
+            <field name="model">curso.countigo.property</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="description"/>
+                            <field name="postcode"/>
+                            <field name="date_availability"/>
+                            <field name="expected_price"/>
+                            <field name="selling_price"/>
+                            <field name="bedrooms"/>
+                            <field name="living_area"/>
+                            <field name="facades"/>
+                            <field name="garage"/>
+                            <field name="garden"/>
+                            <field name="garden_area"/>
+                            <field name="garden_orientation"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

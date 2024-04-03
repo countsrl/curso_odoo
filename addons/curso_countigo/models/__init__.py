@@ -1,1 +1,1 @@
-from . import real_estate_property
+from . import curso_countigo_property
