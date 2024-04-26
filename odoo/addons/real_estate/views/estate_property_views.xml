@@ -24,6 +24,7 @@
                 <sheet>
                     <group>
                         <group>
+                            <field name="property_type_id"/>
                             <field name="postcode" />
                             <field name="date_availability" />
                         </group>
@@ -44,20 +45,24 @@
                                 <field name="garage" />
                                 <field name="garden_area" />
                                 <field name="garden_orientation" />
-                                <field name="total_area" />  
-
+                                <field name="offer_ids"/>
+                                <field name="total_area" />   <!-- CAmpo computado -->
                             </group>
                         </page>
                         <page string="Offers" name="Offers">
                             <field name="offer_ids" widget="one2many_list">
                                 <tree string="Offers">
                                     <field name="price" />
-                                    <field name="validity" />  <!-- nuevo campo validity tarea-->
-                                    <field name="date_deadline" />  <!--nuevo campo date_deadline-->
+                                    <field name="validity" />  <!-- CAmpo computado -->
+                                    <field name="date_deadline" />  <!-- CAmpo computado -->
                                 </tree>
                             </field>
                         </page>
                         <page name="Other_info" string="Other info">
+                            <group>
+                                <field name="buyer_id"/>  
+                                <field name="salesperson_id"/>  
+                            </group>
                         </page>
                     </notebook>
                 </sheet>

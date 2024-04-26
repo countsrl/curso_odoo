@@ -35,7 +35,6 @@ class EstateProperty(models.Model):
 
     total_area = fields.Float(compute="_compute_total_area")
 
-
     @api.depends('living_area', 'garden_area') #se utiliza para especificar los campos de los que depende un campo calculado
     def _compute_total_area(self):
         for record in self:
@@ -54,7 +53,13 @@ class EstateProperty(models.Model):
             # Relación de uno a muchos con el modelo estate.offer
     offer_ids = fields.One2many('estate.offer', 'property_id', string='Offers')
 
- 
+# <-- el nuevo campo 'property_type_id del modelo estate_property_type.py'
+    property_type_id = fields.Many2one('estate.property.type', string='Property Type')  
+    buyer_id = fields.Many2one('res.partner', string='Buyer', copy=False)  
+    salesperson_id = fields.Many2one('res.users', string='Salesperson', default=lambda self: self.env.user)  
+# <--  del modelo estate.property.offer'
+    offer_ids = fields.One2many('estate.property.offer', 'property_id', string='Offers')
+
 class EstateOffer(models.Model):
     _name = 'estate.offer'
     _description = 'Estate Offer'
@@ -62,7 +67,7 @@ class EstateOffer(models.Model):
     price = fields.Float('Offer Price')
     property_id = fields.Many2one('estate.property', string='Property')
 
-    validity = fields.Integer()  # nuevo campo 'validity' ejec.Tarea
+    validity = fields.Integer(default=7)  # nuevo campo 'validity' ejec.Tarea
     date_deadline = fields.Date(compute='_compute_date_deadline', inverse='_inverse_date_deadline')  
 
     @api.depends('create_date', 'validity')
@@ -74,5 +79,6 @@ class EstateOffer(models.Model):
     def _inverse_date_deadline(self):  # <-- Esta es la función inversa para el 'date_deadline'
         for record in self:
             if record.create_date and record.date_deadline:
-                  create_date = record.create_date.date()  # Convertir a datetime.date error corregido de calculo
+                  create_date = record.create_date.date()  # Convertir a datetime.date error corregido de calculo(date)
             record.validity = (record.date_deadline - create_date).days
+
