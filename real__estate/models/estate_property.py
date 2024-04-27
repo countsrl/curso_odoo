@@ -39,7 +39,7 @@ class Estate_property(models.Model):
     user_id = fields.Many2one("res.users",string = "Seller", default= lambda self: self.env.user)
     buyer_id = fields.Many2one("res.partner",string = "Buyer",copy=False, readonly=True)
     offer_ids = fields.One2many("estate.property.offer","property_id", string= "Offer")
-    best_price = fields.Float(string='Best Offer', compute='_compute_best_price', store=True)
+    best_price = fields.Float(string='Best Offer', compute='_compute_best_price')
  
   
     
@@ -64,12 +64,11 @@ class Estate_property(models.Model):
             self.garden_orientation = ""
             
     #use mapped function for max value for many2one list
-    @api.depends('offer_ids.price') 
-    
+    @api.depends('offer_ids.price')     
     def _compute_best_price(self):
-        for prices in self.offer_ids:
-            list=prices.mapped('price')
-            best_price = max(list)
+        for record in self:
+            record.best_price =max(record.offer_ids.mapped('price'))
+     
     
         #if(self.offer_ids):
           #  max_value= max(self.offer_ids.mapped('prices'))
