@@ -1,12 +1,13 @@
 
 
 <odoo>
+    <!-- Acción de ventana para las etiquetas de Properties -->
     <record id="action_estate_property" model="ir.actions.act_window">
         <field name="name">Properties</field>
         <field name="res_model">estate.property</field>
         <field name="view_mode">tree,form</field>
     </record>
-
+ <!-- Menú para las etiquetas de REal estate -->
     <menuitem id="menu_estate" name="Real Estate" sequence="1"/>
     <menuitem id="menu_estate_property" name="Properties" parent="menu_estate" action="action_estate_property"/>
 </odoo>

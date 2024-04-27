@@ -1,5 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
 <odoo>
-    <!--  define una vista de lista (tree view) para el modelo estate.property -->
+  
+
+        <!--  define una vista lista para el modelo estate.property -->
     <record id="view_estate_property_tree" model="ir.ui.view">
         <field name="name">estate.property.tree</field>
         <field name="model">estate.property</field>
@@ -69,7 +73,6 @@
             </form>
         </field>
     </record>
-
     <!--  define una vista de Busqueda para el modelo estate.property -->
     <record id="view_estate_property_search" model="ir.ui.view">
         <field name="name">estate.property.search</field>
@@ -91,4 +94,7 @@
             </search>
         </field>
     </record>
+    
 </odoo>
+
+ 
