@@ -1,20 +1,24 @@
-{
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "Odoo17",
-            "type": "python",
-            "request": "launch",
-            "program": "C:/Users/jasna/OneDrive/Documents/mis cosas/Curso de odoo/Area_Trbj/odoo/odoo-17.0/odoo-bin",
-            "console": "integratedTerminal",
-            "args": [
-                "--config= C:/Users/jasna/OneDrive/Documents/mis cosas/Curso de odoo/Area_Trbj/odoo/conf/odoo.conf",
-                //"--update= all",
-                //"--database=nombre_BD",
-                "--dev=reload",
-                "--dev=xml"
+// Este archivo se utiliza para config las opciones de depuración del proyecto
 
-            ]
-        },
-    ]
-}
+    {
+        "version": "0.8.0",
+        "configurations": [
+          
+          
+            {
+                "name": "Odoo17",
+                "type": "debugpy",
+                "request": "attach",
+                               "connect": {
+                    "host": "localhost",
+                    "port": 5678
+                },
+                "pathMappings": [
+                    {
+                        "localRoot": "C:\\Users\\jasna\\OneDrive\\Documents\\mis cosas\\Curso de odoo\\Area_Trbj\\odoo",
+                        "remoteRoot": "/mnt/extra-addons"
+                    }
+                ]
+            },
+        ]
+    }

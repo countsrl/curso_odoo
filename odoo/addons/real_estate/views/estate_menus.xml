@@ -1,5 +1,4 @@
-
-
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!-- Acción de ventana para las etiquetas de Properties -->
     <record id="action_estate_property" model="ir.actions.act_window">

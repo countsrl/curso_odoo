@@ -1,3 +1,4 @@
+//se utiliza para config las pruebas unitarias en el proyecto
 {
     "python.testing.unittestArgs": [
         "-v",

@@ -10,11 +10,16 @@ services:
         stdin_open: true
         ports:
             - "8069:8069"
+            - "5678:5678"  # puerto para la depuracion remota
         volumes:
             - ./addons:/mnt/extra-addons
             - ./conf:/etc/odoo
         environment:
             - HOST=postgresql
+            #- PYTHONPATH=/mnt/extra-addons
+            #- PYTHONBREAKPOINT=debugpy.breakpoint
+            #- DEBUGPY_LOG_DIR=/var/log/debugpy
+      
         restart: always
     postgresql:
         image: postgres:16.2
