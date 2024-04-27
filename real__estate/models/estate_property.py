@@ -44,16 +44,14 @@ class Estate_property(models.Model):
   
     
     
-  # fields compute use
+  # fields compute use Calcular el area total
     @api.depends('living_area','garden_area')
     def _compute_total_area(self):
         for record in self:
-            record.total_area = record.living_area + record.garden_area
+            record.total_area = record.living_area + record.garden_area    
     
     
-    
-    
-   # onchange use
+   # onchange use al marcar garden por defecto garden_area sea 10 y orintacion norte
     @api.onchange('garden')
     def _onchange_is_garden(self):   
         if self.garden == True:
@@ -65,20 +63,15 @@ class Estate_property(models.Model):
             
     #use mapped function for max value for many2one list
     @api.depends('offer_ids.price')     
-    def _compute_best_price(self):
+    def _compute_best_price(self):        
         for record in self:
-            record.best_price =max(record.offer_ids.mapped('price'))
-     
+            if record.offer_ids:
+                record.best_price =max(record.offer_ids.mapped('price'))
+            else:
+                record.best_price="0.00"
+        
     
-        #if(self.offer_ids):
-          #  max_value= max(self.offer_ids.mapped('prices'))
-         #   for prices in self.offer_ids:
-                
-          #      max_value = max(prices.mapped('price'))
-                
-           # self.best_price = max_value
-        #else:
-            #self.best_price = '0'
+
         
         
         
