@@ -117,6 +117,14 @@ class Estate_property(models.Model):
                 record.status = "cancel"
         return True
     
+    #It should not be possible to delete a property which is not new or canceled.
+    @api.ondelete(at_uninstall=False)
+    def _unlink_if_not_new_or_cancel(self):
+        for record in self:
+            if record.status not in ['new', 'cancel']:
+                raise ValidationError(
+                _("Only new and cancelled properties can be deleted."))
+    
     
 
         
