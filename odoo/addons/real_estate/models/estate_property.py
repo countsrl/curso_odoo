@@ -51,13 +51,15 @@ class EstateProperty(models.Model):
     buyer_id = fields.Many2one('res.partner', string='Buyer', copy=False)  
     salesperson_id = fields.Many2one('res.users', string='Salesperson', default=lambda self: self.env.user)  
     tag_ids = fields.Many2many('estate.property.tag', string='Tags')
-
-    @api.depends('living_area', 'garden_area') #se utiliza para especificar los campos de los que depende un campo calculado
+    # camp Compute
+    @api.depends('living_area', 'garden_area')  # This decorator specifies the field dependencies for the compute method.
     def _compute_total_area(self):
+        """Compute the total area based on the living area and the garden area."""
         for record in self:
             record.total_area = record.living_area + record.garden_area
 
-    @api.depends('offer_ids.price')
+    @api.depends('offer_ids.price')   # This decorator specifies the field dependencies for the compute method.
     def _compute_best_offer(self):
+        """Compute the best offer based on the prices of the offers."""
         for record in self:
             record.best_offer = max(record.offer_ids.mapped('price'), default=0)

@@ -46,11 +46,11 @@
                                 <field name="garage" />
                                 <field name="garden_area" />
                                 <field name="garden_orientation" />
-                                <field name="offer_ids" />
+                                
                                 <field name="total_area" />
                             </group>
                         </page>
-                        <page string="Offers" name="Offers">
+                       <!--  <page string="Offers" name="Offers">
                             <field name="offer_ids" widget="one2many_list">
                                 <tree string="Offers">
                                     <field name="price" />
@@ -58,7 +58,7 @@
                                     <field name="date_deadline" />
                                 </tree>
                             </field>
-                        </page>
+                        </page>-->
                         <page name="Other_info" string="Other info">
                             <group>
                                 <field name="buyer_id" />

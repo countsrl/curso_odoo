@@ -1,27 +1,62 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
+
+        <!-- Form view for estate.property.offer -->
         <record id="view_estate_property_offer_form" model="ir.ui.view">
             <field name="name">estate.property.offer.form</field>
             <field name="model">estate.property.offer</field>
             <field name="arch" type="xml">
-                <form string="Estate Property Offer">
-                    <field name="validity"/>
-                    <field name="date_deadline"/>
+                <form string="Property Offer">
+                    <sheet>
+                        <group>
+                            <field name="price"/>
+                            <field name="status"/>
+                            <field name="partner_id"/>
+                            <field name="validity"/>
+                            <field name="date_deadline"/>
+                        </group>
+                    </sheet>
                 </form>
             </field>
         </record>
 
+        <!-- Tree view for estate.property.offer -->
         <record id="view_estate_property_offer_tree" model="ir.ui.view">
             <field name="name">estate.property.offer.tree</field>
             <field name="model">estate.property.offer</field>
             <field name="arch" type="xml">
-                <tree string="Estate Property Offer">
-                    
+                <tree string="Property Offer">
+                    <field name="price"/>
+                    <field name="status"/>
+                    <field name="partner_id"/>
                     <field name="validity"/>
                     <field name="date_deadline"/>
                 </tree>
             </field>
         </record>
+
+        <!-- Add the offer_ids field to the estate.property form view. Inherited Form View-->
+        <record id="estate_property_form_inherit_offer" model="ir.ui.view"> 
+            <field name="name">estate.property.form.inherit.offer</field>
+            <field name="model">estate.property</field>
+            <field name="inherit_id" ref="view_estate_property_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page string="Offers">
+                        <field name="offer_ids" context="{'default_property_id': active_id}">
+                            <tree>
+                                <field name="price"/>
+                                <field name="status"/>
+                                <field name="partner_id"/>
+                                <field name="validity"/>
+                                <field name="date_deadline"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
     </data>
 </odoo>
