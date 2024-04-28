@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
-    <!-- View estate_property View Tree -->
+     <!-- View estate_property View Tree -->
     <record id="view_estate_property_tree" model="ir.ui.view">
         <field name="name">view.estate.property.tree</field>
         <field name="model">estate.property</field>
@@ -28,14 +27,20 @@
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
             <form string="Estate_property List">
-                <form string="Estate List">   
+                <form string="Estate List">  
+                    <header>
+                        <button name="action_sold" type="object" class="oe_highlight" string="Sold"/>
+                    
+                        <button name="action_cancelled" type="object" class="oe_highlight" string="Cancel"/>
+                    </header> 
                     <h1> 
                         <field name="name"/>  
                     </h1>  
                     
                     <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" />                            
                     <group>          
-                        <group>                                        
+                        <group> 
+                            <field name="status"/>                                       
                             <field name="property_type_id"/> 
                             <field name="postcode"/>
                             <field name="date_availability"/>                       
@@ -78,13 +83,7 @@
                                 <field name="buyer_id"/>
                             </div>   
                         </page>
-                               
-                               
                     </notebook>  
-                   
-
-                         
-
                  </form>
             </form>
         </field>
@@ -96,29 +95,33 @@
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
             <search string="Estate_property">
-                <field name="name"/>                       
+                <field name="name"/>                      
                 <field name="postcode"/>
+                <field name = "property_type_id"/>
                 <field name="date_availability"/>
                 <field name="expected_price"/>
                 <field name="selling_price"/>
                 <field name="bedrooms"/>
-                <field name="living_area" filter_domain="[('living_area','>=', self)]"/>
+                <field name="living_area"/>
                 <field name="garage"/>                                 
                 <field name="garden"/>
                 <field name="garden_area"/>
                 <field name="garden_orientation"/> 
+                <filter name="available" string="Available" domain="[('status', 'in', ('new','offer_received'))]"/>
+                <filter name="big_property" string="Big Properties" domain="[('living_area', '>=', '500')]"/>
+                
+
                 <group expand="1" string="Group By">
-                     <filter name="postcode" string="Postcode" context="{'group_by': 'postcode'}" />
-                    <filter string="Available" name="available" context="{'group_by':'name'}"/>
-                    <filter string="Bedrooms" name="bedrooms" context="{'group_by': 'bedrooms'}"/>
-                    <filter string="Garage" name="garage" context="{'group_by': 'garage'}"/>
+                    <filter name="postcode" string="Postcode" context="{'group_by': 'postcode'}" />
+                    <filter string="Name" name="name" context="{'group_by':'name'}"/>
+                    <filter string="Bedrooms" name="bedrooms" context="{'group_by': 'bedrooms'}"/>                    
                 </group>
                  
                 
             </search>
         </field>
     </record> 
-
+       
     
 
     <!-- Action estate_property -->

@@ -3,6 +3,7 @@ import logging
 
 from odoo import models, fields, api, _
 from datetime import timedelta, date
+from odoo.exceptions import ValidationError, UserError
 
 
 _logger = logging.getLogger(__name__)
@@ -29,11 +30,14 @@ class Estate_property(models.Model):
     garden_orientation = fields.Selection([('n', 'North'), ('s', 'South'), ('e', 'East'), ('w', 'West')], string="Garden Orientation", default="n" )
     total_area = fields.Integer(string='Total Area' , 
                                     compute='_compute_total_area')
-    state = fields.Selection([
+    status = fields.Selection([
         ('new', 'New'),
         ('offer_received', 'Offer Received'),
-      
+        ("offer_accepted", "Offer Accepted "),
+        ("sold", "Sold"),
+        ("cancel", "Cancelled"),      
     ], default='new')
+      
     property_type_id = fields.Many2one("estate.property.type", string = "Property Type")   
     tag_ids = fields.Many2many("estate.property.tag", string= "Tags")
     user_id = fields.Many2one("res.users",string = "Seller", default= lambda self: self.env.user)
@@ -69,7 +73,27 @@ class Estate_property(models.Model):
                 record.best_price =max(record.offer_ids.mapped('price'))
             else:
                 record.best_price="0.00"
+    
+    #linkeando button
         
+    def action_sold(self):
+        for record in self:
+            if self.status == "cancel":
+                raise ValidationError(
+                _("Cancelled properties can not be sold."))
+            else:
+                record.status = "sold"
+        return True
+    
+    def action_cancelled(self):
+        for record in self:
+            if self.status == "sold":
+                raise ValidationError(
+                _("Sold properties can not be cancelled."))
+            else:
+                record.status = "cancel"
+        return True
+    
     
 
         
