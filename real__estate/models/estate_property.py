@@ -19,7 +19,7 @@ class Estate_property(models.Model):
     postcode = fields.Char(string="Postcode")
     date_availability = fields.Date(default=lambda self: fields.Date.today() + timedelta(days=90)) 
     expected_price = fields.Float(string="Expected Prices", required=True, copy=False)
-    selling_price = fields.Float(string="Selling prices", readonly=True)
+    selling_price = fields.Float(string="Selling prices", compute='_compute_selling_price',readonly=True)
     bedrooms = fields.Integer(string="Bedrooms", default="2")
     living_area = fields.Integer(string="Living Area(sqm)")
     facades = fields.Integer(string="Facade")
@@ -40,19 +40,40 @@ class Estate_property(models.Model):
       
     property_type_id = fields.Many2one("estate.property.type", string = "Property Type")   
     tag_ids = fields.Many2many("estate.property.tag", string= "Tags")
-    user_id = fields.Many2one("res.users",string = "Seller", default= lambda self: self.env.user)
-    buyer_id = fields.Many2one("res.partner",string = "Buyer",copy=False, readonly=True)
-    offer_ids = fields.One2many("estate.property.offer","property_id", string= "Offer")
+    user_id = fields.Many2one("res.users",string = "Salesman", default= lambda self: self.env.user)
+    buyer = fields.Char(string="Buyer", compute='_compute_buyer',readonly=True)
+    offer_ids = fields.One2many("estate.property.offer","property_id", string= "Offer", store=True)
     best_price = fields.Float(string='Best Offer', compute='_compute_best_price')
  
   
     
     
-  # fields compute use Calcular el area total
+   # When an offer is accepted, set the buyer and the selling price for the corresponding property. 
+    @api.depends('offer_ids.status', 'offer_ids.price')
+    def _compute_selling_price(self):
+        for record in self:
+            acceptedprice = 0.0
+            for oferta in record.offer_ids:
+                if oferta.status =="accepted":
+                    acceptedprice = oferta.price 
+                    break
+            record.selling_price=acceptedprice
+    
+    @api.depends('offer_ids.status','offer_ids.partner_id')
+    def _compute_buyer(self):
+        for record in self:
+            buyeraccepted = ""
+            for oferta in record.offer_ids:
+                if oferta.status =="accepted":
+                    buyeraccepted = oferta.partner_id.name
+                    break
+        record.buyer=buyeraccepted
+        
+    # Calcular el area total   
     @api.depends('living_area','garden_area')
     def _compute_total_area(self):
         for record in self:
-            record.total_area = record.living_area + record.garden_area    
+            record.total_area = record.living_area + record.garden_area  
     
     
    # onchange use al marcar garden por defecto garden_area sea 10 y orintacion norte
@@ -65,7 +86,7 @@ class Estate_property(models.Model):
             self.garden_area = '0'
             self.garden_orientation = ""
             
-    #use mapped function for max value for many2one list
+    #Calcular valor maximo de una lista one2many usando funtion mapped and function max.
     @api.depends('offer_ids.price')     
     def _compute_best_price(self):        
         for record in self:
@@ -74,7 +95,9 @@ class Estate_property(models.Model):
             else:
                 record.best_price="0.00"
     
-    #linkeando button
+    # linkeando button cancel or set a property as sold.
+    # A canceled property cannot be set as sold, and a sold property cannot be canceled.
+    # use the UserError function.
         
     def action_sold(self):
         for record in self:

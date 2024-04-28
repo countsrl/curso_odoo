@@ -25,7 +25,7 @@ class Estate_property_offer(models.Model):
         default= "accepted",)
       
     validity = fields.Integer(string="Validity", default=7)
-    date_deadline = fields.Date(string= "Dead Line", compute='_compute_date_deadline' , inverse='_inverse_date_deadline', store=True, readonly=True)
+    date_deadline = fields.Date(string= "Dead Line", compute='_compute_date_deadline' , inverse='_inverse_date_deadline', store=True)
 
 
     create_date = fields.Date(default=lambda self: fields.Date.today())     
@@ -35,13 +35,23 @@ class Estate_property_offer(models.Model):
     @api.depends('create_date', 'validity')
     def _compute_date_deadline(self):
         for record in self:
-            if record.create_date:
+            if record.create_date: # Verifica si create_date tiene un valor
                 record.date_deadline = record.create_date + timedelta(days=record.validity)
 
     def _inverse_date_deadline(self):
         for record in self:
             if record.create_date:  # Verifica si create_date tiene un valor
-                record.validity = (record.date_deadline - record.create_date).days
+                record.validity =(record.date_deadline - record.create_date).days
+    
+    
+    #linkeando button  “Accept” and “Refuse” to the estate.property.offer model.
+        
+    def action_accept(self):          
+        self.write({'status': 'accepted'})
+    
+    def action_refused(self):
+        self.write({'status': 'refused'})
+    
     
     
         

@@ -28,11 +28,13 @@
         <field name="arch" type="xml">
             <form string="Estate_property List">
                 <form string="Estate List">  
+                <!-- Add the buttons “Cancel” and “Sold” -->
                     <header>
                         <button name="action_sold" type="object" class="oe_highlight" string="Sold"/>
                     
                         <button name="action_cancelled" type="object" class="oe_highlight" string="Cancel"/>
                     </header> 
+                <!-- Add the buttons “Cancel” and “Sold” -->
                     <h1> 
                         <field name="name"/>  
                     </h1>  
@@ -79,9 +81,9 @@
                                 <field name="user_id"/>
                             </div> 
                             <div>
-                                <label for="buyer_id"/>
-                                <field name="buyer_id"/>
-                            </div>   
+                                <label for="buyer"/>  
+                                <field name="buyer"/>
+                            </div>
                         </page>
                     </notebook>  
                  </form>
