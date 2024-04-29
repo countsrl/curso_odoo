@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-  <!--  define una vista lista para el modelo estate.property -->
+    <!--  define una vista lista para el modelo estate.property -->
     <record id="view_estate_property_tree" model="ir.ui.view">
         <field name="name">estate.property.tree</field>
         <field name="model">estate.property</field>
@@ -46,19 +46,10 @@
                                 <field name="garage" />
                                 <field name="garden_area" />
                                 <field name="garden_orientation" />
-                                
+
                                 <field name="total_area" />
                             </group>
                         </page>
-                       <!--  <page string="Offers" name="Offers">
-                            <field name="offer_ids" widget="one2many_list">
-                                <tree string="Offers">
-                                    <field name="price" />
-                                    <field name="validity" />
-                                    <field name="date_deadline" />
-                                </tree>
-                            </field>
-                        </page>-->
                         <page name="Other_info" string="Other info">
                             <group>
                                 <field name="buyer_id" />
@@ -97,7 +88,7 @@
             </search>
         </field>
     </record>
-    
+
 </odoo>
 
  

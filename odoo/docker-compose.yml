@@ -12,7 +12,7 @@ services:
             - "8069:8069"
             - "5678:5678"  # puerto para la depuracion remota
         volumes:
-            - ./addons:/mnt/extra-addons
+            - ./addons:/mnt/addons
             - ./conf:/etc/odoo
         environment:
             - HOST=postgresql
