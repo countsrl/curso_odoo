@@ -31,7 +31,7 @@
                 <!-- Add the buttons “Cancel” and “Sold” -->
                     <header>
                         <button name="action_sold" type="object" class="oe_highlight" string="Sold" 
-                            attrs="{'invisible': [('status', '=', 'sold')]}"/>
+                            attrs="{'invisible': ['|',('status', '=', 'sold'),('status', '=', 'new')]}"/>                     
 
                     
                         <button name="action_cancelled" type="object" class="oe_highlight" string="Cancel" 

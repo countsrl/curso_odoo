@@ -92,8 +92,11 @@ class Estate_property(models.Model):
             if self.status == "cancel":
                 raise ValidationError(
                 _("Cancelled properties can not be sold."))
-            else:
+            elif self.status == "offer_accepted":
                 record.status = "sold"
+            else:
+                 raise ValidationError(
+                _("This property has no accepted offer"))
         return True
     
     def action_cancelled(self):
@@ -127,10 +130,13 @@ class Estate_property(models.Model):
            if not float_is_zero(record.selling_price, precision_digits=2) and\
             float_compare(record.selling_price, record.expected_price * 0.9, precision_digits=2) == -1:
                 raise ValidationError("The selling price cannot be lower than 90% of the expected price")
-                
+            
+ 
+  
     
 
-           
+    
+                
   
 
             

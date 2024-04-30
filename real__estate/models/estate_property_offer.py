@@ -63,7 +63,20 @@ class Estate_property_offer(models.Model):
         self.property_id.selling_price = '0.0'
         self.property_id.status = 'cancel'
         
+    #inherit con create()
         
+    @api.model
+    def create(self, vals):
+        offer = super(Estate_property_offer, self).create(vals)
+        property_id = offer.property_id
+        if property_id and property_id.status == 'new' and len(property_id.offer_ids) == 1:
+            property_id.status = 'offer_received'
+        return offer
+
+  
+    
+
+
 
 
     
