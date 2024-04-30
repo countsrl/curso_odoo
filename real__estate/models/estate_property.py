@@ -64,7 +64,7 @@ class Estate_property(models.Model):
             record.total_area = record.living_area + record.garden_area  
     
     
-   # onchange use al marcar garden por defecto garden_area sea 10 y orintacion norte
+   # onchange al marcar garden por defecto garden_area sea 10 y orintacion norte
     @api.onchange('garden')
     def _onchange_is_garden(self):   
         if self.garden == True:
