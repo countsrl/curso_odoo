@@ -6,7 +6,7 @@ class EstateProperty(models.Model):
     _rec_name = 'name' 
 
     # Basic fields
-    name = fields.Char(required=True)
+    name = fields.Char(string='Name')
     title = fields.Char(string='Title')
     active = fields.Boolean(default=True)  # Campo activo con valor predeterminado a True, utilizado para filtrar propiedades activas.
     description = fields.Text() 
@@ -37,21 +37,26 @@ class EstateProperty(models.Model):
     state = fields.Selection([
         ('new', 'New'),
         ('offer_received', 'Offer Received'),
+        ('offer_accepted', 'Offer Accepted'),
         ('sold', 'Sold'),
-        ('off_market', 'Off Market'),
-    ], default='new')
-   
+      ], default='new')
+    def action_accept_offer(self):
+        self.state = 'offer_accepted'
+
+    def action_sold(self):
+        self.state = 'sold'
     # Computed fields
     total_area = fields.Float(compute="_compute_total_area")
     best_offer = fields.Float(compute="_compute_best_offer")
 
     # Relations
     offer_ids = fields.One2many('estate.property.offer', 'property_id', string='Offers')
-    property_type_id = fields.Many2one('estate.property.type', string='Property Type')  
+    property_type_id = fields.Many2one('estate.property.type', string='Property Type', ondelete='cascade')  
     buyer_id = fields.Many2one('res.partner', string='Buyer', copy=False)  
     salesperson_id = fields.Many2one('res.users', string='Salesperson', default=lambda self: self.env.user)  
     tag_ids = fields.Many2many('estate.property.tag', string='Tags')
-    # camp Compute
+    
+    # camp Computej
     @api.depends('living_area', 'garden_area')  # This decorator specifies the field dependencies for the compute method.
     def _compute_total_area(self):
         """Compute the total area based on the living area and the garden area."""

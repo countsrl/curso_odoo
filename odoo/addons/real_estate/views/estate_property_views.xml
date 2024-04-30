@@ -13,6 +13,7 @@
                 <field name="expected_price" />
                 <field name="selling_price" />
                 <field name="date_availability" />
+                <!--  <field name="tag_ids" widget="many2many_tags"/>-->
             </tree>
         </field>
     </record>
@@ -22,9 +23,19 @@
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
             <form string="Property">
+                <header>
+                    <field name="state" widget="statusbar"
+                        statusbar_visible="new,offer_received,offer_accepted,sold" />
+                    <button name="action_accept_offer" type="object" string="Accept Offer"
+                        invisible="state != 'offer_received'" />
+                    <button name="action_sold" type="object" string="Sold"
+                        invisible="state != 'offer_accepted'" />
+                </header>
                 <sheet>
                     <group>
                         <group>
+
+                            <field name="tag_ids" widget="many2many_tags"  />
                             <field name="property_type_id" />
                             <field name="postcode" />
                             <field name="date_availability" />
@@ -34,6 +45,7 @@
                             <field name="best_offer" />
                             <field name="selling_price" />
                         </group>
+
                     </group>
                     <notebook>
                         <page string="Description" name="description">

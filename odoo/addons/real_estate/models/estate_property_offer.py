@@ -11,11 +11,13 @@ class EstatePropertyOffer(models.Model):
     date_deadline = fields.Date(compute='_compute_date_deadline', inverse='_inverse_date_deadline', store=True)
     status = fields.Selection([
         ('accepted', 'Accepted'),
-        ('refused', 'Refused')
+        ('refused', 'Refused'),
+        ('sold', 'Sold'),
     ], 'Status', copy=False)
+    
     # Relations
     partner_id = fields.Many2one('res.partner', 'Partner', required=True)
-    property_id = fields.Many2one('estate.property', 'Property', required=True)
+    property_id = fields.Many2one('estate.property', 'Property', required=True, ondelete='cascade')
     
     # Compute and inverse methods
     @api.depends('create_date', 'validity')  # This decorator specifies the field dependencies for the compute method.
