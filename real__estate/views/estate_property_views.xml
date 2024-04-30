@@ -30,9 +30,15 @@
                 <form string="Estate List">  
                 <!-- Add the buttons “Cancel” and “Sold” -->
                     <header>
-                        <button name="action_sold" type="object" class="oe_highlight" string="Sold"/>
+                        <button name="action_sold" type="object" class="oe_highlight" string="Sold" 
+                            attrs="{'invisible': [('status', '=', 'sold')]}"/>
+
                     
-                        <button name="action_cancelled" type="object" class="oe_highlight" string="Cancel"/>
+                        <button name="action_cancelled" type="object" class="oe_highlight" string="Cancel" 
+                            attrs="{'invisible': [('status', '=', 'sold')]}"/>
+
+                        <field name="status" widget="statusbar"
+                               statusbar_visible="new, offer_received, offer_accepted, sold"/>
                     </header> 
                 <!-- Add the buttons “Cancel” and “Sold” -->
                     <h1> 
@@ -81,8 +87,8 @@
                                 <field name="user_id"/>
                             </div> 
                             <div>
-                                <label for="buyer"/>  
-                                <field name="buyer"/>
+                                <label for="buyer_id"/>  
+                                <field name="buyer_id"/>
                             </div>
                         </page>
                     </notebook>  
@@ -108,7 +114,8 @@
                 <field name="garage"/>                                 
                 <field name="garden"/>
                 <field name="garden_area"/>
-                <field name="garden_orientation"/> 
+                <field name="garden_orientation"/>
+                <filter name="unavailable" string="Unavailable" domain="[('status', 'in', ('cancel', 'sold'))]"/> 
                 <filter name="available" string="Available" domain="[('status', 'in', ('new','offer_received'))]"/>
                 <filter name="big_property" string="Big Properties" domain="[('living_area', '>=', '500')]"/>
                 
