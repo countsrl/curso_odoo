@@ -101,6 +101,50 @@
         </field>
     </record>
 
+     <!--  define una vista Kanban para el modelo estate.property -->
+    <record id="view_estate_property_kanban" model="ir.ui.view">
+        <field name="name">property.kanban</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="property_type_id">
+                <field name="name"/>
+                <field name="expected_price"/>
+                <field name="selling_price"/>
+                <field name="sale_price"/>
+                <field name="best_price"/>
+                <field name="tag_ids"/>
+                <field name="state"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="oe_kanban_details">
+                                <strong><field name="name"/></strong>
+                                <div>Expected Price: <field name="expected_price"/></div>
+                                <div t-if="record.state.raw_value == 'offer_received'">
+                                    Best Price: <field name="best_price"/>
+                                </div>
+                                <div t-if="record.state.raw_value == 'offer_accepted'">
+                                    Sale Price: <field name="sale_price"/>
+                                </div>
+                                <div>
+                                    Tags: <field name="tag_ids" widget="many2many_tags"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    
+    <record id="action_estate_property" model="ir.actions.act_window">
+        
+        <field name="res_model">estate.property</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+
+
+
 </odoo>
 
  

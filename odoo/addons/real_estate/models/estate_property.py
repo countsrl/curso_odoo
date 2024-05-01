@@ -14,7 +14,8 @@ class EstateProperty(models.Model):
     # Price fields
     expected_price = fields.Float(required=True, copy=False)  # Campo obligatorio, no se copia
     selling_price = fields.Float(readonly=True)  # Campo de solo lectura
-
+    sale_price = fields.Float(readonly=True)
+    best_price = fields.Float(readonly=True)
     # Property details
     bedrooms = fields.Integer(default=2)
     living_area = fields.Integer()
