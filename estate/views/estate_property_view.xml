@@ -148,10 +148,54 @@
             </field>
         </record>
 
+        <record id="estate_property_kanban_view" model="ir.ui.view">
+            <field name="name">estate.property.kanban</field>
+            <field name="model">estate.property</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="property_type_id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div t-attf-class="#{!selection_mode ? 'text-center' : ''}">
+                                    <i class="fa fa-building" role="img" aria-label="Property Type"
+                                       title="Property Type"></i>
+                                    <strong>
+                                        <field name="property_type_id"/>
+                                    </strong>
+                                </div>
+                                <hr class="mt4 mb4"/>
+                                <div class="row">
+                                    <div t-if="record.name.value" class="col-6 text-center">
+                                        <strong>Name:</strong>
+                                    </div>
+                                    <div t-if="record.price_exp.value" class="col-6 text-center">
+                                        <strong>Expected Price</strong>
+                                    </div>
+                                    <div t-if="record.best_price.value" class="col-6 text-center">
+                                        <strong>Best Offer</strong>
+                                    </div>
+                                    <div t-if="record.name.value" class="col-6 text-center">
+                                        <field name="name"/>
+                                    </div>
+                                    <div t-if="record.price_exp.value" class="col-6 text-center o_force_ltr">
+                                        <field name="price_exp"/>
+                                    </div>
+                                    <div t-if="record.best_price.value" class="col-6 text-center o_force_ltr">
+                                        <field name="best_price"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
         <record id="estate_property_act_window" model="ir.actions.act_window">
             <field name="name">Estate Property</field>
             <field name="res_model">estate.property</field>
-            <field name='view_mode'>tree,form</field>
+            <field name='view_mode'>tree,form,kanban</field>
         </record>
 
     </data>
