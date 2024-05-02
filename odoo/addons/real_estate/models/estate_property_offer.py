@@ -10,6 +10,7 @@ class EstatePropertyOffer(models.Model):
     validity = fields.Integer(default=7)
     date_deadline = fields.Date(compute='_compute_date_deadline', inverse='_inverse_date_deadline', store=True)
     status = fields.Selection([
+        ('new', 'New'),
         ('accepted', 'Accepted'),
         ('refused', 'Refused'),
         ('sold', 'Sold'),
@@ -33,3 +34,12 @@ class EstatePropertyOffer(models.Model):
             if record.create_date and record.date_deadline:
                 create_date = record.create_date.date()  # Converter  datetime.date
                 record.validity = (record.date_deadline - create_date).days
+
+    def action_accept(self):
+     self.status = 'accepted'
+     self.property_id.state = 'sold'
+     self.property_id.buyer_id = self.partner_id
+     self.property_id.selling_price = self.price
+
+    def action_refuse(self):
+     self.status = 'refused'

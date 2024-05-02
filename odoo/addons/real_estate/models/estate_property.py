@@ -1,9 +1,12 @@
 from odoo import models, fields, api
 from datetime import timedelta, date
+from odoo.exceptions import UserError
+
 class EstateProperty(models.Model):
     _name = 'estate.property'
     _description = 'Estate Property'
     _rec_name = 'name' 
+    _order = 'id desc'
 
     # Basic fields
     name = fields.Char(string='Name')
@@ -14,8 +17,7 @@ class EstateProperty(models.Model):
     # Price fields
     expected_price = fields.Float(required=True, copy=False)  # Campo obligatorio, no se copia
     selling_price = fields.Float(readonly=True)  # Campo de solo lectura
-    sale_price = fields.Float(readonly=True)
-    best_price = fields.Float(readonly=True)
+
     # Property details
     bedrooms = fields.Integer(default=2)
     living_area = fields.Integer()
@@ -40,15 +42,23 @@ class EstateProperty(models.Model):
         ('offer_received', 'Offer Received'),
         ('offer_accepted', 'Offer Accepted'),
         ('sold', 'Sold'),
-      ], default='new')
+        ('canceled', 'Canceled'),
+      ], required=True, copy=False, default='new')
     def action_accept_offer(self):
         self.state = 'offer_accepted'
+    def action_cancel(self):
+             if self.state == 'sold':
+              raise UserError("A sold property cannot be canceled.")
+              self.state = 'canceled'
 
     def action_sold(self):
-        self.state = 'sold'
+             if self.state == 'canceled':
+              raise UserError("A canceled property cannot be sold.")
+              self.state = 'sold'
     # Computed fields
     total_area = fields.Float(compute="_compute_total_area")
     best_offer = fields.Float(compute="_compute_best_offer")
+
 
     # Relations
     offer_ids = fields.One2many('estate.property.offer', 'property_id', string='Offers')
@@ -57,7 +67,7 @@ class EstateProperty(models.Model):
     salesperson_id = fields.Many2one('res.users', string='Salesperson', default=lambda self: self.env.user)  
     tag_ids = fields.Many2many('estate.property.tag', string='Tags')
     
-    # camp Computej
+    # camp Compute
     @api.depends('living_area', 'garden_area')  # This decorator specifies the field dependencies for the compute method.
     def _compute_total_area(self):
         """Compute the total area based on the living area and the garden area."""
@@ -69,3 +79,14 @@ class EstateProperty(models.Model):
         """Compute the best offer based on the prices of the offers."""
         for record in self:
             record.best_offer = max(record.offer_ids.mapped('price'), default=0)
+    @api.onchange('garden')
+    def _onchange_garden(self):
+        """Method that is invoked when the value of the 'garden' field changes."""
+        if self.garden:
+            self.garden_area = 10.0
+            self.garden_orientation = 'north'
+        else:
+            self.garden_area = 0.0
+            self.garden_orientation = False
+ 
+                  

@@ -13,7 +13,7 @@
                 <field name="expected_price" />
                 <field name="selling_price" />
                 <field name="date_availability" />
-                <!--  <field name="tag_ids" widget="many2many_tags"/>-->
+                
             </tree>
         </field>
     </record>
@@ -24,18 +24,17 @@
         <field name="arch" type="xml">
             <form string="Property">
                 <header>
+                   
                     <field name="state" widget="statusbar"
                         statusbar_visible="new,offer_received,offer_accepted,sold" />
-                    <button name="action_accept_offer" type="object" string="Accept Offer"
-                        invisible="state != 'offer_received'" />
-                    <button name="action_sold" type="object" string="Sold"
-                        invisible="state != 'offer_accepted'" />
+                    <button name="action_cancel" type="object" string="Cancel" invisible="['|', ('state', '=', 'sold'), ('state', '=', 'new')]" class="oe_highlight"/>
+                    <button name="action_sold" type="object" string="Sold"  class="oe_highlight"/>
                 </header>
                 <sheet>
                     <group>
+                            <field name="name" string=""/>  
+                            <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" string=""/>
                         <group>
-
-                            <field name="tag_ids" widget="many2many_tags"  />
                             <field name="property_type_id" />
                             <field name="postcode" />
                             <field name="date_availability" />
@@ -45,7 +44,6 @@
                             <field name="best_offer" />
                             <field name="selling_price" />
                         </group>
-
                     </group>
                     <notebook>
                         <page string="Description" name="description">
@@ -58,7 +56,6 @@
                                 <field name="garage" />
                                 <field name="garden_area" />
                                 <field name="garden_orientation" />
-
                                 <field name="total_area" />
                             </group>
                         </page>
@@ -100,34 +97,33 @@
             </search>
         </field>
     </record>
-
-     <!--  define una vista Kanban para el modelo estate.property -->
-    <record id="view_estate_property_kanban" model="ir.ui.view">
+    <!--  define una vista Kanban para el modelo estate.property -->
+    <record id="view_property_kanban" model="ir.ui.view">
         <field name="name">property.kanban</field>
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
             <kanban default_group_by="property_type_id">
-                <field name="name"/>
-                <field name="expected_price"/>
-                <field name="selling_price"/>
-                <field name="sale_price"/>
-                <field name="best_price"/>
-                <field name="tag_ids"/>
-                <field name="state"/>
+                <field name="name" />
+                <field name="expected_price" />
+                <field name="best_offer" />
+                <field name="selling_price" />
+                <field name="tag_ids" />
+                <field name="state" />
                 <templates>
                     <t t-name="kanban-box">
                         <div class="oe_kanban_global_click">
                             <div class="oe_kanban_details">
-                                <strong><field name="name"/></strong>
-                                <div>Expected Price: <field name="expected_price"/></div>
-                                <div t-if="record.state.raw_value == 'offer_received'">
-                                    Best Price: <field name="best_price"/>
+                                <strong>
+                                    <field name="name" />
+                                </strong>
+                                <div>Expected Price: <field name="expected_price" /></div>
+                                <div t-if="record.state.raw_value == 'offer_received'"> Best Offer: <field
+                                        name="best_offer" />
                                 </div>
-                                <div t-if="record.state.raw_value == 'offer_accepted'">
-                                    Sale Price: <field name="sale_price"/>
+                                <div t-if="record.state.raw_value == 'offer_accepted'"> Selling
+                                    Price: <field name="selling_price" />
                                 </div>
-                                <div>
-                                    Tags: <field name="tag_ids" widget="many2many_tags"/>
+                                <div> Tags: <field name="tag_ids" widget="many2many_tags" />
                                 </div>
                             </div>
                         </div>
@@ -136,15 +132,9 @@
             </kanban>
         </field>
     </record>
-    
     <record id="action_estate_property" model="ir.actions.act_window">
-        
+        <field name="name">Properties</field>
         <field name="res_model">estate.property</field>
         <field name="view_mode">tree,form,kanban</field>
     </record>
-
-
-
 </odoo>
-
- 

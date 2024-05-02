@@ -33,4 +33,5 @@
     </record>
     <!-- Menú para el modelo estate.property.type -->
     <menuitem id="menu_estate_property_type" name="Property Types" parent="menu_estate_property" action="action_estate_property_type" sequence="30"/>
+
 </odoo>
