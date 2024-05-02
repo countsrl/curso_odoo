@@ -10,7 +10,7 @@
                         </h2>
                         <div>
                             <strong>Expected Price:</strong>
-                            <span t-field="property.expected_price"/>
+                            <span t-field="property.price_exp"/>
                         </div>
                         <table class="table">
                             <thead>
