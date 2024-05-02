@@ -22,9 +22,10 @@
         'views/estate_property_tags_view.xml',
         'views/estate_property_type_view.xml',
         'views/estate_property_view.xml',
-
         'views/estate_menus.xml',
-        'security/security.xml'
+        'security/security.xml',
+        'reports/estate_property_templates.xml',
+        'reports/estate_property_reports.xml',
     ],
 
     # only loaded in demonstration mode
