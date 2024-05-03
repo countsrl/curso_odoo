@@ -44,6 +44,8 @@ class EstateProperty(models.Model):
         ('sold', 'Sold'),
         ('canceled', 'Canceled'),
       ], required=True, copy=False, default='new')
+    
+    #function
     def action_accept_offer(self):
         self.state = 'offer_accepted'
     def action_cancel(self):

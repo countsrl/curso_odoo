@@ -43,3 +43,6 @@ class EstatePropertyOffer(models.Model):
 
     def action_refuse(self):
      self.status = 'refused'
+
+     def print_offer(self):
+        return self.env.ref('estate.action_report_offer').report_action(self)
