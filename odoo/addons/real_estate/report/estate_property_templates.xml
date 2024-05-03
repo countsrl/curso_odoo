@@ -46,8 +46,8 @@
                             <span t-field="property.date_availability"/>
                         </div>
                         <div>
-                            <strong>Status: </strong>
-                            <span t-field="property.status"/>
+                            <strong>State: </strong>
+                            <span t-field="property.state"/>
                         </div>
                         <div>
                             <strong>Total Area: </strong>
@@ -57,8 +57,9 @@
                             <strong>Best Offer: </strong>
                             <span t-field="property.best_offer"/>
                         </div>
-                        <t t-call="estate.property_offers_table"/>
+                        <t t-call="real_estate.report_property_offers_table"/>
                     </main>
+                    <!--<t t-esc="docs"/>-->
                 </t>
             </t>
         </t>
@@ -76,7 +77,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr t-foreach="offer_ids" t-as="offer">
+                <tr t-foreach="property.offer_ids" t-as="offer">
                     <td>
                         <span t-field="offer.price"/>
                     </td>

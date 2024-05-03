@@ -10,7 +10,8 @@
     "python.testing.pytestEnabled": false,
     "python.testing.unittestEnabled": true,
     "python.analysis.extraPaths": [
-        "./odoo/odoo-17.0"
-       
-    ]
+        "./odoo/odoo-17.0",
+        "./odoo/odoo-17.0/odoo-17.0"
+    ],
+    "python.analysis.autoImportCompletions": true
 }
