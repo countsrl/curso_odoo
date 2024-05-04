@@ -20,7 +20,7 @@
     'version': '16.0.0.0',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base', 'web'],
 
     # always loaded
     "data": [
@@ -30,7 +30,10 @@
         "views/estate_property_tag_views.xml",
         "views/estate_menu.xml",
         "views/estate_property_offer_views.xml",
-        "security/ir.model.access.csv"
+        "security/ir.model.access.csv",
+        "report/estate_property_offer_report.xml",
+         "report/estate_property_offer_template.xml"
+        
     ],
     'installable': True,
     'application': True,
