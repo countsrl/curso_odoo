@@ -1,5 +1,5 @@
 from odoo import models, fields, api
-from datetime import timedelta, date
+from datetime import timedelta, date, datetime
 from odoo.exceptions import UserError
 
 class EstateProperty(models.Model):
@@ -90,5 +90,11 @@ class EstateProperty(models.Model):
         else:
             self.garden_area = 0.0
             self.garden_orientation = False
+   
+    @api.model
+    def _get_report_filename(self, base_report_name):
+        report_date = datetime.now().strftime('%Y_%m_%d_%H_%M_%S_%f')
+        report_name = "%s_%s" % (base_report_name, report_date)
+        return report_name
  
                   

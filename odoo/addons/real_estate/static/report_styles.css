@@ -1,0 +1,19 @@
+/* report_styles.css */
+body {
+    font-family: 'Arial', sans-serif;
+}
+h2 {
+    color: #800080;
+}
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.table th, .table td {
+    border: 1px solid #000;
+    padding: 10px;
+}
+.table th {
+    background-color: #227266;
+    color: #fff;
+}
