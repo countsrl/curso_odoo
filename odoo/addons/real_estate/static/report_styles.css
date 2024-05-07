@@ -17,3 +17,19 @@ h2 {
     background-color: #227266;
     color: #fff;
 }
+.page-info{
+    background-color: #227266;  
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+.center-info{
+    text-align: center;
+
+}
+.best-offer {
+    text-align: right;  /* Alinea el texto a la derecha */
+    background-color: #227266;  
+    color: white;  
+    padding: 10px;  /* Añade un poco de espacio alrededor del texto */
+}

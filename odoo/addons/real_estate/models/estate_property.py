@@ -1,5 +1,6 @@
 from odoo import models, fields, api
-from datetime import timedelta, date, datetime
+from datetime import timedelta, date
+from datetime import datetime
 from odoo.exceptions import UserError
 
 class EstateProperty(models.Model):
@@ -66,8 +67,9 @@ class EstateProperty(models.Model):
     offer_ids = fields.One2many('estate.property.offer', 'property_id', string='Offers')
     property_type_id = fields.Many2one('estate.property.type', string='Property Type', ondelete='cascade')  
     buyer_id = fields.Many2one('res.partner', string='Buyer', copy=False)  
-    salesperson_id = fields.Many2one('res.users', string='Salesperson', default=lambda self: self.env.user)  
+    salesperson_id = fields.Many2one('res.users', string='Salesperson', default=lambda self: self.env.user)  # represent vendedor
     tag_ids = fields.Many2many('estate.property.tag', string='Tags')
+    user_id = fields.Many2one('res.users', default=lambda self: self.env.user, string='User') # reprenst comprador
     
     # camp Compute
     @api.depends('living_area', 'garden_area')  # This decorator specifies the field dependencies for the compute method.
@@ -93,8 +95,8 @@ class EstateProperty(models.Model):
    
     @api.model
     def _get_report_filename(self, base_report_name):
-        report_date = datetime.now().strftime('%Y_%m_%d_%H_%M_%S_%f')
-        report_name = "%s_%s" % (base_report_name, report_date)
-        return report_name
+     report_date = datetime.now().strftime('%Y_%m_%d_%H_%M_%S_%f')
+     report_name = "%s_%s_id%s" % (base_report_name, report_date, str(self.id))
+     return report_name
  
                   

@@ -6,7 +6,7 @@
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
             <tree string="Properties">
-                <field name="name" />
+                <field name="name" />       
                 <field name="postcode" />
                 <field name="bedrooms" />
                 <field name="living_area" />
@@ -34,6 +34,7 @@
                     <group>
                             <field name="name" string=""/>  
                             <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" string=""/>
+                           
                         <group>
                             <field name="property_type_id" />
                             <field name="postcode" />
@@ -63,6 +64,7 @@
                             <group>
                                 <field name="buyer_id" />
                                 <field name="salesperson_id" />
+                                <field name="user_id" />
                             </group>
                         </page>
                     </notebook>

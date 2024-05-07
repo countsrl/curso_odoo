@@ -18,8 +18,7 @@
              'views/estate_property_offer.xml',
              'report/estate_property_templates.xml',
              'report/estate_property_reports.xml',
-           #  'report/estate_property_offer_template.xml',
-            # 'report/report.xml',
+           
 
        
     ],
