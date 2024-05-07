@@ -7,10 +7,6 @@
             <field name="model">estate.property.offer</field>
             <field name="arch" type="xml">
                 <form string="Property Offer">
-                   <!-- <header>
-                        <button name="action_accept" type="object" string="Accept" class="oe_highlight"/>
-                        <button name="action_refuse" type="object" string="Refuse" class="oe_highlight"/>
-                    </header> -->
                     <sheet>
                         <group>
                             <field name="price" />
@@ -49,12 +45,12 @@
                         <field name="offer_ids" context="{'default_property_id': active_id}">
                             <tree>
                                 <field name="price" />
-                                <field name="partner_id" />
+                                <field name="partner_id" invisible="1"/>
                                 <field name="validity" />
                                 <field name="date_deadline" />
                                 <field name="status" />
-                                <button name="action_accept" type="object" string="Accept" class="oe_highlight"/>
-                                <button name="action_refuse" type="object" string="Refuse" class="oe_highlight"/>
+                                <button name="action_accept" type="object" string="Accept" class="oe_highlight" attrs="{'invisible': [('status', 'in', ['accepted', 'refused'])]}"/>
+                                <button name="action_refuse" type="object" string="Refuse" class="oe_highlight" attrs="{'invisible': [('status', 'in', ['accepted', 'refused'])]}"/>
                             </tree>
                         </field>
                     </page>

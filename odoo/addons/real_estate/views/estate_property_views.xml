@@ -6,14 +6,14 @@
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
             <tree string="Properties">
-                <field name="name" />       
+                <field name="name" />
                 <field name="postcode" />
                 <field name="bedrooms" />
                 <field name="living_area" />
                 <field name="expected_price" />
                 <field name="selling_price" />
                 <field name="date_availability" />
-                
+
             </tree>
         </field>
     </record>
@@ -24,19 +24,25 @@
         <field name="arch" type="xml">
             <form string="Property">
                 <header>
-                   
+
                     <field name="state" widget="statusbar"
                         statusbar_visible="new,offer_received,offer_accepted,sold" />
-                    <button name="action_cancel" type="object" string="Cancel" invisible="['|', ('state', '=', 'sold'), ('state', '=', 'new')]" class="oe_highlight"/>
-                    <button name="action_sold" type="object" string="Sold"  class="oe_highlight"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                        invisible="['|', ('state', '=', 'sold'), ('state', '=', 'new')]"
+                        class="oe_highlight" />
+                    <!-- <button name="action_sold" type="object" string="Sold"  class="oe_highlight"
+                    states="new,offer_received,offer_accepted"/>-->
                 </header>
                 <sheet>
                     <group>
-                            <field name="name" string=""/>  
-                            <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" string=""/>
-                           
+                        <field name="name" string="" />
+                        <field name="tag_ids" widget="many2many_tags"
+                            options="{'color_field': 'color'}" string="" />
+                        <!-- <field name="active"/>--> <!-- campo para
+                        ocultar-->
+
                         <group>
-                            <field name="property_type_id" />
+                            <field name="property_type_id" options="{'no_create_edit': True}" />
                             <field name="postcode" />
                             <field name="date_availability" />
                         </group>
@@ -49,7 +55,8 @@
                     <notebook>
                         <page string="Description" name="description">
                             <group>
-                                <field name="description" />
+                                <field name="description"
+                                    options="{'invisible': [('partner_id', '=', False)]}" />
                                 <field name="bedrooms" />
                                 <field name="living_area" />
                                 <field name="facades" />
