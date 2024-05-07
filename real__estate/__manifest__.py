@@ -32,7 +32,8 @@
         "views/estate_property_offer_views.xml",
         "security/ir.model.access.csv",
         "report/estate_property_offer_report.xml",
-         "report/estate_property_offer_template.xml"
+        "report/estate_property_offer_template.xml",
+        "views/res_users_views.xml"
         
     ],
     'installable': True,

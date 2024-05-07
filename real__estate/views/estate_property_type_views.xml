@@ -25,6 +25,15 @@
                             <field name="name" placeholder="Name..."/>
                         </h1>
                     </div>
+                     <group>
+                        <field name="property_ids">
+                            <tree string="Properties" editable="bottom">
+                                <field name="name"/>
+                                <field name="expected_price"/>
+                                <field name="status"/>
+                            </tree>
+                        </field>
+                    </group>
                 </sheet>
             </form>
         </field>

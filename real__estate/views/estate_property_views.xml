@@ -72,14 +72,27 @@
                                     <field name="facades"/>
                                     <field name="garage"/>                                 
                                     <field name="garden"/>
-                                    <field name="garden_area"/>
-                                    <field name="garden_orientation"/> 
+                                    <field name="garden_area" attrs="{'invisible': [('garden', '=', False)]}"/>
+                                    <field name="garden_orientation" attrs="{'invisible': [('garden', '=', False)]}"/> 
                                     <field name="total_area"/> 
                                     
                                 </group>                      
                             </page>
                             <page name="offers" string="Offers"> 
-                                <field name="offer_ids" widget="one2many_offers"/>   
+                              
+                                <field name="offer_ids" widget="one2many_offers">
+                                    <tree string="Offers" editable="bottom" decoration-danger="status == 'refused'">
+                                        <field name="price"/>
+                                        <field name="partner_id"/>
+                                        <field name="validity"/>
+                                        <field name ="date_deadline"/> 
+                                    <!-- Add the buttons “Accept” and “Refuse” to the estate.property.offer"-->
+                                        <button name="action_accept" type="object" icon="fa-check"/>  
+                                        <button name="action_refused" type="object" icon="fa-close"/>
+                                    <!-- End "Add the buttons “Accept” and “Refuse” to the estate.property.offer"-->
+                                        <field name="status"/>
+                                    </tree>
+                                </field> 
                             </page>
                             <page name="other" string="Other Info">
                                 <div>
