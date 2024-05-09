@@ -15,7 +15,7 @@
                             <field name="validity" />
                             <field name="date_deadline" />
                         </group>
-                    </sheet>
+                  </sheet>
                 </form>
             </field>
         </record>
@@ -43,15 +43,15 @@
                     XML element that uses XPath to locate a specific part of the view definition  -->
                     <page string="Offers">
                         <field name="offer_ids" context="{'default_property_id': active_id}">
-                            <tree>
+                            <tree editable="bottom" create="true" delete="true">
                                 <field name="price" />
-                                <field name="partner_id" invisible="1"/>
+                                <field name="partner_id"/>
                                 <field name="validity" />
                                 <field name="date_deadline" />
                                 <field name="status" />
-                                <button name="action_accept" type="object" string="Accept" class="oe_highlight" attrs="{'invisible': [('status', 'in', ['accepted', 'refused'])]}"/>
-                                <button name="action_refuse" type="object" string="Refuse" class="oe_highlight" attrs="{'invisible': [('status', 'in', ['accepted', 'refused'])]}"/>
-                            </tree>
+                                <button name="action_accept" type="object" title="accept" class="fa fa-check oe_highlight" invisible="status in ('accepted', 'refused')"/>
+                                <button name="action_refuse" type="object" title="refuse" class="fa fa-times oe_highlight" invisible="status in ('accepted', 'refused')"/>
+                        </tree>
                         </field>
                     </page>
                 </xpath>

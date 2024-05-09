@@ -4,7 +4,7 @@
         inherit_id="real_estate.report_property_offers">
         <xpath expr="//div[@class='best-offer']" position="after">
             <t t-if="property.state == 'sold'">
-                <div>
+                <!--<div>
                     <strong>Factura: </strong>
                     <span t-field="property.invoice_id.name" />
                 </div>
@@ -15,7 +15,7 @@
                 <div>
                     <strong>Total de la factura: </strong>
                     <span t-field="property.invoice_id.amount_total" />
-                </div>
+                </div> -->
             </t>
         </xpath>
     </template>

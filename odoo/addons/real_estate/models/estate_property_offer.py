@@ -38,12 +38,23 @@ class EstatePropertyOffer(models.Model):
 
     def action_accept(self):
      self.status = 'accepted'
-     self.property_id.state = 'sold'
+    #self.property_id.state = 'sold'
      self.property_id.buyer_id = self.partner_id
      self.property_id.selling_price = self.price
 
     def action_refuse(self):
-     self.status = 'refused'
-
-     def print_offer(self):
-        return self.env.ref('estate.action_report_offer').report_action(self)
+        self.status = 'refused'
+    def write(self, vals):
+        res = super(EstatePropertyOffer, self).write(vals)
+        if 'status' in vals:
+            if vals['status'] == 'accepted':
+                self.property_id.state = 'offer_accepted'
+            elif vals['status'] == 'new':
+                self.property_id.state = 'new'
+            elif vals['status'] == 'refused':
+                self.property_id.state = 'offer_received'
+            elif vals['status'] == 'sold':
+                self.property_id.state = 'sold'
+        return res
+    def print_offer(self):
+         return self.env.ref('estate.action_report_offer').report_action(self)

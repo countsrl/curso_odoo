@@ -24,16 +24,14 @@
         <field name="arch" type="xml">
             <form string="Property">
                 <header>
-
                     <field name="state" widget="statusbar"
-                        statusbar_visible="new,offer_received,offer_accepted,sold" />
-                    <button name="action_cancel" type="object" string="Cancel"
-                        invisible="['|', ('state', '=', 'sold'), ('state', '=', 'new')]"
-                        class="oe_highlight" />
-                    <!-- <button name="action_sold" type="object" string="Sold"  class="oe_highlight"
-                    states="new,offer_received,offer_accepted"/>-->
+                        statusbar_visible="new,offer_received,offer_accepted,canceled,sold" statusbar_colors='{"offer_accepted":"green","offer_received":"red"}'/>
+                    <button name="action_cancel" type="object" string="Cancel" 
+                    invisible="state in ('sold', 'offer_received','new','canceled')"
+                        class="btn-danger" />
+                    <button name="action_sold" string="Sold" type="object" class="btn-success" invisible="state in ('sold', 'offer_received','new','canceled')"/>
                 </header>
-                <sheet>
+                                <sheet>
                     <group>
                         <field name="name" string="" />
                         <field name="tag_ids" widget="many2many_tags"

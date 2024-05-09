@@ -42,27 +42,13 @@ class EstateProperty(models.Model):
         ('new', 'New'),
         ('offer_received', 'Offer Received'),
         ('offer_accepted', 'Offer Accepted'),
-        ('sold', 'Sold'),
         ('canceled', 'Canceled'),
+        ('sold', 'Sold'),
       ], required=True, copy=False, default='new')
-    
-    #function
-    def action_accept_offer(self):
-        self.state = 'offer_accepted'
-    def action_cancel(self):
-             if self.state == 'sold':
-              raise UserError("A sold property cannot be canceled.")
-              self.state = 'canceled'
-
-    def action_sold(self):
-             if self.state == 'canceled':
-              raise UserError("A canceled property cannot be sold.")
-              self.state = 'sold'
+      
     # Computed fields
     total_area = fields.Float(compute="_compute_total_area")
     best_offer = fields.Float(compute="_compute_best_offer")
-
-
     # Relations
     offer_ids = fields.One2many('estate.property.offer', 'property_id', string='Offers')
     property_type_id = fields.Many2one('estate.property.type', string='Property Type', ondelete='cascade')  
@@ -70,7 +56,23 @@ class EstateProperty(models.Model):
     salesperson_id = fields.Many2one('res.users', string='Salesperson', default=lambda self: self.env.user)  # represent vendedor
     tag_ids = fields.Many2many('estate.property.tag', string='Tags')
     user_id = fields.Many2one('res.users', default=lambda self: self.env.user, string='User') # reprenst comprador
-    
+    invoice_id = fields.Many2one('account.move', string='Invoice')
+
+ 
+    # function
+    def action_sold(self):
+        if self.state == 'canceled':
+            raise UserError("A canceled property cannot be sold.")
+        self.state = 'sold'
+    def action_accept_offer(self):
+        self.state = 'offer_accepted'
+    def action_offer_received(self):
+        self.state = 'offer_received'
+    def action_cancel(self):
+        if self.state == 'sold':
+            raise UserError("A sold property cannot be canceled.")
+        self.state = 'canceled'
+
     # camp Compute
     @api.depends('living_area', 'garden_area')  # This decorator specifies the field dependencies for the compute method.
     def _compute_total_area(self):
@@ -92,7 +94,6 @@ class EstateProperty(models.Model):
         else:
             self.garden_area = 0.0
             self.garden_orientation = False
-   
     @api.model
     def _get_report_filename(self, base_report_name):
      report_date = datetime.now().strftime('%Y_%m_%d_%H_%M_%S_%f')
