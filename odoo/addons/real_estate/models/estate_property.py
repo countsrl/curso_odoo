@@ -56,7 +56,7 @@ class EstateProperty(models.Model):
     salesperson_id = fields.Many2one('res.users', string='Salesperson', default=lambda self: self.env.user)  # represent vendedor
     tag_ids = fields.Many2many('estate.property.tag', string='Tags')
     user_id = fields.Many2one('res.users', default=lambda self: self.env.user, string='User') # reprenst comprador
-    invoice_id = fields.Many2one('account.move', string='Invoice')
+    
 
  
     # function
@@ -94,10 +94,4 @@ class EstateProperty(models.Model):
         else:
             self.garden_area = 0.0
             self.garden_orientation = False
-    @api.model
-    def _get_report_filename(self, base_report_name):
-     report_date = datetime.now().strftime('%Y_%m_%d_%H_%M_%S_%f')
-     report_name = "%s_%s_id%s" % (base_report_name, report_date, str(self.id))
-     return report_name
- 
-                  
+   
