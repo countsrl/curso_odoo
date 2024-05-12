@@ -9,7 +9,7 @@
     'description': 'Real Estate Manageme',
     'depends': ['real_estate', 'account'], # Dependencia con el módulo de Real Estate
     'data': [
-    'views/estate_account_report.xml',
-    'views/estate_property_views.xml',
+    #'views/estate_account_report.xml',
+    
     ],
 }

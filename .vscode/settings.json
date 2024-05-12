@@ -13,5 +13,11 @@
         "./odoo/odoo-17.0",
         "./odoo/odoo-17.0/odoo-17.0"
     ],
-    "python.analysis.autoImportCompletions": true
+    "python.analysis.autoImportCompletions": true,
+    "CodeGPT.apiKey": "CodeGPT Plus Beta",
+    "CodeGPT.query.language": "Spanish",
+    "CodeGPT.Autocomplete.enabled": false,
+    "CodeGPT.Autocomplete.provider": "CodeGPT Plus - Plus",
+    "CodeGPT.Autocomplete.suggestionDelay": 2000,
+    "CodeGPT.Autocomplete.maxTokens": 710
 }
