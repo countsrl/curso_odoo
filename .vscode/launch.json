@@ -6,19 +6,19 @@
           
           
             {
-                "name": "Odoo17",
+                "name": "Python: Attach",
                 "type": "debugpy",
                 "request": "attach",
-                               "connect": {
+                "connect": {
                     "host": "localhost",
                     "port": 5678
                 },
                 "pathMappings": [
                     {
-                        "localRoot": "C:\\Users\\jasna\\OneDrive\\Documents\\mis cosas\\Curso de odoo\\Area_Trbj\\odoo",
-                        "remoteRoot": "/mnt/extra-addons"
+                        "localRoot": "C:\\Users\\jasna\\OneDrive\\Documents\\mis cosas\\Curso de odoo\\Area_Trbj",
+                        "remoteRoot": "/mnt/addons"
                     }
                 ]
-            },
+            }
         ]
     }

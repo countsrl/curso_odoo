@@ -2,6 +2,7 @@ version: "3.7"
 services:
     odoo16:
         image: odoo:17
+        #image: my_odoo_debug:17
         platform: linux/amd64
         container_name: odoo17
         depends_on:
