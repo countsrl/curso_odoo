@@ -2,7 +2,8 @@ from odoo import models, fields, api
 from datetime import timedelta, date
 from datetime import datetime
 from odoo.exceptions import UserError
-
+import logging
+_logger = logging.getLogger(__name__)
 class EstateProperty(models.Model):
     _name = 'estate.property'
     _description = 'Estate Property'
@@ -56,14 +57,22 @@ class EstateProperty(models.Model):
     salesperson_id = fields.Many2one('res.users', string='Salesperson', default=lambda self: self.env.user)  # represent vendedor
     tag_ids = fields.Many2many('estate.property.tag', string='Tags')
     user_id = fields.Many2one('res.users', default=lambda self: self.env.user, string='User') # reprenst comprador
-    
-
  
     # function
+  
     def action_sold(self):
-        if self.state == 'canceled':
-            raise UserError("A canceled property cannot be sold.")
-        self.state = 'sold'
+        pass
+       # _logger.debug(f"Estado de la propiedad antes de vender: {self.state}")
+        #if self.state == 'offer_accepted':
+           # self.state = 'sold'
+        #else:
+            #raise UserError("Onlyj properties with 'Offer Accepted' state can be sold.")
+    #def action_sold(self):
+        #for prop in self:
+            #if prop.state == 'sold':
+                #continue  # Evita cambiar el estado si ya está vendido
+            #if prop.state != 'offer_accepted':
+                #raise UserError("Only properties with 'Offer Accepted' state can be sold.")
     def action_accept_offer(self):
         self.state = 'offer_accepted'
     def action_offer_received(self):
