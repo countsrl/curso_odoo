@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="real_estate.website_layout_inherit" inherit_id="website.layout">
+        <xpath expr="//header" position="after">
+            <t t-if="show_property_offers" t-call="real_estate.report_property_offers" />
+            <t t-if="show_all_properties" t-call="real_estate.report_all_properties"/>
+        </xpath>
+    </template>
+</odoo>

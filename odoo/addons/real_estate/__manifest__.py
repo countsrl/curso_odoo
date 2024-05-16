@@ -6,7 +6,7 @@
     'version': '1.0',
     'license': 'AGPL-3',
     'description': 'Manage properties for sale and for rent.',
-    'depends': ['base'],
+    'depends': ['base','website'],
     'data': [
         'security/ir.model.access.csv',
    
@@ -19,7 +19,8 @@
              'report/estate_property_templates.xml',
              'report/estate_property_reports.xml',
              'views/assets.xml',
-
+             'views/website_layout_inherit.xml',
+             
        
     ],
 }

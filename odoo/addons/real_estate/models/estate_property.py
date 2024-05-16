@@ -56,15 +56,14 @@ class EstateProperty(models.Model):
     buyer_id = fields.Many2one('res.partner', string='Buyer', copy=False)  
     salesperson_id = fields.Many2one('res.users', string='Salesperson', default=lambda self: self.env.user)  # represent vendedor
     tag_ids = fields.Many2many('estate.property.tag', string='Tags')
-    user_id = fields.Many2one('res.users', default=lambda self: self.env.user, string='User') # reprenst comprador
+    user_id = fields.Many2one('res.users', default=lambda self: self.env.user, string='User') 
  
     # function
-  
     def action_sold(self):
         pass
-       # _logger.debug(f"Estado de la propiedad antes de vender: {self.state}")
+        _logger.debug(f"Estado de la propiedad antes de vender: {self.state}")
         #if self.state == 'offer_accepted':
-           # self.state = 'sold'
+            #self.state = 'sold'
         #else:
             #raise UserError("Onlyj properties with 'Offer Accepted' state can be sold.")
     #def action_sold(self):
