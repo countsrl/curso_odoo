@@ -14,7 +14,7 @@
     'version': '1.0',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'product'],
+    'depends': ['base', 'product', 'website'],
 
     # always loaded
     'data': [
@@ -26,6 +26,7 @@
         'security/security.xml',
         'reports/estate_property_templates.xml',
         'reports/estate_property_reports.xml',
+        'views/list_properties.xml',
     ],
 
     # only loaded in demonstration mode

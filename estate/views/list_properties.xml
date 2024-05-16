@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="request_list" name="Properties List">
+            <t t-call="website.layout">
+                <div id="wrap">
+                    <div class="oe_structure">
+                        <div class="container">
+                            <h1 class="my-4" data-traslate="true">Properties List</h1>
+                            <div class="row">
+                                <div class="col-12">
+                                    <table id="datatable" class="table table-striped table-bordered"
+                                           cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th data-traslate="true">Name</th>
+                                                <th data-traslate="true">Expected Price</th>
+                                                <th data-traslate="true">Selling Price</th>
+                                                <th data-traslate="true">Status</th>
+                                                <th data-traslate="true">Property Type</th>
+                                            </tr>
+                                        </thead>
+                                        <t t-foreach="list_properties" t-as="properties">
+                                            <tr>
+                                                <td t-att-value="properties.id">
+                                                    <t t-esc="properties.name" t-att-value="properties.id"/>
+                                                </td>
+                                                <td t-att-value="properties.id">
+                                                    <t t-esc="properties.price_exp" t-att-value="properties.id"/>
+                                                </td>
+                                                <td t-att-value="properties.id">
+                                                    <t t-esc="properties.sale_price" t-att-value="properties.id"/>
+                                                </td>
+                                                <td t-att-value="properties.id">
+                                                    <t t-if="properties.state == 'nuevo'">
+                                                        Nuevo
+                                                    </t>
+                                                    <t t-if="properties.state == 'oferta_rec'">
+                                                        Oferta Recibida
+                                                    </t>
+                                                    <t t-if="properties.state == 'oferta_acep'">
+                                                        Oferta Aceptada
+                                                    </t>
+                                                    <t t-if="properties.state == 'vendido'">
+                                                        Vendido
+                                                    </t>
+                                                    <t t-if="properties.state == 'cancelado'">
+                                                        Cancelado
+                                                    </t>
+                                                </td>
+                                                <td t-att-value="properties.id">
+                                                    <t t-esc="properties.property_type_id.name" t-att-value="properties.id"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

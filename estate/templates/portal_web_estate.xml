@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="request_list" name="Properties">
+            <t t-call="website.layout">
+                <div id="wrap">
+                <div class="oe_structure">
+                    <div class="container">
+                        <div class="col-12">
+                            <table id="datatable" class="table table-striped table-bordered"
+                                   cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th data-traslate="true">Name</th>
+                                        <th data-traslate="true">Expected Price</th>
+                                        <th data-traslate="true">State</th>
+                                        <th id="action"></th>
+                                    </tr>
+                                </thead>
+                                <t t-foreach="list_values" t-as="value">
+                                    <tr>
+                                        <td t-att-value="value.id">
+                                            <t t-esc="value.name" t-att-value="value.id"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </table>
+
+
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>
