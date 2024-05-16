@@ -26,7 +26,7 @@
         'security/security.xml',
         'reports/estate_property_templates.xml',
         'reports/estate_property_reports.xml',
-        'views/list_properties.xml',
+        'templates/portal_web_estate.xml',
     ],
 
     # only loaded in demonstration mode
