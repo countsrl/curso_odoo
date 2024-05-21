@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="pga" model="room.property.tags">
+            <field name="name">Parking Gratis en Alojamiento</field>
+        </record>
+
+        <record id="view" model="room.property.tags">
+            <field name="name">Vistas</field>
+        </record>
+
+        <record id="wifi" model="room.property.tags">
+            <field name="name">Wifi Gratis</field>
+        </record>
+
+        <record id="aire" model="room.property.tags">
+            <field name="name">Aire Acondicionado</field>
+        </record>
+
+        <record id="tv" model="room.property.tags">
+            <field name="name">Television de Pantalla Plana</field>
+        </record>
+
+        <record id="calefaccion" model="room.property.tags">
+            <field name="name">Calefaccion</field>
+        </record>
+
+        <record id="jardin" model="room.property.tags">
+            <field name="name">Jardin</field>
+        </record>
+
+    </data>
+</odoo>

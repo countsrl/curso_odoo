@@ -14,11 +14,15 @@
     'version': '1.0',
 
     # any module necessary for this one to work correctly
-    'depends': ['website'],
+    'depends': ['base', 'website'],
 
     # always loaded
     'data': [
+        'views/hostal_menus.xml',
 
+        'views/room_property_tags.xml',
+        'data/tags_data.xml',
+        'security/security.xml',
     ],
 
     # only loaded in demonstration mode

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="room_property_tags_tree_view" model="ir.ui.view">
+            <field name="name">room.room_property.tags.tree</field>
+            <field name="model">room.property.tags</field>
+            <field name="arch" type="xml">
+                <tree editable="top">
+                    <field name="name"/>
+                    <field name="color"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="room_property_tags_act_window" model="ir.actions.act_window">
+            <field name="name">Room Property Tags</field>
+            <field name="res_model">room.property.tags</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+    </data>
+</odoo>
