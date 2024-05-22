@@ -1,1 +1,1 @@
-from . import hostel_management
+from . import reservation

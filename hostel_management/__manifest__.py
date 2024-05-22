@@ -24,8 +24,8 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
+        'views/reservations.xml',
         'views/hostel_menu.xml',
-        'views/hostel_management_view.xml',
 
     ]
 }
