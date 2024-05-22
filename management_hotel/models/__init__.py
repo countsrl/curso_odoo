@@ -1,1 +1,0 @@
-from . import room_property_tags

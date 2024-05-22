@@ -1,0 +1,7 @@
+<odoo>
+    <data>
+        <menuitem name="Hostel Management" id="hostel_id">
+            <menuitem name="Reservations" id="reservations_id" action="hostel_management_action_window"/>
+        </menuitem>
+    </data>
+</odoo>

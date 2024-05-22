@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<odoo>
-    <data>
-
-        <menuitem id="management_hotel.hostal_menu_root" name="Hostal"/>
-        <menuitem id="room_property_tags_menu" parent="management_hotel.hostal_menu_root"
-                  action="room_property_tags_act_window" name="Room Property Tags"/>
-    </data>
-</odoo>
