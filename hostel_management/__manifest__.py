@@ -24,11 +24,12 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
-        'data/reservation_sequence_data.xml',
-        'data/room_sequence_data.xml',
-        'views/room_characteristics.xml',
-        'views/room.xml',
+        # 'data/reservation_sequence_data.xml',
+        # 'data/room_sequence_data.xml',
+        # 'views/room_characteristics.xml',
+        # 'views/room.xml',
         'views/reservations.xml',
+        'views/hostel_services.xml',
         'views/hostel_menu.xml',
 
     ]

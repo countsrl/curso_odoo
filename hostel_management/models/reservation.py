@@ -6,13 +6,20 @@ from odoo import fields, models, api, _
 class Reservations(models.Model):
     _name = 'reservation'
 
-    no_reservation = fields.Char('Reservation No', required=True)
-    # room_type = fields.Selection('Room Type', required=True)
+    id_reservation = fields.Char('Reservation ID', required=True)
+    client_id = fields.Many2one('res.partner', 'Client name', reuired=True)
+    room_no = fields.Integer('Room No.', required=True)
     init_date = fields.Date('Init Date', required=True)
     end_date = fields.Date('End Date', required=True)
-    # services = fields.Many2many()
-    # services_plus = fields.Many2many()
-    # states = fields.Selection()
+    number_nights = fields.Integer('Number of nights', required=True)
+    total_price = fields.Float('Total Price', required=True)
+    method_payment = fields.Selection(([('online_payment', 'Online Payment'), ('check', 'Check'), ('cash', 'Cash')]),
+                                      'Method of Payment', required=True)
+    notes = fields.Text('Notes')
+    service_ids = fields.Many2many('service')
+    states = fields.Selection(
+        ([('confirm', 'Confirm'), ('canceled', 'Canceled'), ('new', 'New'), ('finished', 'Finished')]), 'States',
+        default='new')
 
     @api.model
     def create(self, vals):

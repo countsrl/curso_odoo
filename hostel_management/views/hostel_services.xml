@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="service_tree_view" model="ir.ui.view">
+            <field name="name">service.tree</field>
+            <field name="model">service</field>
+            <field name="arch" type="xml">
+                <tree editable="top">
+                    <field name="name"/>
+                    <field name="color"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="management_services_act_window" model="ir.actions.act_window">
+            <field name="name">Hostel Services</field>
+            <field name="res_model">service</field>
+            <field name="view_mode">tree</field>
+        </record>
+    </data>
+</odoo>

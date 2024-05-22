@@ -10,4 +10,4 @@ class Room(models.Model):
     rooms_type = fields.Selection(
         [('private_B', 'Private room with bathroom'), ('private_cb', 'Private room with shared bathroom'),
          ('shared_b', 'Shared room with bathroom'), ('dormitory', 'Dormitory type room')], required=True)
-    rooms_characteristics = fields.Many2many('room.characteristics', '')
+    # rooms_characteristics = fields.Many2many('room.characteristics', )

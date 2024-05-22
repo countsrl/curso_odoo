@@ -7,13 +7,14 @@
             <field name="model">reservation</field>
             <field name="arch" type="xml">
                 <tree default_order="create_date desc">
-                    <field name="no_reservation"/>
-                    <!--                    <field name="room_type"/>-->
+                    <field name="id_reservation"/>
+                    <field name="client_id"/>
+                    <field name="room_no"/>
                     <field name="init_date"/>
                     <field name="end_date"/>
-                    <!--                    <field name="states"/>-->
-                    <!--                    <field name="service"/>-->
-                    <!--                    <field name="service_plus"/>-->
+                    <field name="total_price"/>
+                    <field name="method_payment"/>
+                    <field name="states"/>
                 </tree>
             </field>
         </record>
@@ -24,7 +25,9 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
-                        <!--                        <field name="states" widget="statusbar" readonly="1" force_save="1"/>-->
+                        <field name="states" widget="statusbar" readonly="1" force_save="1"/>
+                        <button name="action_cancelar" type="object" string="Cancelar"
+                                attrs="{'invisible': [('state', '!=', 'vendido')]}"/>
                     </header>
                     <sheet>
                         <div class="oe_title">
