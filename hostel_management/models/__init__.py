@@ -1,1 +1,1 @@
-from . import reservation
+from . import reservation, room, room_characteristics
