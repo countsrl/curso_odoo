@@ -19,7 +19,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'website', 'account', 'website'],
+    'depends': ['base', 'website', 'account', 'l10n_generic_coa'],
 
     # always loaded
     'data': [

@@ -22,9 +22,13 @@ class Reservations(models.Model):
     states = fields.Selection(([('new', 'New'), ('confirm', 'Confirm'),
                                 ('invoice', 'Invoice'), ('invoiced', 'Invoiced'), ('finished', 'Finished'),
                                 ('canceled', 'Canceled')]), 'States', default='new')
+    invoicer_no = fields.Char('Invoicer No')
 
     def action_cancelar(self):
         self.write({'states': 'canceled'})
+
+    def action_confirm(self):
+        self.write({'states': 'confirm'})
 
     def name_get(self):
         result = []
@@ -56,3 +60,18 @@ class Reservations(models.Model):
     def _onchange_dates(self):
         if self.init_date and self.end_date:
             self.number_nights = (self.end_date - self.init_date).days
+
+    def generate_invoice(self):
+        invoice = self.env['account.move'].create({
+            'customer_request': self.client_id.id
+        })
+
+        self.invoicer_no = invoice.id
+        return {
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'account.move',
+            'type': 'ir.actions.act_window',
+            'res_id': invoice.id,
+            'target': 'current',
+        }
