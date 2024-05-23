@@ -6,6 +6,7 @@ from odoo import fields, models, api, _
 class Reservations(models.Model):
     _name = 'reservation'
 
+    sequence = fields.Char(default=lambda self: _('New'))
     id_reservation = fields.Char('Reservation ID', required=True)
     client_id = fields.Many2one('res.partner', 'Client name', reuired=True)
     room_no = fields.Integer('Room No.', required=True)
@@ -18,16 +19,20 @@ class Reservations(models.Model):
     notes = fields.Text('Notes')
     service_ids = fields.Many2many('service')
     states = fields.Selection(
-        ([('confirm', 'Confirm'), ('canceled', 'Canceled'), ('new', 'New'), ('finished', 'Finished')]), 'States',
-        default='new')
+        ([('confirm', 'Confirm'), ('canceled', 'Canceled'), ('new', 'New'), ('finished', 'Finished'),
+          ('invoice', 'Invoice'), ('invoiced', 'Invoiced')]), 'States', default='new')
+
+    def action_cancelar(self):
+        self.write({'states': 'canceled'})
 
     @api.model
     def create(self, vals):
         request = super(Reservations, self).create(vals)
+
         if vals.get('sequence', _('New')) == _('New'):
-            # Generar un número de solicitud único
-            vals['sequence'] = self.env['ir.sequence'].next_by_code('reservation') or _('New')
+            vals['sequence'] = self.env['ir.sequence'].next_by_code('hostel_management.reservation.seq') or _('New')
             aux = 'R'
             date = datetime.now().year
-            request.no_reservation = '{0}-{1}/{2}'.format(aux, vals['sequence'], date)
+            request.id_reservation = '{0}-{1}/{2}'.format(aux, vals['sequence'], date)
+
         return super(Reservations, self).write(vals)

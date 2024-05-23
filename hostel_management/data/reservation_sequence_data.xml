@@ -3,8 +3,7 @@
     <data>
         <record id="sequence_reservation" model="ir.sequence">
             <field name="name">Reservation Sequence</field>
-            <field name="code">reservation</field>
-            <field name="prefix">R</field>
+            <field name="code">hostel_management.reservation.seq</field>
             <field name="padding">4</field>
         </record>
     </data>
