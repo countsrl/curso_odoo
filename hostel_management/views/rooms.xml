@@ -2,5 +2,58 @@
 <odoo>
     <data>
 
+        <record model="ir.ui.view" id="room_list">
+            <field name="name">rooms list</field>
+            <field name="model">room</field>
+            <field name="arch" type="xml">
+                <tree default_order="create_date desc">
+                    <field name="rooms_no"/>
+                    <field name="rooms_type"/>
+                    <field name="capacity"/>
+                    <field name="price"/>
+                    <field name="states"/>
+                    <field name="floor"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="room_form">
+            <field name="name">rooms form</field>
+            <field name="model">room</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <field name="states" widget="statusbar" readonly="1" force_save="1"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="rooms_no" class="oe_edit_only"/>
+                            <h1>
+                                <field name="rooms_no"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="rooms_type"/>
+                                <field name="capacity"/>
+                                <field name="price"/>
+                                <field name="floor"/>
+                            </group>
+
+                            <group>
+                                <field name="description"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="management_rooms_action_window">
+            <field name="name">Rooms</field>
+            <field name="res_model">room</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
     </data>
 </odoo>

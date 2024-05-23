@@ -9,7 +9,7 @@ class Reservations(models.Model):
     sequence = fields.Char(string='Sequence')
     id_reservation = fields.Char('Reservation ID', default=lambda self: _('New'), readonly=True)
     client_id = fields.Many2one('res.partner', 'Client name', reuired=True)
-    room_no = fields.Integer('Room No.', required=True)
+    room_no = fields.Many2one('room', 'Room No.', required=True)
     init_date = fields.Date('Init Date', required=True)
     end_date = fields.Date('End Date', required=True)
     number_nights = fields.Integer('Number of nights', required=True)

@@ -3,7 +3,7 @@
         <menuitem name="Hostel Management" id="hostel_id">
             <menuitem name="Reservations" id="reservations_id" action="reservation_action_window"/>
             <menuitem name="Settings" id="settings_id">
-<!--                <menuitem name="Rooms" id="rooms_id" action="management_rooms_action_window"/>-->
+                <menuitem name="Rooms" id="rooms_id" action="management_rooms_action_window"/>
                 <menuitem name="Hostel Services" id="services_id" action="management_services_act_window"/>
             </menuitem>
         </menuitem>

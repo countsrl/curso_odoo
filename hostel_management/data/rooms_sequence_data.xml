@@ -4,7 +4,6 @@
         <record id="sequence_rooms" model="ir.sequence">
             <field name="name">Rooms Sequence</field>
             <field name="code">room</field>
-            <field name="prefix"></field>
             <field name="padding">2</field>
         </record>
     </data>
