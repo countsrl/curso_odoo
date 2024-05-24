@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id="request_list_reservation" name="Listado de Reservas">
+            <t t-call="website.layout">
+                <div id="wrap">
+                    <div class="oe_structure">
+                        <div class="container">
+                            <h1 class="my-4" data-traslate="true">Listado mis Reservas</h1>
+                            <div class="row">
+                                <div class="col-12">
+                                    <table id="datatable" class="table table-striped table-bordered"
+                                           cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th data-traslate="true">Reservation ID</th>
+                                                <th data-traslate="true">Room No.</th>
+                                                <th data-traslate="true">Init Date</th>
+                                                <th data-traslate="true">End Date</th>
+                                                <th data-traslate="true">Number of nights</th>
+                                                <th data-traslate="true">States</th>
+                                                <th id="action"></th>
+                                            </tr>
+                                        </thead>
+                                        <t t-foreach="list_reservations" t-as="reservations">
+                                            <tr>
+                                                <td t-att-value="reservations.id">
+                                                    <t t-esc="reservations.id_reservation"
+                                                       t-att-value="reservations.id"/>
+                                                </td>
+                                                <td t-att-value="reservations.id">
+                                                    <t t-esc="reservations.room_no.id"
+                                                       t-att-value="reservations.id"/>
+                                                </td>
+                                                <td t-att-value="reservations.id">
+                                                    <t t-esc="reservations.init_date"
+                                                       t-att-value="reservations.id"/>
+                                                </td>
+
+                                                <td t-att-value="reservations.id">
+                                                    <t t-esc="reservations.end_date"
+                                                       t-att-value="reservations.id"/>
+                                                </td>
+                                                <td t-att-value="reservations.id">
+                                                    <t t-esc="reservations.number_nights"
+                                                       t-att-value="reservations.id"/>
+                                                </td>
+
+                                                <td t-att-value="reservations.id">
+                                                    <t t-if="reservations.states == 'new'">
+                                                        New
+                                                    </t>
+                                                    <t t-if="reservations.states == 'confirm'">
+                                                        Confirm
+                                                    </t>
+                                                    <t t-if="reservations.states == 'invoice'">
+                                                        Invoice
+                                                    </t>
+
+                                                    <t t-if="reservations.states == 'invoiced'">
+                                                        Invoiced
+                                                    </t>
+                                                    <t t-if="reservations.states == 'finished'">
+                                                        Finished
+                                                    </t>
+                                                    <t t-if="reservations.states == 'canceled'">
+                                                        Canceled
+                                                    </t>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

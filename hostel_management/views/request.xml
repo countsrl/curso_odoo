@@ -10,7 +10,7 @@
 
         <record id="website_menu_reservation" model="website.menu">
             <field name="name">Reservations</field>
-            <field name="url">reservations</field>
+            <field name="url">list/reservations</field>
             <field name="parent_id" search="[('parent_id', '=', False), ('website_id', '=', 1)]"/>
             <field name="sequence" type="int">20</field>
         </record>

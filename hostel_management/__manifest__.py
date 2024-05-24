@@ -34,6 +34,6 @@
         'views/hostel_menu.xml',
         'views/request.xml',
         'views/list_availability.xml',
-        'views/list_reservation.xml',
+        'views/list_reservations.xml',
     ]
 }

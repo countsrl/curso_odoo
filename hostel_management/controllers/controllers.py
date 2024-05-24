@@ -12,3 +12,14 @@ class Request(http.Controller):
         }
 
         return http.request.render('hostel_management.request_list', values)
+
+    @http.route(['/list/reservations'], type="http", auth="user", website=True)
+    def list_reservations(self):
+        user = request.env.user.partner_id.id
+        reservations = request.env['reservation'].search([('client_id', '=', user)])
+
+        values = {
+            'list_reservations': reservations,
+        }
+
+        return http.request.render('hostel_management.request_list_reservation', values)
