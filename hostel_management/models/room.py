@@ -13,7 +13,7 @@ class Room(models.Model):
          ('shared_b', 'Shared room with bathroom'), ('dormitory', 'Dormitory type room'), ('simple', 'Simple'),
          ('doble', 'Doble')])
     capacity = fields.Integer('Capacity', required=True)
-    price = fields.Float('Price', required=True)
+    price = fields.Float('Price', required=True, compute='_compute_price')
     states = fields.Selection(
         [('disponible', 'Disponible'), ('ocupada', 'Ocupada'), ('mantenimiento', 'En mantenimiento')], 'States',
         default='disponible')
@@ -37,3 +37,15 @@ class Room(models.Model):
 
         request.write(vals)
         return request
+
+    @api.depends('capacity', 'rooms_type', 'floor')
+    def _compute_price(self):
+        for record in self:
+            if record.rooms_type == 'private_B':
+                record.price = record.capacity * 50 * 30
+            elif int(record.floor) > 1 and record.rooms_type == 'private_B':
+                record.price = record.capacity * 50 * 30 + int(record.floor) * 10
+            elif int(record.floor) > 1:
+                record.price = record.capacity * 50 + int(record.floor) * 10
+            else:
+                record.price = record.capacity * 50

@@ -80,3 +80,9 @@ class Reservations(models.Model):
     def _onchange_states_room(self):
         if self.room_no:
             self.room_no.states = 'ocupada'
+
+    @api.constrains('total_price')
+    def check_total_price(self):
+        for rec in self:
+            if rec.total_price <= 0:
+                raise ValidationError('El precio de la reserva debe ser mayor que 0')
