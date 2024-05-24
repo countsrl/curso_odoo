@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- View hostal_services View Tree -->
+    <record id="view_hostal_services_tree" model="ir.ui.view">
+        <field name="name">view.hostal_services.tree</field>
+        <field name="model">hostal.services</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="description"/>                                       
+                <field name="type_services"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- View hostal_services form -->
+    <record id="view_hostal_services_form" model="ir.ui.view">
+        <field name="name">view.hostal_services.form</field>
+        <field name="model">hostal.services</field>
+        <field name="arch" type="xml">
+            <form string="Hostal_services">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="Name..."/>
+                        </h1>
+                        <field name="description"/>                                       
+                        <field name="type_services"/> 
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- View hostal_services search -->
+    <record id="view_hostal_services_search" model="ir.ui.view">
+        <field name="name">view.hostal_services.search</field>
+        <field name="model">hostal.services</field>
+        <field name="arch" type="xml">
+            <search>
+                <group expand="1" string="Group By">
+                    <filter string="Name" name="name" domain="[]" context="{'group_by':'name'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action hostal_services -->
+    <record id="action_hostal_services" model="ir.actions.act_window">
+        <field name="name">Hostal_services</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hostal.services</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                There is no examples click here to add new Hostal_services.
+            </p>
+        </field>
+    </record>
+
+</odoo>

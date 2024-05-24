@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <!--  Declaramos los menu --> 
+    <menuitem id="menu_hostal" name="Hostal" sequence="10"/> 
+    <menuitem id="submenu_hostal" name="Mi Hostal" sequence="10" parent="menu_hostal"/> 
+    <menuitem id="submenu_hostal_action" name="Hostal" sequence="10" parent="submenu_hostal" action="action_hostal"/> 
+    <menuitem id="submenu_room_action" name="Habitaciones" sequence="11" parent="submenu_hostal" action="action_hostal_room"/>
+    <menuitem id="submenu_reserva" name="Mis Reservas" sequence="12" parent="menu_hostal" action="action_room_reservation"/>
+    <menuitem id="submenu_room_type" name="Clasificacion" sequence="14" parent="menu_hostal" action="action_hostal_room_type"/>
+    <menuitem id="submenu_search-wizard" name="Buscar" sequence="15" parent="menu_hostal" action="action_room_reservation_wizard"/>
+  
+   
+   
+
+</odoo>
+    
+    
+
+

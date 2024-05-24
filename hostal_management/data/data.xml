@@ -1,0 +1,25 @@
+
+<odoo>
+    <record id="email_template_payment_confirmation" model="mail.template">
+        <field name="name">Payment Confirmation</field>
+        <field name="model_id" ref="model_room_reservation"/>
+        <field name="subject">Payment Confirmation - ${object.name}</field>
+        <field name="email_from">${(object.user_id.email or user.email)|safe}</field>
+        <field name="email_to">${object.customer_id.email|safe}</field>
+        <field name="body_html" type="html">
+            <div>
+                <p>Dear <t t-out="object.customer_id.name or ''"/>,</p>
+                <p>Your payment for reservation <t t-out="object.name"/> has been received.</p>
+                <p><strong>Payment Details:</strong></p>
+                <ul>
+                    <li><strong>Reservation Reference:</strong> <t t-out="object.name"/></li>
+                  
+                    <li><strong>Payment Status:</strong> Paid</li>
+                    <li><strong>Amount Paid:</strong> <t t-out="object.total_price"/></li>
+                </ul>
+                <p>Thank you for choosing our hostal!</p>
+            </div>
+            
+        </field>
+    </record>
+</odoo>
