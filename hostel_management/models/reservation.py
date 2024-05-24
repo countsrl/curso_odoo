@@ -10,7 +10,7 @@ class Reservations(models.Model):
     sequence = fields.Char(string='Sequence')
     id_reservation = fields.Char('Reservation ID', default=lambda self: _('New'), readonly=True)
     client_id = fields.Many2one('res.partner', 'Client name', reuired=True)
-    room_no = fields.Many2one('room', 'Room No.', required=True)
+    room_no = fields.Many2one('room', 'Room No.', required=True, domain=[('states', '=', 'disponible')])
     init_date = fields.Date('Init Date', required=True, default=lambda self: fields.Date.context_today(self))
     end_date = fields.Date('End Date', required=True)
     number_nights = fields.Integer('Number of nights', required=True, computed='_onchange_dates')
@@ -22,7 +22,7 @@ class Reservations(models.Model):
     states = fields.Selection(([('new', 'New'), ('confirm', 'Confirm'),
                                 ('invoice', 'Invoice'), ('invoiced', 'Invoiced'), ('finished', 'Finished'),
                                 ('canceled', 'Canceled')]), 'States', default='new')
-    invoicer_no = fields.Char('Invoicer No')
+    invoicer_no = fields.Char('Invoicer No', readonly=True)
 
     def action_cancelar(self):
         self.write({'states': 'canceled'})
@@ -75,3 +75,8 @@ class Reservations(models.Model):
             'res_id': invoice.id,
             'target': 'current',
         }
+
+    @api.onchange('room_no')
+    def _onchange_states_room(self):
+        if self.room_no:
+            self.room_no.states = 'ocupada'
