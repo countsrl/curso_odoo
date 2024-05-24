@@ -67,6 +67,36 @@
                                                         Canceled
                                                     </t>
                                                 </td>
+                                                <td t-att-value="reservations.id">
+                                                    <t>
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <t t-if="reservations.states == 'new'">
+                                                                    <a class="mx-1"
+                                                                       t-attf-href="/request?parameter={{reservations.id }}">
+                                                                        <i class="fa fa-pencil-square-o"></i>
+                                                                    </a>
+                                                                    <a t-attf-href="/delete?parameter={{ reservations.id }}">
+                                                                        <i class="fa fa-trash"></i>
+                                                                    </a>
+                                                                </t>
+                                                                <t t-if="reservations.states != 'new'">
+                                                                    <a class="mx-1"
+                                                                       t-attf-href="/view_service?parameter={{ reservations.id }}">
+                                                                        <i class="fa fa-search"></i>
+                                                                    </a>
+                                                                </t>
+                                                                <t t-if="reservations.states not in ['finished', 'canceled']">
+                                                                    <a t-attf-href="/cancel?parameter={{ reservations.id }}">
+                                                                        <i class="fa fa-close"></i>
+                                                                    </a>
+                                                                </t>
+                                                            </div>
+                                                        </div>
+                                                    </t>
+
+                                                </td>
+
                                             </tr>
                                         </t>
                                     </table>
