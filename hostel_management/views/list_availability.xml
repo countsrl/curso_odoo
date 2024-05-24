@@ -25,7 +25,6 @@
                                                 <th data-traslate="true">Price</th>
                                                 <th data-traslate="true">Floor</th>
                                                 <th data-traslate="true">States</th>
-                                                <th id="action"></th>
                                             </tr>
                                         </thead>
                                         <t t-foreach="list_rooms" t-as="available_rooms">
@@ -66,112 +65,15 @@
                                                     <t t-esc="available_rooms.floor"
                                                        t-att-value="available_rooms.id"/>
                                                 </td>
-                                                <td t-att-value="service.id">
-                                                    <t t-if="service.service_are == 'servic_l' or service.service_are == 'servic_t'">
-                                                        <t t-if="service.states == 'draft'">
-                                                            <span class="badge badge-secondary">Borrador</span>
-                                                        </t>
-                                                        <t t-if="service.states == 'new'">
-                                                            <span class="badge badge-primary">Nueva solicitud</span>
-                                                        </t>
-                                                        <t t-if="service.states == 'to_quote'">
-                                                            <span class="badge badge-secondary">A cotizar</span>
-                                                        </t>
-                                                        <t t-if="service.states == 'quoted'">
-                                                            <span class="badge badge-secondary">Cotizado</span>
-                                                        </t>
-                                                        <t t-if="service.states == 'required'">
-                                                            <span class="badge badge-secondary">Solicitado</span>
-                                                        </t>
-                                                        <t t-if="service.states == 'in_progress'">
-                                                            <span class="badge badge-info">En Proceso</span>
-                                                        </t>
-                                                        <t t-if="service.states == 'finished'">
-                                                            <span class="badge badge-success">Terminado</span>
-                                                        </t>
-                                                        <t t-if="service.states == 'cancelled'">
-                                                            <span class="badge badge-danger">Cancelado</span>
-                                                        </t>
-                                                    </t>
-                                                    <t t-if="service.service_are == 'servic_a'">
-                                                        <t t-if="service.states1 == 'required'">
-                                                            <span class="badge badge-secondary">Solicitado</span>
-                                                        </t>
-                                                        <t t-if="service.states1 == 'in_review'">
-                                                            <span class="badge badge-info">En revisión</span>
-                                                        </t>
-                                                        <t t-if="service.states1 == 'accepted'">
-                                                            <span class="badge badge-info">Aceptado</span>
-                                                        </t>
-                                                        <t t-if="service.states1 == 'refused'">
-                                                            <span class="badge badge-danger">Rechazado</span>
-                                                        </t>
-                                                        <t t-if="service.states1 == 'finished'">
-                                                            <span class="badge badge-success">Terminado</span>
-                                                        </t>
-                                                        <t t-if="service.states1 == 'cancelled'">
-                                                            <span class="badge badge-danger">Cancelado</span>
-                                                        </t>
-                                                    </t>
-                                                </td>
-                                                <td t-att-value="service.id">
-                                                    <t t-if="service.service_are == 'servic_l' or service.service_are == 'servic_t'">
-                                                        <div class="row">
-                                                            <div class="col" t-if="service.states == 'draft'">
-                                                                <a class="mx-1"
-                                                                   t-attf-href="/request?parameter={{ service.id }}">
-                                                                    <i class="fa fa-pencil-square-o"></i>
-                                                                </a>
-                                                                <a t-attf-href="/delete?parameter={{ service.id }}">
-                                                                    <i class="fa fa-trash"></i>
-                                                                </a>
-                                                            </div>
-                                                            <div class="col" t-if="service.states != 'draft'">
-                                                                <a class="mx-1"
-                                                                   t-attf-href="/view_service?parameter={{ service.id }}">
-                                                                    <i class="fa fa-search"></i>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </t>
-                                                    <t t-if="service.service_are == 'servic_a'">
-                                                        <div class="row">
-                                                            <div class="col">
-                                                                <t t-if="service.states1 == 'required'">
-                                                                    <a class="mx-1"
-                                                                       t-attf-href="/request?parameter={{ service.id }}">
-                                                                        <i class="fa fa-pencil-square-o"></i>
-                                                                    </a>
-                                                                    <a t-attf-href="/delete?parameter={{ service.id }}">
-                                                                        <i class="fa fa-trash"></i>
-                                                                    </a>
-                                                                </t>
-                                                                <t t-if="service.states1 != 'required'">
-                                                                    <a class="mx-1"
-                                                                       t-attf-href="/view_service?parameter={{ service.id }}">
-                                                                        <i class="fa fa-search"></i>
-                                                                    </a>
-                                                                </t>
-                                                                <t t-if="service.states1 not in ['refused', 'finished', 'cancelled']">
-                                                                    <a t-attf-href="/cancel?parameter={{ service.id }}">
-                                                                        <i class="fa fa-close"></i>
-                                                                    </a>
-                                                                </t>
-                                                            </div>
-                                                        </div>
+                                                <td t-att-value="available_rooms.id">
+                                                    <t t-if="available_rooms.states == 'disponible'">
+                                                        <span>Disponible</span>
                                                     </t>
                                                 </td>
                                             </tr>
                                         </t>
                                     </table>
-                                    <div t-if="total == 0" style="text-align: center;">
-                                        <h5>No existen registros que se correspondan con el criterio buscado</h5>
-                                    </div>
-                                    <br/>
-                                    <div t-if="pager" class="o_portal_pager text-center">
-                                        <t t-call="portal.pager"/>
-                                    </div>
-                                    <br/>
+
                                 </div>
                             </div>
                         </div>
