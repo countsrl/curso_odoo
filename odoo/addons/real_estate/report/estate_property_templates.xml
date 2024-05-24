@@ -63,10 +63,14 @@
                             <t t-call="real_estate.report_property_offers_table" />
                         </t>
                         <t t-else="">
-                            <p>No hay ofertas para esta propiedad.</p>
+                            <div class="alert alert-success" role="alert">
+                            No hay ofertas para esta propiedad.
+                        </div>
                         </t>
                         <t t-if="property.state == 'sold'">
-                            <p>Esta propiedad ha sido vendida y la factura ha sido creada.</p>
+                            <div class="alert alert-success" role="alert">
+                            Esta propiedad ha sido vendida y la factura ha sido creada
+                            </div>
                         </t>
                     </main>
                     <!--<t t-esc="docs"/>-->

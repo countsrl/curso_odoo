@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_report_info_client" model="ir.actions.report">
+        <field name="name">Info Client</field>
+        <field name="model">hostel.client</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hostel_management.report_hostel_client</field>
+        <field name="report_file">hostel_management.report_hostel_client</field>
+        <field name="binding_model_id" ref="model_hostel_client" />
+    </record>
+    <record id="action_report_all_client" model="ir.actions.report">
+        <field name="name">All Clients</field>
+        <field name="model">hostel.client</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hostel_management.report_all_client</field>
+        <field name="report_file">hostel_management.report_all_client</field>
+        <field name="binding_model_id" ref="model_hostel_client" />
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="action_report_list_guest" model="ir.actions.report">
+        <field name="name">List Guest</field>
+        <field name="model">hostel.guest</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hostel_management.report_hostel_guest</field>
+        <field name="report_file">hostel_management.report_hostel_guest</field>
+        <field name="binding_model_id" ref="model_hostel_guest" />
+    </record>
+
+    <record id="action_report_list_room" model="ir.actions.report">
+        <field name="name">Info Rooms</field>
+        <field name="model">hostel.room</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hostel_management.report_hostel_room</field>
+        <field name="report_file">hostel_management.report_hostel_room</field>
+        <field name="binding_model_id" ref="model_hostel_room" />
+    </record>
+
+    <record id="action_report_list_reservation" model="ir.actions.report">
+        <field name="name">Reservation</field>
+        <field name="model">hostel.reservation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hostel_management.report_hostel_reservation</field>
+        <field name="report_file">hostel_management.report_hostel_reservation</field>
+        <field name="binding_model_id" ref="model_hostel_reservation" />
+    </record>
+
+    <record id="action_report_all_reservations" model="ir.actions.report">
+        <field name="name">All Reservation</field>
+        <field name="model">hostel.reservation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hostel_management.report_all_reservations</field>
+        <field name="report_file">hostel_management.report_all_reservations</field>
+        <field name="binding_model_id" ref="model_hostel_reservation" />
+    </record>
+
+    <record id="action_report_all_packages" model="ir.actions.report">
+        <field name="name">All Packages</field>
+        <field name="model">hostel.package</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hostel_management.report_all_packages</field>
+        <field name="report_file">hostel_management.report_all_packages</field>
+        <field name="binding_model_id" ref="model_hostel_package" />
+    </record>
+    
+</odoo>
+    

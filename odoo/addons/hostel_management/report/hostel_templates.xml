@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="hostel_management.report_hostel_client">
+        <t t-foreach="docs" t-as="client">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <link rel="stylesheet" type="text/css"
+                        href="/hostel_management/static/report_styles.css" />
+                    <main class="page">
+                        <h2 class="page-info">
+                            <span t-field="client.name" />
+                        </h2>
+    
+                        <div>
+                            <strong>Nombre: </strong>
+                            <span t-field="client.name" />
+                        </div>
+                        <div>
+                            <strong>Apellido: </strong>
+                            <span t-field="client.surname" />
+                        </div>
+                        <div>
+                            <strong>Correo Electrónico: </strong>
+                            <span t-field="client.email" />
+                        </div>
+                        <div>
+                            <strong>Teléfono: </strong>
+                            <span t-field="client.phone" />
+                        </div>
+                  </main>
+                </t>
+            </t>
+        </t>
+    </template>
+    <template id="hostel_management.report_all_client">
+        <t t-set="clients" t-value="env['hostel.client'].search([])" />
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <link rel="stylesheet" type="text/css"
+                    href="/hostel_management/static/report_styles.css" />
+                <div class="page">
+                    <t t-foreach="clients" t-as="client">
+                        <h2 class="page-info"> Cliente: <span t-field="client.name" /></h2>
+                        <div>
+                            <strong>Nombre: </strong>
+                            <span t-field="client.name" />
+                        </div>
+                        <div>
+                            <strong>Apellido: </strong>
+                            <span t-field="client.surname" />
+                        </div>
+                        <div>
+                            <strong>Correo Electrónico: </strong>
+                            <span t-field="client.email" />
+                        </div>
+                        <div>
+                            <strong>Teléfono: </strong>
+                            <span t-field="client.phone" />
+                        </div>
+                        <div style="page-break-after: always;"></div>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+    
+    <template id="hostel_management.report_hostel_guest">
+        <t t-foreach="docs" t-as="guest">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <link rel="stylesheet" type="text/css"
+                        href="/hostel_management/static/report_styles.css" />
+                        <main class="page">
+                            <h2 class="page-info">
+                                <span t-field="guest.name" />
+                            </h2>
+                            <div>
+                                <strong>Nombre: </strong>
+                                <span t-field="guest.name" />
+                            </div>
+                            <div>
+                                <strong>Nacionalidad: </strong>
+                                <span t-field="guest.nationalitys.name" />
+                            </div>
+                            <div>
+                                <strong>Documento de Identidad: </strong>
+                                <span t-field="guest.identity_document" />
+                            </div>
+                        </main>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+            <template id="hostel_management.report_hostel_guest_table">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            
+                            <th>Huespedes</th>
+                            <th>Nacionalidad</th>
+                            <th>Documento de Identidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="reservation.guest_ids" t-as="guest">
+                          
+                            <td class="center-info">
+                                <span t-field="guest.name" />
+                            </td>
+                            <td class="center-info">
+                                <span t-field="guest.nationalitys.name" />
+                            </td>
+                            <td class="center-info">
+                                <span t-field="guest.identity_document" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </template>
+
+        <template id="hostel_management.report_hostel_room">
+            <t t-foreach="docs" t-as="room">
+                <t t-call="web.html_container">
+                    <t t-call="web.external_layout">
+                        <link rel="stylesheet" type="text/css"
+                            href="/hostel_management/static/report_styles.css" />
+                            <main class="page">
+                                <h2 class="page-info">
+                                    <span t-field="room.number" />
+                                </h2>
+                                <div>
+                                    <strong>Número: </strong>
+                                    <span t-field="room.number" />
+                                </div>
+                                <div>
+                                    <strong>Tipo: </strong>
+                                    <span t-field="room.room_type" />
+                                </div>
+                                <div>
+                                    <strong>Capacidad: </strong>
+                                    <span t-field="room.capacity" />
+                                </div>
+                                <div>
+                                    <strong>Número de Camas: </strong>
+                                    <span t-field="room.num_beds" />
+                                </div>
+                                <div>
+                                    <strong>Aire Acondicionado: </strong>
+                                    <span t-field="room.has_ac" />
+                                </div>
+                                <div>
+                                    <strong>Terraza: </strong>
+                                    <span t-field="room.has_terrace" />
+                                </div>
+                                <div>
+                                    <strong>Número de Baños: </strong>
+                                    <span t-field="room.num_bathrooms" />
+                                </div>
+                                <div>
+                                    <strong>Precio: </strong>
+                                    <span t-field="room.price" />
+                                </div>
+                                <div>
+                                    <strong>Disponibilidad: </strong>
+                                    <span t-field="room.is_available" />
+                                </div>
+                            </main>
+                        </t>
+                    </t>
+                </t>
+            </template>
+            <template id="hostel_management.report_hostel_reservation">
+                <t t-foreach="docs" t-as="reservation">
+                    <t t-call="web.html_container">
+                        <t t-call="web.external_layout">
+                            <link rel="stylesheet" type="text/css"
+                                href="/hostel_management/static/report_styles.css" />
+                            <main class="page">
+                                <h2 class="page-info">
+                                    <span t-field="reservation.reservation_id" />
+                                </h2>
+            
+                                <div>
+                                    <strong>Cliente: </strong>
+                                    <span t-field="reservation.client_id.name" />
+                                </div>
+                                <div>
+                                    <strong>Correo Electrónico del Cliente: </strong>
+                                    <span t-field="reservation.client_id.email" />
+                                </div>
+                                <div>
+                                    <strong>Teléfono del Cliente: </strong>
+                                    <span t-field="reservation.client_id.phone" />
+                                </div>
+                                <div>
+                                    <strong>Habitación: </strong>
+                                    <span t-field="reservation.room_id.number" />
+                                </div>
+                                  <div>
+                                    <strong>Fecha de Entrada: </strong>
+                                    <span t-field="reservation.check_in_date" />
+                                </div>
+                                <div>
+                                    <strong>Fecha de Salida: </strong>
+                                    <span t-field="reservation.check_out_date" />
+                                </div>
+                                <div>
+                                    <strong># Personas: </strong>
+                                    <span t-field="reservation.num_persons" />
+                                </div>
+                                
+                                <div class="total_price">
+                                    <strong>Estado: </strong>
+                                    <span t-field="reservation.state" />
+                                </div>
+                                <t t-if="reservation.guest_ids">
+                                    <t t-call="hostel_management.report_hostel_guest_table" />
+                                </t>
+                                <t t-else="">
+                                    <div class="alert alert-success" role="alert">
+                                    Esta reserva no tiene huéspedes.
+                                    </div>
+                                </t>
+                                <t t-if="reservation.room_id">
+                                    <t t-call="hostel_management.report_hostel_room_table" />
+                                </t>
+                                <t t-if="reservation.package_id">
+                                    <div>
+                                        <strong>Servicios Opcionales:</strong>
+                                        <span t-field="reservation.package_id.name" />
+                                    </div>
+                                    <t t-call="hostel_management.report_hostel_package_table">
+                                        <t t-set="packages" t-value="[reservation.package_id]" />
+                                    </t>
+                                </t>
+                                <t t-else="">
+                                    <div class="alert alert-warning" role="alert">
+                                        Esta reserva no tiene ningún paquete de servicios seleccionado.
+                                    </div>
+                                </t>
+                                <div class="total_price">
+                                    <strong>Precio Total: </strong>
+                                    <span t-field="reservation.total_price" />
+                                </div>
+                            </main>
+                        </t>
+                    </t>
+                </t>
+            </template>
+            <template id="hostel_management.report_all_reservations">
+                <t t-set="reservations" t-value="env['hostel.reservation'].search([])" />
+                <t t-call="web.html_container">
+                    <t t-call="web.external_layout">
+                        <link rel="stylesheet" type="text/css"
+                            href="/hostel_management/static/report_styles.css" />
+                        <div class="page">
+                            <t t-foreach="reservations" t-as="reservation">
+                                <h2 class="page-info"> Reservación: <span t-field="reservation.reservation_id" /></h2>
+                                <div>
+                                    <strong>Cliente: </strong>
+                                    <span t-field="reservation.client_id.name" />
+                                </div>
+                                <div>
+                                    <strong>Correo Electrónico del Cliente: </strong>
+                                    <span t-field="reservation.client_id.email" />
+                                </div>
+                                <div>
+                                    <strong>Teléfono del Cliente: </strong>
+                                    <span t-field="reservation.client_id.phone" />
+                                </div>
+                                <div>
+                                    <strong>Habitación: </strong>
+                                    <span t-field="reservation.room_id.number" />
+                                </div>
+                                <div>
+                                    <strong>Fecha de Entrada: </strong>
+                                    <span t-field="reservation.check_in_date" />
+                                </div>
+                                <div>
+                                    <strong>Fecha de Salida: </strong>
+                                    <span t-field="reservation.check_out_date" />
+                                </div>
+                                <div>
+                                    <strong># Personas: </strong>
+                                    <span t-field="reservation.num_persons" />
+                                </div>
+                                
+                                <div class="total_price">
+                                    <strong>Estado: </strong>
+                                    <span t-field="reservation.state" />
+                                </div>
+                                <t t-if="reservation.guest_ids">
+                                    <t t-call="hostel_management.report_hostel_guest_table" />
+                                </t>
+                                <t t-else="">
+                                    <div class="alert alert-success" role="alert">
+                                    Esta reserva no tiene huéspedes.
+                                    </div>
+                                </t>
+                                <t t-if="reservation.room_id">
+                                    <t t-call="hostel_management.report_hostel_room_table" />
+                                </t>
+                                <t t-if="reservation.package_id">
+                                   <div>
+                                        <strong>Servicios Opcionales:</strong>
+                                        <span t-field="reservation.package_id.name" />
+                                    </div>
+                                    <t t-call="hostel_management.report_hostel_package_table">
+                                        <t t-set="packages" t-value="[reservation.package_id]" />
+                                    </t>
+                                </t>
+                                <t t-else="">
+                                    <div class="alert alert-warning" role="alert">
+                                        Esta reserva no tiene ningún paquete de servicios seleccionado.
+                                    </div>
+                                </t>
+                                <div class="total_price">
+                                    <strong>Precio Total: </strong>
+                                    <span t-field="reservation.total_price" />
+                                </div>
+                                <div style="page-break-after: always;"></div>
+                            </t>
+                        </div>
+                    </t>
+                </t>
+            </template>
+            
+            
+            <template id="hostel_management.report_hostel_room_table">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>#Habitación</th>
+                            <th>Tipo</th>
+                            <th>Capacidad</th>
+                            <th>Número de Camas</th>
+                            <th>Aire Acondicionado</th>
+                            <th>Terraza</th>
+                            <th>Número de Baños</th>
+                            <th>Precio *noche</th>
+                            </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="reservation.room_id" t-as="room">
+                            <td class="center-info">
+                                <span t-field="room.number" />
+                            </td>
+                            <td class="center-info">
+                                <span t-field="room.room_type" />
+                            </td>
+                            <td class="center-info">
+                                <span t-field="room.capacity" />
+                            </td>
+                            <td class="center-info">
+                                <span t-field="room.num_beds" />
+                            </td>
+                            <td class="center-info">
+                                <span t-field="room.has_ac" />
+                            </td>
+                            <td class="center-info">
+                                <span t-field="room.has_terrace" />
+                            </td>
+                            <td class="center-info">
+                                <span t-field="room.num_bathrooms" />
+                            </td>
+                            <td class="center-info">
+                                <span t-field="room.price" />
+                            </td>
+                         
+                        </tr>
+                    </tbody>
+                </table>
+            </template>
+
+            <template id="hostel_management.report_all_packages">
+                <t t-set="packages" t-value="env['hostel.package'].search([])" />
+                <t t-call="web.html_container">
+                    <t t-call="web.external_layout">
+                        <link rel="stylesheet" type="text/css"
+                            href="/hostel_management/static/report_styles.css" />
+                        <div class="page">
+                            <t t-foreach="packages" t-as="package">
+                                <h2 class="page-info"> Paquete: <span t-field="package.name" /></h2>
+                                <div>
+                                    <strong>Nombre del Paquete: </strong>
+                                    <span t-field="package.name" />
+                                </div>
+                                <div>
+                                    <strong>Precio Total: </strong>
+                                    <span t-field="package.price" />
+                                </div>
+                                <div>
+                                    <strong>Servicios Incluidos: </strong>
+                                    <ul>
+                                        <t t-foreach="package.service_ids" t-as="service">
+                                            <li><span t-field="service.service_type"/></li>
+                                        </t>
+                                    </ul>
+                                </div>
+                                <div style="page-break-after: always;"></div>
+                            </t>
+                        </div>
+                    </t>
+                </t>
+            </template>
+            <template id="hostel_management.report_hostel_package_table">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nombre del Paquete</th>
+                            <th>Servicios Incluidos</th>
+                            <th>Precio Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="packages" t-as="package">
+                            <td class="center-info">
+                                <span t-field="package.name" />
+                            </td>
+                            <td class="center-info">
+                                <t t-foreach="package.service_ids" t-as="service">
+                                    <span t-field="service.service_type" />, 
+                                </t>
+                            </td>
+                            <td class="center-info">
+                                <span t-field="package.price" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </template>
+            
+   
+</odoo>

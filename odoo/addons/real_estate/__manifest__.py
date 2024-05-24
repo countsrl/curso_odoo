@@ -6,7 +6,7 @@
     'version': '1.0',
     'license': 'AGPL-3',
     'description': 'Manage properties for sale and for rent.',
-    'depends': ['base','website'],
+    'depends': ['base','website','web'],
     'data': [
         'security/ir.model.access.csv',
    

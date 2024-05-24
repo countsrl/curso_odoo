@@ -17,9 +17,9 @@ services:
             - ./conf:/etc/odoo
         environment:
             - HOST=postgresql
-            #- PYTHONPATH=/mnt/extra-addons
-            #- PYTHONBREAKPOINT=debugpy.breakpoint
-            #- DEBUGPY_LOG_DIR=/var/log/debugpy
+            - PYTHONPATH=/mnt/extra-addons
+            - PYTHONBREAKPOINT=debugpy.breakpoint
+            - DEBUGPY_LOG_DIR=/var/log/debugpy
       
         restart: always
     postgresql:

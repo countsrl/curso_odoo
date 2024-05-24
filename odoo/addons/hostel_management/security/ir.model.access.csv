@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hostel_client,hostel.client,model_hostel_client,base.group_user,1,1,1,1
+access_hostel_room,hostel.room,model_hostel_room,base.group_user,1,1,1,1
+access_hostel_reservation,hostel.reservation,model_hostel_reservation,base.group_user,1,1,1,1
+access_hostel_service,hostel.service,model_hostel_service,base.group_user,1,1,1,1
+access_hostel_guest,hostel.guest,model_hostel_guest,base.group_user,1,1,1,1
+access_hostel_package,hostel.package,model_hostel_package,base.group_user,1,1,1,1

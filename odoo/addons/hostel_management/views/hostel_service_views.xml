@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--  define una vista list para el modelo hostel.service -->
+    <record id="view_hostel_service_tree" model="ir.ui.view">
+        <field name="name">hostel.service.tree</field>
+        <field name="model">hostel.service</field>
+
+        <field name="arch" type="xml">
+            <tree>
+                <field name="service_type" />
+
+                <field name="price" />
+            </tree>
+        </field>
+    </record>
+    <!--  define una vista formulario para el modelo hostel.service -->
+    <record id="view_hostel_service_form" model="ir.ui.view">
+        <field name="name">hostel.service.form</field>
+        <field name="model">hostel.service</field>
+
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="service_type" />
+
+                    <field name="price" />
+                </group>
+            </form>
+        </field>
+    </record>
+    <record id="hostel_management.action_hostel_services" model="ir.actions.act_window">
+        <field name="name">Services</field>
+        <field name="res_model">hostel.service</field>
+        <field name="view_mode">tree,form</field>
+         </record>
+
+</odoo>

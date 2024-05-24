@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="hostel_management.website_layout_inherit" inherit_id="website.layout">
+        <xpath expr="//header" position="after">
+            <t t-if="show_all_clients" t-call="hostel_management.report_all_client" />
+            <t t-if="show_client" t-call="hostel_management.report_hostel_client" />
+            <t t-if="show_guest" t-call="hostel_management.report_hostel_guest" />
+            <t t-if="show_all_reservations" t-call="hostel_management.report_all_reservations"/>
+            <t t-if="show_reservations" t-call="hostel_management.report_hostel_reservation"/>
+            <t t-if="show_all_packages" t-call="hostel_management.report_all_packages"/>
+        </xpath>
+    </template>
+</odoo>

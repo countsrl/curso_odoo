@@ -1,0 +1,61 @@
+<odoo>
+    <data noupdate="1">
+        <!-- Crea un cliente de demostración -->
+        <record id="demo_client_1" model="hostel.client">
+            <field name="name">Demo Client 1</field>
+            <field name="surname">Surname</field>
+            <field name="email">demo.client1@example.com</field>
+            <field name="phone">1234567890</field>
+        </record>
+
+        <!-- Crea un servicio de demostración -->
+        <record id="demo_service_1" model="hostel.service">
+            <field name="service_type">breakfast</field>
+            <field name="price">10.0</field>
+        </record>
+
+        <!-- Crea un paquete de demostración -->
+        <record id="demo_package_1" model="hostel.package">
+            <field name="name">Demo Package 1</field>
+            <field name="service_ids" eval="[(6, 0, [ref('demo_service_1')])]" />
+        </record>
+
+        <!-- Crea  una habitación de demostración -->
+             <record id="demo_room_1" model="hostel.room">
+            <field name="number">101</field>
+            <field name="sequence">10</field>
+            <field name="room_type">single</field>
+            <field name="capacity">1</field>
+            <field name="num_beds">1</field>
+            <field name="has_ac">True</field>
+            <field name="has_terrace">False</field>
+            <field name="num_bathrooms">1</field>
+            <field name="price">50.0</field>
+            <field name="availability">True</field>
+        </record>
+
+        <!-- Crea  otra habitación de demostración -->
+        <record id="demo_room_2" model="hostel.room">
+            <field name="number">102</field>
+            <field name="sequence">20</field>
+            <field name="room_type">double</field>
+            <field name="capacity">2</field>
+            <field name="num_beds">2</field>
+            <field name="has_ac">True</field>
+            <field name="has_terrace">True</field>
+            <field name="num_bathrooms">1</field>
+            <field name="price">100.0</field>
+            <field name="availability">True</field>
+        </record>
+
+        <!-- Crea una reserva de demostración -->
+        <record id="demo_reservation_1" model="hostel.reservation">
+            <field name="room_id" ref="demo_room_1"/>
+            <field name="client_id" ref="demo_client_1"/>
+            <field name="package_id" ref="demo_package_1"/>
+            <field name="start_date">2024-01-01</field>
+            <field name="end_date">2024-01-07</field>
+            <field name="num_persons">2</field>
+        </record>
+    </data>
+</odoo>

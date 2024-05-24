@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--  define una vista list para el modelo hostel.client -->
+    <record id="view_client_list" model="ir.ui.view">
+        <field name="name">hostel.client.list</field>
+        <field name="model">hostel.client</field>
+        
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="surname"/>
+                <field name="email"/>
+                <field name="phone"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_client_form" model="ir.ui.view">
+        <field name="name">hostel.client.form</field>
+        <field name="model">hostel.client</field>
+       
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name"/>
+                    <field name="surname"/>
+                    <field name="email"/>
+                    <field name="phone"/>
+                </group>
+            </form>
+        </field>
+    </record>
+<!--  define una vista de Busqueda para el modelo hostel.client -->
+    <record id="view_hostel_client_search" model="ir.ui.view">
+        <field name="name">hostel.client.search</field>
+        <field name="model">hostel.client</field>
+        <field name="arch" type="xml">
+            <search string="Search Client">
+                <field name="name"/>
+                <field name="surname"/>
+                <field name="email"/>
+                <field name="phone"/>
+                <group>
+                    <filter string="Name" name="group_by_name" context="{'group_by':'name'}"/>
+                    <filter string="Surname" name="group_by_surname" context="{'group_by':'surname'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    
+    <record id="action_hostel_client" model="ir.actions.act_window">
+        <field name="name">Clientes</field>
+        <field name="res_model">hostel.client</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+</odoo>

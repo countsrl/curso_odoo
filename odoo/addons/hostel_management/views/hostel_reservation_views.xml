@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Definición de la secuencia -->
+    <record id="seq_hostel_reservation" model="ir.sequence">
+        <field name="name">Hostel Reservation</field>
+        <field name="code">hostel.reservation</field>
+        <field name="prefix">INV/%(year)s/</field>
+        <field name="padding">5</field>
+    </record>
+
+    <!--  define una vista lista para el modelo hostel.Reservation -->
+    <record id="view_hostel_reservation_tree" model="ir.ui.view">
+        <field name="name">hostel.reservation.tree</field>
+        <field name="model">hostel.reservation</field>
+
+        <field name="arch" type="xml">
+            <tree string="Hostel Reservation">
+                <field name="reservation_id" readonly="1" />
+                <field name="client_id" />
+                <field name="room_id" />
+                <field name="num_persons" />
+                <field name="check_in_date" />
+                <field name="check_out_date" />
+                <field name="total_price" />
+                <field name="state" />
+
+            </tree>
+        </field>
+    </record>
+    <!--  define una vista formulario para el modelo hostel. reservation -->
+    <record id="view_hostel_reservation_form" model="ir.ui.view">
+        <field name="name">hostel.reservation.form</field>
+        <field name="model">hostel.reservation</field>
+
+        <field name="arch" type="xml">
+            <form string="reservation">
+                <header>
+                    <field name="state" widget="statusbar"
+                        statusbar_visible="draft, confirmed, done, cancelled" />
+                    <button name="action_cancel" type="object" string="Cancel"
+                        invisible="state not in ['draft', 'confirmed']"
+                        class="btn-danger" />
+                    <button name="action_confirm" string="Reservar" type="object"
+                        class="btn-success"
+                        invisible="state not in ['confirmed']" />
+                </header>
+                <sheet>
+                    <group>
+                        <field name="reservation_id" readonly="1" />
+                    </group>
+                    <group>
+                        <field name="client_id" string="Cliente:" />
+                        <group>
+                            <field name="room_id" domain="[('is_available', '=', True)]" />
+                            <field name="is_room_available" widget="statusbar_visible" />
+                            <field name="num_persons" />
+                        </group>
+                        <group>
+                            <field name="check_in_date" />
+                            <field name="check_out_date" />
+                        </group>
+
+                        <group>
+                            <field name="state" />
+                            <button name="action_accept" type="object" title="accept"
+                                class="fa fa-check oe_highlight"
+                                invisible="state in ('confirmed', 'cancelled')" />
+                            <button name="action_refuse" type="object" title="refuse"
+                                class="fa fa-times oe_highlight"
+                                invisible="state in ('confirmed', 'cancelled')" />
+                        </group>
+                        <group>
+                            <field name="package_id" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="info Rooms">
+                            <group>
+                                <field name="room_info" />
+                            </group>
+                        </page>
+                    </notebook>
+
+                    <group>
+                        <field name="total_price" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!--  define una vista kanban para el modelo hostel. Reservation -->
+    <record id="view_hostel_reservation_kanban" model="ir.ui.view">
+        <field name="name">hostel.reservation.kanban</field>
+        <field name="model">hostel.reservation</field>
+
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="reservation_id" readonly="1" />
+                <field name="client_id" />
+                <field name="room_id" />
+                <field name="num_persons" />
+                <field name="check_in_date" />
+                <field name="check_out_date" />
+                <field name="total_price" />
+                <field name="state" />
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="oe_kanban_details">
+                                <strong>
+                                    <field name="client_id" />
+                                </strong>
+                                <div>Room: <field name="room_id" /></div>
+                                <div>Check-in Date: <field name="check_in_date" /></div>
+                                <div>Check-out Date: <field name="check_out_date" /></div>
+                                <div>Total Price: <field name="total_price" /></div>
+                                <div>State: <field name="state" /></div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <!--  define una vista busqueda  para el modelo hostel. Reservation -->
+    <record id="view_hostel_reservation_search" model="ir.ui.view">
+        <field name="name">hostel.reservation.search</field>
+        <field name="model">hostel.reservation</field>
+        <field name="arch" type="xml">
+            <search string="Buscar Reservas">
+                <field name="client_id" />
+                <field name="room_id" />
+                <field name="check_in_date" />
+                <field name="check_out_date" />
+                <field name="total_price" />
+                <field name="state" />
+                <group>
+                    <filter string="Cliente" name="group_by_client"
+                        context="{'group_by':'client_id'}" />
+                    <filter string="Room" name="filter_room" domain="[('room_id','!=',False)]" />
+                    <filter string="Check in Date" name="filter_check_in"
+                        domain="[('check_in_date','!=',False)]" />
+                    <filter string="Check Out sDate" name="filter_check_out"
+                        domain="[('check_out_date','!=',False)]" />
+                    <filter string="Reservations out onclude" name="filter_upcoming_check_out"
+                        domain="[('days_until_check_in','&lt;=',7)]" />
+                    <filter string="Recent reservations" name="filter_recent_reservations"
+                        domain="[('days_since_check_out','&lt;=',7)]" />
+
+                    <filter string="Reservations conclude" name="filter_done_reservations"
+                        domain="[('state','=','done')]" />
+                    <filter string="State" name="filter_state" domain="[('state','!=',False)]" />
+
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_hostel_reservation" model="ir.actions.act_window">
+        <field name="name">Reservations</field>
+        <field name="res_model">hostel.reservation</field>
+
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+</odoo>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="hostel_room_1" model="hostel.room">
+            <field name="number">101</field>
+            <field name="room_type">single</field>
+            <field name="capacity">1</field>
+            <field name="price">50.0</field>
+        </record>
+
+        <record id="hotel_room_2" model="hostel.room">
+            <field name="number">102</field>
+            <field name="room_type">double</field>
+            <field name="capacity">2</field>
+            <field name="price">80.0</field>
+        </record>
+
+        <record id="hotel_room_3" model="hostel.room">
+            <field name="number">201</field>
+            <field name="room_type">suite</field>
+            <field name="capacity">4</field>
+            <field name="price">150.0</field>
+        </record>
+    </data>
+</odoo>

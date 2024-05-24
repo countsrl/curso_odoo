@@ -11,7 +11,10 @@ _logger = logging.getLogger(__name__)
 #debugpy.wait_for_client()
 
 class EstatePropertyInherit(models.Model):
-    _inherit = 'estate.property'
+    _inherits = 'estate.property'
+    _inherit  = 'estate.property'
+    
+    test_field = fields.Char(string='Test Field') 
     # Define un método para crear una factura
     def _create_invoice(self, partner, lines):
         # Establece el tipo de movimiento para la factura

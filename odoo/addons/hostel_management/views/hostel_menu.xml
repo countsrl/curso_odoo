@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_hostel_root" name="Hostel Management"/>
+    <menuitem id="menu_hostel_reservations" name="Reservations" parent="menu_hostel_root" action="action_hostel_reservation"/>
+    <menuitem id="menu_hostel_rooms" name="Rooms" parent="menu_hostel_root" action="action_hostel_room" />
+    <menuitem id="menu_hostel_guests" name="Guests" parent="menu_hostel_root" action="action_hostel_guest"/>
+    <menuitem id="menu_hostel_services" name="Services" parent="menu_hostel_root" action="hostel_management.action_hostel_services"/>
+    <menuitem id="menu_hostel_clients" name="Clientes" parent="menu_hostel_root" action="action_hostel_client"/>
+    <menuitem id="menu_hostel_package" name="Package" parent="menu_hostel_root" action="action_package_services"/>
+</odoo>

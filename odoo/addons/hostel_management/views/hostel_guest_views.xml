@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--  define una vista lista para el modelo hostel guest -->
+    <record id="view_hostel_guest_tree" model="ir.ui.view">
+        <field name="name">hostel.guest.tree</field>
+        <field name="model">hostel.guest</field>
+
+        <field name="arch" type="xml">
+            <tree string="Guest" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name" />
+                <field name="nationalitys" />
+                <field name="identity_document" />
+            </tree>
+        </field>
+    </record>
+     <!--  define una vista de form para el modelo hostel guest -->
+    <record id="view_hostel_guest_form" model="ir.ui.view">
+        <field name="name">hostel.guest.form</field>
+        <field name="model">hostel.guest</field>
+
+        <field name="arch" type="xml">
+            <form string="Guest">
+                <sheet>
+                    <group>
+                <field name="name" />
+                <field name="nationalitys" />
+                <field name="identity_document" />
+                </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- Añade los campos de Guest a la vista formulario de Reservation. Vista heredada -->
+<record id="view_hostel_reservation_form_inherit_guest" model="ir.ui.view">
+    <field name="name">hostel.reservation.form.inherit.guest</field>
+    <field name="model">hostel.reservation</field>
+    <field name="inherit_id" ref="view_hostel_reservation_form" />
+    <field name="arch" type="xml">
+        <xpath expr="//notebook" position="inside">
+             <!--<xpath expr="//notebook/page[@name='Lista de habitaciones']" position="after"> -->
+                <page string="huspedes">
+            <field name="guest_ids">
+                <tree editable="bottom" create="true" delete="true">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name" />
+                    <field name="nationalitys" />
+                    <field name="identity_document" />
+                </tree>
+            </field>
+        </page>
+        </xpath>
+    </field>
+</record>
+
+
+        <!-- define una vista de busqueda para el modelo hostel guest -->
+        <record id="view_hostel_guest_search" model="ir.ui.view">
+            <field name="name">hostel.guest.search</field>
+            <field name="model">hostel.guest</field>
+            <field name="arch" type="xml">
+                <search string="Buscar Huéspedes">
+                    <field name="name"/>
+                    <field name="nationalitys"/>
+                    <field name="identity_document"/>
+                    <group>
+                        <filter string="Name" name="group_by_name" context="{'group_by':'name'}"/>
+                        <filter string="Nationality" name="group_by_nationalitys" context="{'group_by':'nationalitys'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+    <record id="action_hostel_guest" model="ir.actions.act_window">
+        <field name="name">Guests</field>
+        <field name="res_model">hostel.guest</field>
+
+        <field name="view_mode">tree,form</field>
+
+    </record>
+</odoo>

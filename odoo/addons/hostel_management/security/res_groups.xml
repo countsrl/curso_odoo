@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Definir Grupos de Usuarios -->
+    <record id="group_hostel_staff" model="res.groups">
+        <field name="name">Hostel Staff</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+    <record id="group_hostel_guest" model="res.groups">
+        <field name="name">Hostel Guest</field>
+    </record>
+
+    <!-- Definir Reglas de Acceso -->
+    <record id="hostel_room_staff_rule" model="ir.rule">
+        <field name="name">Hostel Room Staff Access</field>
+        <field name="model_id" ref="model_hostel_room"/>
+        <field name="groups" eval="[(4, ref('group_hostel_staff'))]"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+    <record id="hostel_room_guest_rule" model="ir.rule">
+        <field name="name">Hostel Room Guest Access</field>
+        <field name="model_id" ref="model_hostel_room"/>
+        <field name="groups" eval="[(4, ref('group_hostel_guest'))]"/>
+        <field name="domain_force">[('is_available', '=', True)]</field>
+        <field name="perm_read" eval="1"/>
+    </record>
+
+    <!-- Reglas de Acceso para el Modelo Servicio -->
+    <record id="hostel_service_staff_rule" model="ir.rule">
+        <field name="name">Hostel Service Staff Access</field>
+        <field name="model_id" ref="model_hostel_service"/>
+        <field name="groups" eval="[(4, ref('group_hostel_staff'))]"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+    <!-- Reglas de Acceso para el Modelo Reserva -->
+    <record id="hostel_reservation_staff_rule" model="ir.rule">
+        <field name="name">Hostel Reservation Staff Access</field>
+        <field name="model_id" ref="model_hostel_reservation"/>
+        <field name="groups" eval="[(4, ref('group_hostel_staff'))]"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+    <!-- Reglas de Acceso para el Modelo Huésped -->
+    <record id="hostel_guest_staff_rule" model="ir.rule">
+        <field name="name">Hostel Guest Staff Access</field>
+        <field name="model_id" ref="model_hostel_guest"/>
+        <field name="groups" eval="[(4, ref('group_hostel_staff'))]"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+    <!-- Reglas de Acceso para el Modelo Cliente -->
+    <record id="hostel_client_staff_rule" model="ir.rule">
+        <field name="name">Hostel Client Staff Access</field>
+        <field name="model_id" ref="model_hostel_client"/>
+        <field name="groups" eval="[(4, ref('group_hostel_staff'))]"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+</odoo>

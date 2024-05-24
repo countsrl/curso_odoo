@@ -9,7 +9,10 @@
     'description': 'Real Estate Manageme',
     'depends':['real_estate','account','base' ], # Dependencia con el módulo de Real Estate
     'data': [
-        #'views/estate_property_views.xml',
+       #'security/ir.model.access.csv',
+        #'views/estate_property_inherit_views.xml',
+   
+       
     ],
     'installable': True,
     'application': True,

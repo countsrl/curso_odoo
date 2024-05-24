@@ -50,7 +50,7 @@ class EstateProperty(models.Model):
     # Computed fields
     total_area = fields.Float(compute="_compute_total_area")
     best_offer = fields.Float(compute="_compute_best_offer")
-    # Relations
+    # Relations 
     offer_ids = fields.One2many('estate.property.offer', 'property_id', string='Offers')
     property_type_id = fields.Many2one('estate.property.type', string='Property Type', ondelete='cascade')  
     buyer_id = fields.Many2one('res.partner', string='Buyer', copy=False)  
@@ -60,18 +60,13 @@ class EstateProperty(models.Model):
  
     # function
     def action_sold(self):
-        pass
+        #pass
         _logger.debug(f"Estado de la propiedad antes de vender: {self.state}")
-        #if self.state == 'offer_accepted':
-            #self.state = 'sold'
-        #else:
-            #raise UserError("Onlyj properties with 'Offer Accepted' state can be sold.")
-    #def action_sold(self):
-        #for prop in self:
-            #if prop.state == 'sold':
-                #continue  # Evita cambiar el estado si ya está vendido
-            #if prop.state != 'offer_accepted':
-                #raise UserError("Only properties with 'Offer Accepted' state can be sold.")
+        if self.state == 'offer_accepted':
+            self.state = 'sold'
+        else:
+            raise UserError("Onlyj properties with 'Offer Accepted' state can be sold.")
+  
     def action_accept_offer(self):
         self.state = 'offer_accepted'
     def action_offer_received(self):

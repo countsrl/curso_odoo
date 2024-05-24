@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--  define una vista tree para el modelo habitacion -->
+    <record id="view_hostel_room_tree" model="ir.ui.view">
+        <field name="name">hostel.room.tree</field>
+        <field name="model">hostel.room</field>
+        <field name="arch" type="xml">
+            <tree string="Rooms" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="number" />
+                <field name="room_type"/>
+                <field name="capacity" />
+                <field name="price" />
+                <field name="is_available"/>
+                <field name="num_beds" />
+                <field name="has_ac" />
+                <field name="has_terrace"/>
+                <field name="num_bathrooms"/>
+            </tree>
+        </field>
+    </record>
+    <!--  define una vista formulario para el modelo hostel.Room -->
+    <record id="view_hostel_room_form" model="ir.ui.view">
+        <field name="name">hostel.room.form</field>
+        <field name="model">hostel.room</field>
+        <field name="arch" type="xml">
+            <form string="Rooms">
+                <sheet>
+                <group>
+                <field name="number" />
+                <field name="room_type" />
+                <field name="capacity" />
+                <field name="price" />
+                <field name="is_available" />
+                <field name="num_beds" />
+                <field name="has_ac" />
+                <field name="has_terrace"/>
+                <field name="num_bathrooms"/>
+            </group>
+            </sheet>
+            </form>
+        </field>
+    </record>
+    <!--  define una vista kanban para el modelo habitacion-->
+    <record id="view_hostel_room_kanban" model="ir.ui.view">
+        <field name="name">hostel.room.kanban</field>
+        <field name="model">hostel.room</field>
+
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="number" />
+                <field name="room_type" />
+                <field name="capacity" />
+                <field name="price" />
+                <field name="is_available" />
+                <field name="num_beds" />
+                <field name="has_ac" />
+                <field name="has_terrace"/>
+                <field name="num_bathrooms"/>
+            </kanban>
+        </field>
+    </record>
+    <!--  define una vista de Busqueda para el modelo hostel. habitacion -->
+    <record id="view_hostel_room_search" model="ir.ui.view">
+        <field name="name">hostel.room.search</field>
+        <field name="model">hostel.room</field>
+        <field name="arch" type="xml">
+            <search string="Buscar Habitaciones">
+                <field name="number" />
+                <field name="room_type" />
+                <field name="capacity" />
+                <field name="price" />
+                <field name="is_available" />
+                <field name="num_beds" />
+                <field name="has_ac" />
+                <field name="has_terrace"/>
+                <field name="num_bathrooms"/>
+                <group>
+                    <filter string="Number" name="group_by_number" context="{'group_by':'number'}" />
+                    <filter string="Room_type" name="group_by_room_type"
+                        context="{'group_by':'room_type'}" />
+                    <filter string="Capacity" name="group_by_capacity"
+                        context="{'group_by':'capacity'}" />
+                    <filter string="Price" name="group_by_price" context="{'group_by':'price'}" />
+                    <filter string="Available" name="filter_available"
+                        domain="[('is_available','=',True)]" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_hostel_room" model="ir.actions.act_window">
+        <field name="name">Rooms</field>
+        <field name="res_model">hostel.room</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+</odoo>
