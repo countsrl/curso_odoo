@@ -19,7 +19,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'website', 'account', 'l10n_generic_coa'],
+    'depends': ['base', 'website', 'account'],
 
     # always loaded
     'data': [
@@ -32,6 +32,6 @@
         'views/reservations.xml',
         'views/hostel_services.xml',
         'views/hostel_menu.xml',
-
+        'views/request.xml',
     ]
 }

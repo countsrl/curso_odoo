@@ -63,7 +63,7 @@ class Reservations(models.Model):
 
     def generate_invoice(self):
         invoice = self.env['account.move'].create({
-            'customer_request': self.client_id.id
+            'partner_id': self.client_id.id
         })
 
         self.invoicer_no = invoice.id

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="website_menu_availability_list" model="website.menu">
+            <field name="name">Availability</field>
+            <field name="url">list/availability</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence" type="int">10</field>
+        </record>
+
+        <record id="website_menu_reservation" model="website.menu">
+            <field name="name">Reservations</field>
+            <field name="url">reservations</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence" type="int">20</field>
+        </record>
+    </data>
+</odoo>
