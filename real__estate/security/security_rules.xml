@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record model="ir.rule" id="estate_property_all_rule">
+        <field name="name">properties: see all properties</field>
+        <field name="model_id" ref="model_estate_property"/>
+        <field name="groups" eval="[(4, ref('my_realestate.group_property_manager'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+</odoo>
+
