@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="room_list_template" name="Room List">
+        <t t-call="website.layout">
+            <div class="container">
+                <h1>Nuestras habitaciones</h1>
+                <div class="row">
+                    <t t-foreach="rooms" t-as="room">
+                        <div class="col-md-4">
+                            <div class="card mb-4 shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title"><t t-esc="room.name"/></h5>
+                                    <p class="card-text">Price per night: <t t-esc="room.price"/> $</p>
+                                    <p class="card-text"><t t-esc="room.description"/></p>
+                                    <a href="/reservation" class="btn btn-primary">Book Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </t>
+    </template>
+
+</odoo>

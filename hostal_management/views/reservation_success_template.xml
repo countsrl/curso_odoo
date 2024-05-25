@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+     <template id="reservation_success_template" name="Reservation Success">
+        <t t-call="website.layout">
+            <div class="container">
+                <h1>Reservation Confirmed</h1>
+                <p>Thank you for your reservation, <t t-esc="reservation.customer_id.name"/>!</p>
+                <p>Your reservation for room <t t-esc="reservation.room_id.name"/> from <t t-esc="reservation.start_date"/> to <t t-esc="reservation.end_date"/> has been confirmed.</p>
+            </div>
+        </t>
+    </template>
+
+</odoo>

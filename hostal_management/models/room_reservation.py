@@ -83,8 +83,6 @@ class Room_reservation(models.Model):
                 }),
             ],
         })
-        template = self.env.ref('hostal_management.email_template_payment_confirmation')
-        self.env['mail.template'].browse(template.id).send_mail(self.id, force_send=True)
         return super().action_pay()  
     
     

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="reservation_form_template" name="Reservation Form">
+        <t t-call="website.layout">
+            <div class="container">
+                <form action="/reservation/submit" method="post">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" class="form-control" required="required"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" class="form-control" required="required"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="mobile">Telefono</label>
+                        <input type="mobile" id="mobile" name="mobile" class="form-control" required="required"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="passport">Pasaporte</label>
+                        <input type="passport" id="passport" name="passport" class="form-control" required="required"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="country">Pais</label>
+                        <input type="country" id="country" name="country" class="form-control" required="required"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="room_id">Room</label>
+                        <select id="room_id" name="room_id" class="form-control">
+                            <t t-foreach="request.env['hostal.room'].sudo().search([])" t-as="room">
+                                <option t-att-value="room.id"><t t-esc="room.name"/></option>
+                            </t>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="start_date">Start Date</label>
+                        <input type="date" id="start_date" name="start_date" class="form-control" required="required"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="end_date">End Date</label>
+                        <input type="date" id="end_date" name="end_date" class="form-control" required="required"/>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </t>
+    </template>
+
+</odoo>
