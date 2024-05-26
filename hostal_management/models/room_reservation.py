@@ -42,6 +42,8 @@ class Room_reservation(models.Model):
         ('paid', 'Paid')
     ], string='Payment Status', default='not_paid')
    
+    
+    #metodo para definir el numero de la reserva
     @api.model
     def create(self, vals):
         if vals.get('name', 'New') == 'New':
@@ -49,7 +51,7 @@ class Room_reservation(models.Model):
         return super(Room_reservation, self).create(vals)
     
     
-    
+    #acciones de los botones de la reserva
     def action_confirm(self):
         for record in self:
             if self.state == "cancelled":
@@ -66,7 +68,7 @@ class Room_reservation(models.Model):
             if self.state == "paid":
                 raise ValidationError(
                 _("Reservas vendidas no pueden ser pagadas"))
-            else:
+            else: 
                 record.state = "cancelled"
         return True
     
@@ -83,17 +85,32 @@ class Room_reservation(models.Model):
                 }),
             ],
         })
-        return super().action_pay()  
+        return super().action_pay()
+    
+    def action_pay(self):
+        self.env['account.move'].create({
+            'partner_id': self.customer_id.id,
+            'move_type': 'out_invoice',
+            'invoice_line_ids': [
+                Command.create({
+                    'name': self.name,
+                    'quantity': 1,
+                    'partner_id': self.customer_id.id,
+                    'price_unit': self.total_price
+                }),
+            ],
+        })
+        return super().action_pay() 
     
     
-      
+    
         
-    # En el método _check_room_availability, usamos una búsqueda (search) para encontrar reservas que se solapan con la nueva reserva. La lógica incluye:
+    # Usar una búsqueda (search) para encontrar reservas que se solapan con la nueva reserva.
     #Comprobar que la fecha de check_in es anterior a la fecha de check_out.
     #Buscar reservas que:
     #Tengan el mismo room_id.
     #No estén canceladas.
-    #No sean la misma reserva (esto es relevante en caso de ediciones).
+    #No sean la misma reserva.
     #Se solapen en cualquier punto con la nueva reserva. Esto se hace usando condiciones OR (|) y AND (&).
     
     @api.constrains('room_id', 'check_in_date', 'check_out_date')
@@ -116,7 +133,7 @@ class Room_reservation(models.Model):
                 raise ValidationError("La habitacion ya esta reservada para la fecha seleccionada. Intente elegir otra fecha")
    
    
-    
+    #metodo para calcular los dias reservados atendiendo a fecha de check in y check out
     @api.depends('check_in_date', 'check_out_date')
     def _compute_days_reserved(self):
         for record in self:
@@ -124,6 +141,7 @@ class Room_reservation(models.Model):
                 delta = fields.Datetime.from_string(record.check_out_date) - fields.Datetime.from_string(record.check_in_date)
                 record.days_reserved = delta.days + 1
 
+    #calculo el costo total de la reserva
     @api.depends('days_reserved', 'room_id')
     def _compute_total_price(self):
         for record in self:

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_booked_view">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="room">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                         <h2>
+                            <strong>Habitacion: </strong>
+                            <span t-field="room.name"/>
+                        </h2>
+                         
+                        
+                         <div>
+                            <strong>Tipo de habitacion: </strong>
+                            <span t-field="room.room_type_id"/>
+                        </div>    
+                         <div>
+                            <strong>Precio por noche: </strong>
+                            <span t-field="room.price"/>
+                        </div>                     
+                       
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Referencia</th>                                    
+                                    <th>Partner</th>
+                                    <th>Fecha de Check in</th>
+                                    <th>Fecha de Check out</th>
+                                    <th>Monto Total</th>
+                                    <th>state</th>
+                                </tr>
+                                
+                            </thead>
+                            <tbody>
+                                <t t-set="reservas" t-value="room.mapped('reservation_ids')"/>
+                                <tr t-foreach="reservas" t-as="res">
+                                    <td>
+                                        <center><span t-field="res.name"/></center>
+                                    </td>
+                                    <td>
+                                        <center><span t-field="res.customer_id"/></center>
+                                    </td>
+                                    <td>
+                                        <center><span t-field="res.check_in_date"/></center>
+                                    </td>
+                                    <td>
+                                        <center><span t-field="res.check_out_date"/></center>
+                                    </td>
+                                    <td>
+                                        <center><span t-field="res.total_price"/></center>
+                                    </td>
+                                    <td>
+                                        <center><span t-field="res.state"/></center>
+                                       
+                                    </td>
+                                    
+                                </tr>
+                            </tbody>
+                        </table>
+                                               
+                    </div>
+                </t>
+                
+            </t>
+        
+            
+            
+        </t>
+    </template>
+
+
+</odoo>

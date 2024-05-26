@@ -17,7 +17,7 @@
     'license': 'AGPL-3',
     'category': 'Extra Tools',
     'summary': 'Short summary.',
-    'depends': ['base', 'product', 'calendar', 'account', 'web','website'],
+    'depends': ['base','product', 'calendar','account','web','website'],
     "data": [
         "views/hostal_views.xml",
         "security/ir.model.access.csv",
@@ -31,7 +31,10 @@
         "data/data.xml",
         "views/room_list_template.xml",
         "views/reservation_form_template.xml",
-        "views/reservation_success_template.xml"
+        "views/reservation_success_template.xml",
+        "report/booked_report.xml",
+        "report/booked_template.xml"
+     
     ],
     'images': [ ],
     'installable': True,

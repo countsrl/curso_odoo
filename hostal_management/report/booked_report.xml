@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="report_booked_action" model="ir.actions.report">
+        <field name="name">Reservas por Habitacion</field>
+        <field name="model">hostal.room</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hostal_management.report_booked_view</field>
+        <field name="report_file">hostal_management.report_booked_view</field>
+        <field name="binding_model_id" ref="model_hostal_room"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    
+
+    
+</odoo>

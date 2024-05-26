@@ -37,19 +37,14 @@ class Hostal_room(models.Model):
     #services
     service_line_ids = fields.One2many('hostal.room.service.line', 'room_id', string='Service Lines')
 
-    
-    #product_manager = fields.Many2one("res.users", "Product Manager")
-    #room_type = fields.Selection([
-     #   ('single', 'Single'),
-     #   ('double', 'Double'),
-      #  ('suite', 'Suite'),
-    #], string='Room Type', required=True)
+
     
     @api.depends('max_adult', 'max_child')
     def _compute_total_capacity(self):
         for record in self:
             record.capacity = record.max_adult + record.max_child
-    
+    # Mostrar por defecto la habitacion, y las fechas cuando se reserve desde e resultado
+    # de disponibilidad de habitacion tras realizar una busqueda por el wizard
     def reserve_room(self):
         return {
             'name': 'Reservar Habitación',

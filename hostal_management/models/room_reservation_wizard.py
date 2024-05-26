@@ -26,16 +26,16 @@ class Room_reservation_wizard(models.Model):
         Reservation = self.env['room.reservation']
         Room = self.env['hostal.room']
 
-        # Encuentra todas las habitaciones
+        # Encontrar todas las habitaciones
         all_rooms = Room.search([])
 
-        # Filtra habitaciones que están ocupadas durante el período especificado
+        # Filtrar habitaciones que están ocupadas durante el período especificado
         occupied_rooms = Reservation.search([
             ('check_in_date', '<=', self.check_out_date),
             ('check_out_date', '>=', self.check_in_date)
         ]).mapped('room_id')
 
-        # Filtra habitaciones disponibles
+        # Filtrar habitaciones disponibles
         available_rooms = all_rooms - occupied_rooms
 
         # Filtra por capacidad
