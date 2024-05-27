@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- View rooms View Tree -->
+    <record id="view_rooms_tree" model="ir.ui.view">
+        <field name="name">view.rooms.tree</field>
+        <field name="model">rooms</field>
+        <field name="arch" type="xml">
+            <tree decoration-success="state =='available'"
+                  decoration-muted="state =='occupied'">
+                <field name="name"/>
+                <field name="bed"/>
+                <field name="rent"/>
+                <field name="room_amenities_ids" widget="many2many_tags"/>                
+                <field name="state" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- View rooms form -->
+    <record id="view_rooms_form" model="ir.ui.view">
+        <field name="name">view.rooms.form</field>
+        <field name="model">rooms</field>
+        <field name="arch" type="xml">
+            <form string="Hostal Rooms">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="Number..."/>
+                        </h1>
+                        <label for="state"/>
+                        <h1>
+                            <field name="state" readonly="1"/>
+                        </h1>
+                    </div>
+                    <notebook>
+                        <page name="information_hostal" string="Information">
+                            <group name="main">
+                                <group name="main_details">
+                                    <field name="floor_id"/>
+                                    <field name="bed"/>
+                                    <field name="capacity"/>
+                                    
+                                                                   
+                                </group>
+                                
+                                <group name="main_options">
+                                    <field name="available_beds" invisible="bed != 'dormitory'"/>
+                                    <field name="rent"/>
+                                    <field name="currency_id"/>                                
+                                </group>                                
+                            </group>                            
+                        </page>
+                        <page name="room_amenities" string="Room Amenities">
+                            <field name="room_amenities_ids"/>
+                                
+                        </page>                  
+                            
+                        
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Kanban view of hostal room -->
+    <record id="view_hostal_room_kanban" model="ir.ui.view">
+        <field name="name">hotel.room.kanban</field>
+        <field name="model">rooms</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state">
+                <field name="name" />
+                <field name="state" />
+                <field name="color" />                
+                <templates>
+                    <t t-name="kanban-box">
+                        <div
+                            t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_card oe_kanban_global_click"
+                        >
+                            <div class="o_dropdown_kanban dropdown">      
+                                <a
+                                    role="button"
+                                    class="dropdown-toggle btn"
+                                    data-toggle="dropdown"
+                                    href="#"
+                                >
+                                    <span title="fa_icon" class="fa fa-bars fa-lg" />
+                                </a>
+                                <ul
+                                    class="dropdown-menu"
+                                    role="menu"
+                                    aria-labelledby="dLabel"
+                                >
+                                    <t t-if="widget.editable">
+                                        <li>
+                                            <a type="edit">Edit</a>
+                                        </li>
+                                    </t>
+                                    <t t-if="widget.deletable">
+                                        <li>
+                                            <a type="delete">Delete</a>
+                                        </li>
+                                    </t>
+                                    <li>
+                                        <ul
+                                            class="oe_kanban_colorpicker"
+                                            data-field="color"
+                                        />
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="oe_kanban_details" style='margin-top: -5px;'>
+                                <div class="oe_kanban_content">
+                                    <div class="oe_kanban_project_list">
+                                        <H3>
+                                            <a type="open">                                                
+                                                <field name="name" />
+                                            </a>
+                                        </H3>
+                                    </div>
+                                    <div name="tags" />
+                                    <ul>
+                                        <li>
+                                            Status:
+                                            <field name="state" />
+                                        </li>
+                                        <li>
+                                            Bed:
+                                            <field name="bed" />
+                                        </li>
+                                        
+                                    </ul>
+                                </div>
+                                <div class="oe_kanban_bottom_right">
+                                    <a
+                                        t-if="record.state.raw_value === 'available'"
+                                        type="object"
+                                        string="Available"
+                                        name="set_room_status_occupied"
+                                        class="oe_kanban_state oe_kanban_state_green "
+                                    >
+                                    </a>
+                                    <a
+                                        t-if="record.state.raw_value === 'closed'"                                        
+                                        type="object"
+                                        string="occupied"
+                                        name="set_room_status_available"
+                                        class="oe_kanban_state oe_kanban_state_red "
+                                    >
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="oe_clear" />
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    
+    <!-- View rooms search -->
+    <record id="view_rooms_search" model="ir.ui.view">
+        <field name="name">view.rooms.search</field>
+        <field name="model">rooms</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="bed"/>
+                <field name="rent"/>
+                <field name="room_amenities_ids"/> 
+                <field name="capacity"/>               
+                <filter name="available" string="Available" domain="[('state', '=', 'available')]"/>
+                <group expand="1" string="Group By">
+                    <filter string="Name" name="name" domain="[]" context="{'group_by':'name'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action rooms -->
+    <record id="action_rooms" model="ir.actions.act_window">
+        <field name="name">Rooms</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">rooms</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="domain">[]</field>
+        <field name="context">{'search_default_available': True}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                There is no examples click here to add new Rooms.
+            </p>
+        </field>
+    </record>
+
+</odoo>

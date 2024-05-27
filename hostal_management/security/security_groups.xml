@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.module.category" id="hostal_management">
+             <field name="name">Hostal Management</field>
+             <field name="description">User access level for Hostal Management Module</field>
+       </record>
+        <record id="hostal_management_receptionist" model="res.groups">
+            <field name="name">Receptionist</field>
+            <field name="category_id" ref="hostal_management"/>
+        </record>
+        <record id="hostal_management_manager" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="category_id" ref="hostal_management"/>
+        </record>
+    </data>
+</odoo>

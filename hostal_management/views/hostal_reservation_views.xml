@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- View hostal.reservation View Tree -->
+    <record id="view_hostal_reservation_tree" model="ir.ui.view">
+        <field name="name">view.hostal.reservation.tree</field>
+        <field name="model">hostal.reservation</field>
+        <field name="arch" type="xml">
+            <tree decoration-info="state == 'draft'" decoration-danger="state == 'check_in'" >
+                <field name="name"/>
+                <field name="room_id" />
+                <field name="check_in" />
+                <field name="check_out" />
+                <field name="state" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- View hostal.reservation form -->
+    <record id="view_hostal_reservation_form" model="ir.ui.view">
+        <field name="name">view.hostal.reservation.form</field>
+        <field name="model">hostal.reservation</field>
+        <field name="arch" type="xml">
+            <form string="Hostal Reservation">
+                <header>
+                    <button name="select_check_in" type="object" string="Check In"
+                            invisible="state in ('check_out', 'cancel', 'check_in') "/>
+                    <button name="select_check_out" type="object" string="Check Out"
+                            invisible="state in ('check_out', 'draft', 'cancel') "/>
+                    <button name="action_cancel" string="Cancel" type="object" invisible="state == 'cancel'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,check_in,check_out,cancel"
+                            options="{'clickable':'1'}" />
+                </header>
+            <sheet>
+                <h2>
+                     <field name="name" />
+                </h2>
+                <widget name="web_ribbon" title="Paid" bg_color="bg-success" invisible= "payment_status == False"/>
+                <group>
+                    <field name="date_reservation"/>                    
+                </group>
+                <separator/>
+                <group>
+                    <group>
+                           <field name="partner_id" widget="res_partner_many2one" context="{'show_address':'1'}" options="{'always_reload' : 'true'}"/>
+                            <field name="check_in"/>
+                            <field name ="number_of_guest"/>
+                            <field name="total_price"/>
+
+                        
+                            
+                            
+                    </group>
+                    <group>
+                            <field name="room_id" string="Room" options="{'no_create_edit': True, 'no_create': True}"/> 
+                            <field name="check_out"/>
+                            <field name="payment_status" invisible="1"/>                    
+                            
+                           
+                    </group>
+                </group>
+                <notebook>
+                        <page string="Guest information" name="hostal_accommodation_guest_info">
+                            <field name="partner_ids">
+                                <tree string="Guest Information" editable="bottom">
+                                    <field name="partner_id"/>
+                                    <field name="age"/>
+                                    <field name="gender"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+            </sheet>
+            
+            </form>
+        </field>
+    </record>
+
+    <!-- View hostal.reservation search -->
+    <record id="view_hostal_reservation_search" model="ir.ui.view">
+        <field name="name">view.hostal.reservation.search</field>
+        <field name="model">hostal.reservation</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="room_id"/>
+                <field name="partner_id"/>
+                <field name="name"/>
+                <filter string="Check In" name="state" domain="[('state', '=', 'check_in')]"/>
+                <filter string="Today Checkout" name="check_out"
+                        domain="[('check_out','=', (datetime.date.today()).strftime('%Y-%m-%d'))]"/>                
+                <group expand="1" string="Group By">
+                    <filter string="Name" name="name" domain="[]" context="{'group_by':'name'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!--     Calendar view of hotel reservation -->
+    <record id="hostal_calendar_view" model="ir.ui.view">
+        <field name="name">Room Reservation</field>
+        <field name="model">hostal.reservation</field>
+        <field name="priority" eval="2" />
+        <field name="arch" type="xml">
+            <calendar
+                string="Current Reservation"
+                date_start="check_in"
+                date_stop="check_out"
+                color="partner_id"
+            >
+                <field name="partner_id" />
+            </calendar>
+        </field>
+    </record>
+
+    <!-- Action hostal.reservation -->
+    <record id="action_hostal_reservation" model="ir.actions.act_window">
+        <field name="name">Hostal Reservation</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hostal.reservation</field>
+        <field name="view_mode">tree,form,calendar</field>
+        <field name="domain">[('state', '!=', 'cancel')]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                There is no examples click here to add new Hostal Reservation.
+            </p>
+        </field>
+    </record>
+
+</odoo>

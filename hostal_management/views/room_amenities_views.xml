@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- View room.amenities View Tree -->
+    <record id="view_room_amenities_tree" model="ir.ui.view">
+        <field name="name">view.room.amenities.tree</field>
+        <field name="model">room.amenities</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sequence" widget="handle" />
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- View room.amenities form -->
+    <record id="view_room_amenities_form" model="ir.ui.view">
+        <field name="name">view.room.amenities.form</field>
+        <field name="model">room.amenities</field>
+        <field name="arch" type="xml">
+            <form string="Room Amenities">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="Room Amenities..."/>
+                        </h1>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- View room.amenities search -->
+    <record id="view_room_amenities_search" model="ir.ui.view">
+        <field name="name">view.room.amenities.search</field>
+        <field name="model">room.amenities</field>
+        <field name="arch" type="xml">
+            <search>
+                <group expand="1" string="Group By">
+                    <filter string="Name" name="name" domain="[]" context="{'group_by':'name'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action room.amenities -->
+    <record id="action_room_amenities" model="ir.actions.act_window">
+        <field name="name">Room Amenities</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">room.amenities</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>        
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                There is no examples click here to add new Room Amenities.
+            </p>
+        </field>
+    </record>
+
+</odoo>

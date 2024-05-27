@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_room_amenities_manager,room_amenities_manager,model_room_amenities,,1,1,1,1
+access_hostal_partner_lines,hostal_partner_lines,model_hostal_partner_lines,,1,1,1,1
+access_room_floor_manager,room_floor_manager,model_room_floor,,1,1,1,1
+access_rooms_manager,rooms_manager,model_rooms,,1,1,1,1
+access_hostal_reservation_manager,hostal_reservation_manager,model_hostal_reservation,,1,1,1,1
+access_res_partner_manager,res_partner_manager,model_res_partner,,1,1,1,1

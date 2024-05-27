@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Top menu item -->
+    <menuitem id="hostal_menu_root" name="Hostal Management">
+        <menuitem id="hostal_reservation_menu" name="Reservation" action="action_hostal_reservation" sequence="10"/>        
+        <menuitem id="hostal_management_settings_menu" name="Settings" sequence="10">
+            <menuitem id="action_rooms_menu" action="action_rooms" sequence="2"/>
+            <menuitem id="action_room_amenities_menu" action="action_room_amenities" sequence="5"/>
+            <menuitem id="action_room_floor_menu" action="action_room_floor" sequence="10"/>
+                      
+        </menuitem>
+    </menuitem>
+</odoo>
+
+
