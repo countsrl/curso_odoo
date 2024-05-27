@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <!--  Declaramos los menu --> 
+<menuitem id="estate_real_menu" name="Estate Real" sequence="10"/> 
+<menuitem id="submenu_estate_real_menu" name="Advertisements" sequence="10" parent="estate_real_menu"/> 
+<menuitem id="submenu_estate_real_action" name="Advertisements" sequence="10" parent="submenu_estate_real_menu" action="action_estate_property"/>
+
+<menuitem id="submenu1_estate_real_menu" name="Settings" sequence="10" parent="estate_real_menu"/> 
+<menuitem id="submenu1_estate_real_action" name="Type Properties" sequence="10" parent="submenu1_estate_real_menu" action="action_estate_property_type"/>
+<menuitem id="submenu2_estate_real_action" name="Tag Properties" sequence="10" parent="submenu1_estate_real_menu" action="action_estate_property_tag"/>
+</odoo>

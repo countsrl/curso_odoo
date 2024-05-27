@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    
+    <template id="snippet_property_cover" name="Property Cover">
+        <section class="pt-3 pb-3">
+            <div class="container">
+                <div class="align-items-center">
+                    <div class="col-lg-12 pt16 pb16">
+                        <h1 class="center">Properties</h1>                                           
+                    </div>
+                    <div class="col-md-12">                        
+                        <div id="property"/>
+                    </div>
+                    <div class="col-lg-12 pt16 pb16">
+                        <a class="btn btn-primary" href="#" >Ver detalle</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+    <template id="property_snippets_options" inherit_id="website.snippets">
+        <xpath expr="//div[@id='snippet_structure']/div[hasclass('o_panel_body')]" position="inside">
+            <t t-snippet="real__estate.snippet_property_cover"/>
+        </xpath>
+    </template>
+    <template id="basic_snippet" name="Dynamic Snippet">
+        <section class="container dynamic_snippet_blog">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Dynamic Snippet</h1>
+                    Total Products Sold: <span id="total_sold"/>
+                </div>
+            </div>
+        </section>  
+    </template> 
+    <template id="external_snippets" inherit_id="website.snippets" priority="8">
+        <xpath expr="//div[@id='snippet_effect']//t[@t-snippet][last()]" position="after">
+           <t t-snippet="real__estate.basic_snippet"/>
+       </xpath>
+    </template>
+
+
+
+    <template id="property_list_template" name="Propiedades">
+        <t t-call="website.layout">
+            <div id="wrap p-5">                
+              
+                <h1>Listado de Propiedades</h1>
+                <div class= "row d-flex o_grid_mode">                    
+                    <t t-foreach="property" t-as="p">
+                        <div class="s_col_no_bgcolor o_grid_item g-col-lg-4 g-height-9 col-lg-4">
+                            <div class="card text-bg-white h-10">
+                                <div class="card-body">   
+                                    <h5 class="card-title o_default_snippet_text">                                
+                                        <t t-esc="p.name"/>
+                                    </h5>  
+                                    <div clas="card-title o_default_snippet_text">                               
+                                        <t t-esc="p.expected_price"/>
+                                    </div>
+                                    <div>
+                                        <t t-esc="p.status"/>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </t>    
+                </div>             
+             </div>
+        </t>            
+    </template>
+
+    
+</odoo>
