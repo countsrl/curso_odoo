@@ -33,7 +33,8 @@
         "views/reservation_form_template.xml",
         "views/reservation_success_template.xml",
         "report/booked_report.xml",
-        "report/booked_template.xml"
+        "report/booked_template.xml",
+        "security/security_hotel.xml",
      
     ],
     'images': [ ],

@@ -69,11 +69,13 @@ class Room_reservation(models.Model):
         return True
     
     
-    #pagar una reserva ya confirmada
+    #pagar una reserva ya confirmada. Con regla de acceso que solo el gerente puede pagar la reserva.
     def action_pay(self):
         self.ensure_one()
+        if not self.user_has_groups('hostal_management.group_hostal_manager'):
+            raise AccessError("Ud no tiene permiso para realizar esta accion")
         if self.state != 'confirmed':
-            raise UserError("Solo reservas confirmadas pueden pagarse.")
+            raise UserError("Solo reservas confirmadas pueden ser pagadas.")
         
         
         invoice_vals = {

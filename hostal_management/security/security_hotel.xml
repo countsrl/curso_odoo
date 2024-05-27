@@ -1,0 +1,15 @@
+<odoo>
+    <data>
+        <!-- Grupo para Gerentes del Hostal -->
+        <record id="group_hostal_manager" model="res.groups">
+            <field name="name">Gerente</field>
+            <field name="category_id" ref="base.module_category_hostal_management"/>
+        </record>
+
+        <!-- Grupo para Usuarios del Hostal -->
+        <record id="group_hostal_user" model="res.groups">
+            <field name="name">Gestores</field>
+            <field name="category_id" ref="base.module_category_hostal_management"/>
+        </record>
+    </data>
+</odoo>
