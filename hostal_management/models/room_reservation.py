@@ -37,13 +37,9 @@ class Room_reservation(models.Model):
     ], string='Status', readonly=True)
    
    
-    payment_status = fields.Selection([
-        ('not_paid', 'Not Paid'),
-        ('paid', 'Paid')
-    ], string='Payment Status', default='not_paid')
    
     
-    #metodo para definir el numero de la reserva
+    #metodo para definir la referencia de la reserva
     @api.model
     def create(self, vals):
         if vals.get('name', 'New') == 'New':
@@ -72,38 +68,36 @@ class Room_reservation(models.Model):
                 record.state = "cancelled"
         return True
     
+    
+    #pagar una reserva ya confirmada
     def action_pay(self):
-        self.env['account.move'].create({
+        self.ensure_one()
+        if self.state != 'confirmed':
+            raise UserError("Solo reservas confirmadas pueden pagarse.")
+        
+        
+        invoice_vals = {
             'partner_id': self.customer_id.id,
             'move_type': 'out_invoice',
-            'invoice_line_ids': [
-                Command.create({
-                    'name': self.name,
-                    'quantity': 1,
-                    'partner_id': self.customer_id.id,
-                    'price_unit': self.total_price
-                }),
-            ],
-        })
-        return super().action_pay()
-    
-    def action_pay(self):
-        self.env['account.move'].create({
-            'partner_id': self.customer_id.id,
-            'move_type': 'out_invoice',
-            'invoice_line_ids': [
-                Command.create({
-                    'name': self.name,
-                    'quantity': 1,
-                    'partner_id': self.customer_id.id,
-                    'price_unit': self.total_price
-                }),
-            ],
-        })
-        return super().action_pay() 
-    
-    
-    
+            'invoice_line_ids': [(0, 0, {
+                'name': self.name,
+                'quantity': 1,
+                'price_unit': self.total_price,
+                
+            })],
+        }
+        invoice = self.env['account.move'].create(invoice_vals)
+        self.write({'state': 'paid'})
+        
+        
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Invoice',
+            'res_model': 'account.move',
+            'view_mode': 'form',
+            'res_id': invoice.id,
+            'target': 'current',
+        }
         
     # Usar una búsqueda (search) para encontrar reservas que se solapan con la nueva reserva.
     #Comprobar que la fecha de check_in es anterior a la fecha de check_out.

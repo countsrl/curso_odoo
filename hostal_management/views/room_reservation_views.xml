@@ -17,8 +17,7 @@
                 <field name="customer_mobile" invisible="1"/>
                 <field name="state"/>
                 <field name="days_reserved"/>
-                <field name="total_price"/>
-                <field name="payment_status"/>                
+                <field name="total_price"/>              
             </tree>
         </field>
     </record>
@@ -55,7 +54,7 @@
                     <group>
                         <field name="days_reserved" readonly="1"/>
                         <field name="total_price" readonly="1"/>
-                        <field name="payment_status" readonly="1"/>
+                       
                         
                     </group>
                 </group>
