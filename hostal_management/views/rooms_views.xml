@@ -23,6 +23,15 @@
         <field name="model">rooms</field>
         <field name="arch" type="xml">
             <form string="Hostal Rooms">
+                 <header>
+                    <button name="action_maintenance" type="object" 
+                            class="btn btn-outline-danger" string="Set to Maintenance" 
+                            invisible="state != 'available'"/>
+                    <button name="action_available" type="object" class="btn btn-outline-success" 
+                                string="Set to Available" 
+                                invisible="state != 'maintenance'"/>
+                    
+                </header>
                 <sheet>
                     <div class="oe_title">
                         <label for="name"/>

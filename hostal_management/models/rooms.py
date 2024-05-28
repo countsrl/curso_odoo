@@ -23,6 +23,7 @@ class Rooms(models.Model):
     state = fields.Selection(
         selection=
             [("available", "Available"), 
+            ('maintenance', 'Maintenance'),
             ("occupied", "Occupied")], 
         default='available',            
         string="Status"
@@ -50,7 +51,11 @@ class Rooms(models.Model):
     # hostal_reservation_ids = fields.One2many('hostal.reservation', 'room_id', string='Hostal Reservation')
       
 
-    
+    def action_maintenance(self):                      
+        self.state = 'maintenance'
+
+    def action_available(self):                      
+        self.state = 'available'
 
     
 

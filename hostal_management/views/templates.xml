@@ -1,0 +1,46 @@
+<odoo>
+  <data>
+    <template id="reservations_list" name="Reservations">
+      <t t-call="website.layout">
+        <table class="table table-bordered" style="table-layout: fixed">
+            <thead class="text-center">
+                <tr>
+                    <th>Reservation No</th>                    
+                    <th>Room No</th>                    
+                    <th>Total Price</th>
+                    <th>Check in</th>
+                    <th>Check out</th> 
+                    <th>Status</th>                   
+                </tr>
+            </thead>
+            <tbody class="text-center">                
+                <div class="container">
+                  <tr t-foreach="reservations" t-as="r">
+                      <td>
+                          <span t-field="r.name"/>
+                      </td>
+                      <td>
+                          <span t-field="r.room_id.name"/>
+                      </td>
+                      <td>
+                          <span t-field="r.total_price"/>
+                      </td>
+                      <td>
+                          <span t-field="r.check_in"/>
+                      </td> 
+                      <td>
+                          <span t-field="r.check_out"/>
+                      </td> 
+                      <td>
+                          <span t-field="r.state"/>
+                      </td>                       
+                  </tr>
+                </div>
+            </tbody>
+        </table>       
+      </t>      
+    </template> 
+  </data>  
+</odoo>
+
+

@@ -24,10 +24,10 @@
             <form string="Hostal Reservation">
                 <header>
                     <button name="select_check_in" type="object" string="Check In"
-                            invisible="state in ('check_out', 'cancel', 'check_in') "/>
+                            invisible="state != 'booked'" class="oe_highlight"/>
                     <button name="select_check_out" type="object" string="Check Out"
-                            invisible="state in ('check_out', 'draft', 'cancel') "/>
-                    <button name="action_cancel" string="Cancel" type="object" invisible="state == 'cancel'"/>
+                            invisible="state != 'check_in'" />
+                    <button name="action_cancel" string="Cancel" type="object" invisible="state in ['draft', 'check_in', 'check_out', 'cancel']"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,check_in,check_out,cancel"
                             options="{'clickable':'1'}" />
                 </header>
@@ -43,7 +43,7 @@
                 <group>
                     <group>
                            <field name="partner_id" widget="res_partner_many2one" context="{'show_address':'1'}" options="{'always_reload' : 'true'}"/>
-                            <field name="check_in"/>
+                            <field name="check_in" readonly="state in ['booked', 'check_in', 'check_out']"/>
                             <field name ="number_of_guest"/>
                             <field name="total_price"/>
 
@@ -52,8 +52,10 @@
                             
                     </group>
                     <group>
-                            <field name="room_id" string="Room" options="{'no_create_edit': True, 'no_create': True}"/> 
-                            <field name="check_out"/>
+                            <field name="room_id" string="Room" options="{'no_create_edit': True, 'no_create': True}"
+                                    readonly="state in ['checked_in', 'checked_out']"
+                                    domain="[('state', '=', 'available')]"/> 
+                            <field name="check_out" readonly="state in ['booked', 'check_in', 'check_out']"/>
                             <field name="payment_status" invisible="1"/>                    
                             
                            
@@ -61,7 +63,7 @@
                 </group>
                 <notebook>
                         <page string="Guest information" name="hostal_accommodation_guest_info">
-                            <field name="partner_ids">
+                            <field name="partner_ids" readonly="state in ['checked_in', 'checked_out']">
                                 <tree string="Guest Information" editable="bottom">
                                     <field name="partner_id"/>
                                     <field name="age"/>

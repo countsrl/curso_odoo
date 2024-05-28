@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 
-from datetime import timedelta
+import datetime
 
 from odoo import models, fields, api, _, Command
 from odoo.exceptions import UserError, ValidationError
@@ -26,19 +26,19 @@ class HostalReservation(models.Model):
     invoice_id = fields.Many2one("account.move")
     payment_status = fields.Boolean(default=False, compute='_compute_payment_status')
     total_price = fields.Integer('Total price', compute='_compute_total_price', store=True)
-    room_id = fields.Many2one('rooms', string='Room',domain="[('state', '!=', 'occupied')]")
+    room_id = fields.Many2one('rooms', string='Room')
     date_reservation = fields.Datetime('Date Reservation', readonly=True, 
                                         default = lambda self: fields.Datetime.now())
-    check_in = fields.Datetime('Date Check In', required=True,     
-                                default = lambda self: fields.Datetime.now(),
+    check_in = fields.Datetime('Date Check In', required=True)                           
                                
-                                states={"draft": [("readonly", False)]})
-    check_out = fields.Datetime('Date Check Out', required=True,
-                                states={"draft": [("readonly", False)]})
+                                
+    check_out = fields.Datetime('Date Check Out', required=True)
+                                
     
     state = fields.Selection(
         selection=[
             ('draft', 'Draft'),
+            ('booked', 'Booked'),
             ('check_in', 'Check in'),
             ('check_out', 'Check out'),
             ('cancel', 'Cancel')
@@ -83,6 +83,17 @@ class HostalReservation(models.Model):
                 raise UserError(_("Please provide all guest information"))            
             return True
 
+
+    api.onchange('check_in')
+    def onchange_check_in(self):
+        self._auto_assign_check_out()
+        self._check_availability()
+
+    @api.onchange('check_out')
+    def onchange_check_out(self):
+        self._auto_assign_check_in()
+        self._check_availability()
+
     def select_check_out(self):     
 
         self.state = 'check_out'
@@ -112,7 +123,10 @@ class HostalReservation(models.Model):
         if vals.get('name', _('New')) == _('New'):
             vals['name'] = self.env['ir.sequence'].next_by_code(
                 'reservation_sequence') or _('New')
+
+        vals['state'] = 'booked'
         res = super().create(vals)
+
         return res
 
     @api.constrains('check_out')
@@ -121,4 +135,25 @@ class HostalReservation(models.Model):
             if record.check_out < record.check_in:
                 raise ValidationError('The end date of the reservation must be greater than the start date')
 
-                            
+    def _auto_assign_check_in(self):
+        if self.check_out:
+            if not self.check_in or (self.check_in and self.check_out < self.check_in):
+                self.check_in = self.check_out - datetime.timedelta(days=1)
+                
+    def _auto_assign_check_out(self):
+        if self.check_in:
+            if not self.check_out or (self.check_out and self.check_out < self.check_in):
+                self.check_out = self.check_in + datetime.timedelta(days=1)
+                
+    def _check_availability(self):
+        pass        
+        selected_room_id = self.room_id
+        for room in selected_room_id:
+            is_reservation_exist = self.env['hostal.reservation'].search([
+                ('room_id', '=', room.id),
+                ('check_in', '<=', self.check_in),
+                ('check_out', '>=', self.check_in),
+                ('state', 'in', ['draft', 'checked_in']),
+            ])
+            if is_reservation_exist:
+                raise ValidationError(_("Room %s is not available on %s") % (room.name, self.check_in))                        
