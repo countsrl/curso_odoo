@@ -26,13 +26,14 @@ class HostalReservation(models.Model):
     invoice_id = fields.Many2one("account.move")
     payment_status = fields.Boolean(default=False, compute='_compute_payment_status')
     total_price = fields.Integer('Total price', compute='_compute_total_price', store=True)
-    room_id = fields.Many2one('rooms', string='Room')
+    room_ids = fields.Many2many('rooms', string='Room')
     date_reservation = fields.Datetime('Date Reservation', readonly=True, 
                                         default = lambda self: fields.Datetime.now())
-    check_in = fields.Datetime('Date Check In', required=True)                           
+    check_in = fields.Date('Date Check In', required=True)
+                               
                                
                                 
-    check_out = fields.Datetime('Date Check Out', required=True)
+    check_out = fields.Date('Date Check Out', required=True)
                                 
     
     state = fields.Selection(
@@ -53,9 +54,9 @@ class HostalReservation(models.Model):
 
     def select_check_in(self):
         for record in self:
-            if record.number_of_guest == len(self.partner_ids) and record.number_of_guest <= self.room_id.capacity:
+            if record.number_of_guest == len(self.partner_ids):
                 record.state = 'check_in'
-                record.room_id.state = 'occupied'
+                record.room_ids.state = 'occupied'
                 journal = self.env["account.journal"].search([("type", "=", "sale")], limit=1)
                 invoice = self.env['account.move'].create({
                 'partner_id': self.partner_id.id,
@@ -84,7 +85,7 @@ class HostalReservation(models.Model):
             return True
 
 
-    api.onchange('check_in')
+    @api.onchange('check_in')
     def onchange_check_in(self):
         self._auto_assign_check_out()
         self._check_availability()
@@ -94,10 +95,14 @@ class HostalReservation(models.Model):
         self._auto_assign_check_in()
         self._check_availability()
 
+    @api.onchange('room_ids')
+    def onchange_room(self):        
+        self._check_availability()
+
     def select_check_out(self):     
 
         self.state = 'check_out'
-        self.room_id.state = 'available'
+        self.room_ids.state = 'available'
 
     def action_cancel(self):
          self.write({'state':'cancel'})
@@ -110,12 +115,15 @@ class HostalReservation(models.Model):
             else:
                 rec.payment_status = False
 
-    @api.depends('check_in', 'check_out', 'room_id.rent')
+    @api.depends('check_in', 'check_out', 'room_ids.rent')
     def _compute_total_price(self):
-        for rec in self:
-            if rec.check_in and rec.check_out and rec.room_id.rent:
-                days = (rec.check_out - rec.check_in).days
-                rec.total_price = days * rec.room_id.rent
+        self.total_price = 0
+        if self.check_out and self.check_in and self.room_ids:
+            selected_room_ids = self.room_ids
+            
+            for rec in selected_room_ids:            
+                    days = (self.check_out - self.check_in).days                
+                    self.total_price += days * rec.rent 
 
     @api.model
     def create(self, vals):         
@@ -125,15 +133,27 @@ class HostalReservation(models.Model):
                 'reservation_sequence') or _('New')
 
         vals['state'] = 'booked'
+        
         res = super().create(vals)
 
         return res
+        
 
-    @api.constrains('check_out')
-    def check_as_check_out(self):
-        for record in self:
-            if record.check_out < record.check_in:
+    @api.constrains('number_of_guest','room_ids.capacity')
+    def check_as_capacity(self):
+        for rec in self:
+            sum_value = sum(rec.room_ids.mapped("capacity"))
+            if rec.number_of_guest > sum_value:
                 raise ValidationError('The end date of the reservation must be greater than the start date')
+    
+    @api.constrains('check_in','check_out')
+    def check_as_reservation_today(self):
+        for record in self:
+            if record.check_in < datetime.date.today():
+                raise ValidationError('The end date of the reservation must be greater than the start date')
+            if record.check_out < datetime.date.today():
+                raise ValidationError('The end 2do of the reservation must be greater than the start date')
+            
 
     def _auto_assign_check_in(self):
         if self.check_out:
@@ -147,13 +167,17 @@ class HostalReservation(models.Model):
                 
     def _check_availability(self):
         pass        
-        selected_room_id = self.room_id
-        for room in selected_room_id:
+        selected_room_ids = self.room_ids
+        for rooms in selected_room_ids:
             is_reservation_exist = self.env['hostal.reservation'].search([
-                ('room_id', '=', room.id),
+                ('room_ids', '=', rooms.id),              
                 ('check_in', '<=', self.check_in),
                 ('check_out', '>=', self.check_in),
-                ('state', 'in', ['draft', 'checked_in']),
+                ('state', 'in', ['booked', 'check_in']),
             ])
+            # is_reservation_rooms_exist = self.env['hostal.reservation.rooms.rel'].search([                
+            #     ('rooms_id', '=', rooms.id),
+                
+            # ])
             if is_reservation_exist:
-                raise ValidationError(_("Room %s is not available on %s") % (room.name, self.check_in))                        
+                raise ValidationError(_("Room %s is not available on %s") % (rooms.name, self.check_in))                        

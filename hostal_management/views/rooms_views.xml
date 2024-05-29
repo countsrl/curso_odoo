@@ -7,7 +7,8 @@
         <field name="model">rooms</field>
         <field name="arch" type="xml">
             <tree decoration-success="state =='available'"
-                  decoration-muted="state =='occupied'">
+                  decoration-muted="state =='occupied'"
+                  decoration-danger="state == 'maintenance'">
                 <field name="name"/>
                 <field name="bed"/>
                 <field name="rent"/>
@@ -78,89 +79,34 @@
         <field name="name">hotel.room.kanban</field>
         <field name="model">rooms</field>
         <field name="arch" type="xml">
-            <kanban default_group_by="state">
+            <kanban class="o_kanban_small_column" 
+                    default_group_by="state">
                 <field name="name" />
-                <field name="state" />
-                <field name="color" />                
+                <field name="state" />                                
                 <templates>
                     <t t-name="kanban-box">
-                        <div
-                            t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_card oe_kanban_global_click"
-                        >
-                            <div class="o_dropdown_kanban dropdown">      
-                                <a
-                                    role="button"
-                                    class="dropdown-toggle btn"
-                                    data-toggle="dropdown"
-                                    href="#"
-                                >
-                                    <span title="fa_icon" class="fa fa-bars fa-lg" />
+                        <div t-attf-class="oe_kanban_card d-flex flex-column">
+                            <div class="o_dropdown_kanban dropdown">
+                                <a class="dropdown-toggle o-no-caret btn" role="button" data-bs-toggle="dropdown" data-bs-display="static" href="#" aria-label="Dropdown menu" title="Dropdown menu">
+                                    <span class="fa fa-ellipsis-v"/>
                                 </a>
-                                <ul
-                                    class="dropdown-menu"
-                                    role="menu"
-                                    aria-labelledby="dLabel"
-                                >
-                                    <t t-if="widget.editable">
-                                        <li>
-                                            <a type="edit">Edit</a>
-                                        </li>
+                                <div class="dropdown-menu" role="menu">
+                                    <t t-if="record.state.raw_value == 'available'">                                        
+                                        <a role="menuitem" class="dropdown-item" type="object" name="action_maintenance">Set to Maintenance</a>
+                                    </t>                                    
+                                    <t t-if="record.state.raw_value == 'maintenance'">
+                                        <a role="menuitem" class="dropdown-item" type="object" name="action_available">Set to Available</a>
                                     </t>
-                                    <t t-if="widget.deletable">
-                                        <li>
-                                            <a type="delete">Delete</a>
-                                        </li>
-                                    </t>
-                                    <li>
-                                        <ul
-                                            class="oe_kanban_colorpicker"
-                                            data-field="color"
-                                        />
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="oe_kanban_details" style='margin-top: -5px;'>
-                                <div class="oe_kanban_content">
-                                    <div class="oe_kanban_project_list">
-                                        <H3>
-                                            <a type="open">                                                
-                                                <field name="name" />
-                                            </a>
-                                        </H3>
-                                    </div>
-                                    <div name="tags" />
-                                    <ul>
-                                        <li>
-                                            Status:
-                                            <field name="state" />
-                                        </li>
-                                        <li>
-                                            Bed:
-                                            <field name="bed" />
-                                        </li>
-                                        
-                                    </ul>
-                                </div>
-                                <div class="oe_kanban_bottom_right">
-                                    <a
-                                        t-if="record.state.raw_value === 'available'"
-                                        type="object"
-                                        string="Available"
-                                        name="set_room_status_occupied"
-                                        class="oe_kanban_state oe_kanban_state_green "
-                                    >
-                                    </a>
-                                    <a
-                                        t-if="record.state.raw_value === 'closed'"                                        
-                                        type="object"
-                                        string="occupied"
-                                        name="set_room_status_available"
-                                        class="oe_kanban_state oe_kanban_state_red "
-                                    >
-                                    </a>
                                 </div>
                             </div>
-                            <div class="oe_clear" />
+                            <div class="oe_kanban_content">
+                                <div class="oe_kanban_title">
+                                    <strong><field name="name"/></strong>
+                                </div>
+                                <div class="oe_kanban_subtitle">
+                                    <field name="state" widget="badge" decoration-success="state == 'available'" decoration-warning="state == 'occupied'" decoration-danger="state == 'maintenance'" title="Current status"/>
+                                </div>
+                            </div>                            
                         </div>
                     </t>
                 </templates>

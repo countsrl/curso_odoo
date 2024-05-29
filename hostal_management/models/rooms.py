@@ -17,9 +17,9 @@ class Rooms(models.Model):
         ("check_name", "UNIQUE(name)", "The name must be unique"),
     ]
 
-    name = fields.Char(_('Room Number', required=True))    
+    name = fields.Char(_('Room Number'), required=True)    
     color = fields.Integer('Color')
-    capacity = fields.Integer('Capacity', required=True)
+    capacity = fields.Integer('Capacity', required=True, default=1)
     state = fields.Selection(
         selection=
             [("available", "Available"), 
