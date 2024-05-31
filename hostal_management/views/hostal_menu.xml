@@ -9,6 +9,8 @@
             <menuitem id="action_room_floor_menu" action="action_room_floor" sequence="10"/>
                       
         </menuitem>
+        <menuitem
+            id="invoice_menu" action="account.action_move_out_invoice_type" sequence="10"/>
     </menuitem>
 </odoo>
 

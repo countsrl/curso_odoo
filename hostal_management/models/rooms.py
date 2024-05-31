@@ -10,6 +10,8 @@ _logger = logging.getLogger(__name__)
 class Rooms(models.Model):
     _name = 'rooms'
     _order = "name"
+    _inherit = ['mail.thread', 'mail.activity.mixin']
+    
     _description = _('Rooms')
     _sql_constraints = [
         ("check_capacity", "CHECK(capacity > 0)", "The capacity must be strictly positive"),
@@ -19,6 +21,7 @@ class Rooms(models.Model):
 
     name = fields.Char(_('Room Number'), required=True)    
     color = fields.Integer('Color')
+    active = fields.Boolean(string=_('Active'), default=True)
     capacity = fields.Integer('Capacity', required=True, default=1)
     state = fields.Selection(
         selection=

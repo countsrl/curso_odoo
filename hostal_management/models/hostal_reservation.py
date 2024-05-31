@@ -12,6 +12,7 @@ _logger = logging.getLogger(__name__)
 class HostalReservation(models.Model):
     _name = 'hostal.reservation'
     _order = "name"
+    _rec_name = 'date_reservation'
     _description = _('Hostal Reservation')
     _sql_constraints = [
         ("check_number_of_guest", "CHECK(number_of_guest > 0)", "The number_of_guest must be strictly positive"),
@@ -27,6 +28,8 @@ class HostalReservation(models.Model):
     payment_status = fields.Boolean(default=False, compute='_compute_payment_status')
     total_price = fields.Integer('Total price', compute='_compute_total_price', store=True)
     room_ids = fields.Many2many('rooms', string='Room')
+    # room_ids = fields.Many2many(comodel_name="rooms", rel="reservation.room.rel", 
+    #                 column1="reservation_id", column2="room_id", string="Rooms") 
     date_reservation = fields.Datetime('Date Reservation', readonly=True, 
                                         default = lambda self: fields.Datetime.now())
     check_in = fields.Date('Date Check In', required=True)
@@ -144,15 +147,15 @@ class HostalReservation(models.Model):
         for rec in self:
             sum_value = sum(rec.room_ids.mapped("capacity"))
             if rec.number_of_guest > sum_value:
-                raise ValidationError('The end date of the reservation must be greater than the start date')
+                raise ValidationError('The number of guests exceeds the capacity of the rooms.')
     
     @api.constrains('check_in','check_out')
     def check_as_reservation_today(self):
         for record in self:
             if record.check_in < datetime.date.today():
-                raise ValidationError('The end date of the reservation must be greater than the start date')
+                raise ValidationError('The entry date is not correct')
             if record.check_out < datetime.date.today():
-                raise ValidationError('The end 2do of the reservation must be greater than the start date')
+                raise ValidationError('The out date is not correct')
             
 
     def _auto_assign_check_in(self):
@@ -169,14 +172,16 @@ class HostalReservation(models.Model):
         pass        
         selected_room_ids = self.room_ids
         for rooms in selected_room_ids:
+            #value= rooms.ids
             is_reservation_exist = self.env['hostal.reservation'].search([
-                ('room_ids', '=', rooms.id),              
+                ('room_ids', '=', rooms.ids),            
                 ('check_in', '<=', self.check_in),
                 ('check_out', '>=', self.check_in),
                 ('state', 'in', ['booked', 'check_in']),
             ])
-            # is_reservation_rooms_exist = self.env['hostal.reservation.rooms.rel'].search([                
-            #     ('rooms_id', '=', rooms.id),
+            # value = rooms.id.origin
+            # is_reservation_rooms_exist = self.env['hostal.reservation'].search([                
+            #     ('room_ids.rooms_id', '=', rooms.id),
                 
             # ])
             if is_reservation_exist:

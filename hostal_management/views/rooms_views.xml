@@ -7,10 +7,10 @@
         <field name="model">rooms</field>
         <field name="arch" type="xml">
             <tree decoration-success="state =='available'"
-                  decoration-muted="state =='occupied'"
+                  decoration-warning="state =='occupied'"
                   decoration-danger="state == 'maintenance'">
                 <field name="name"/>
-                <field name="bed"/>
+                <field name="bed" optional="show"/>
                 <field name="rent"/>
                 <field name="room_amenities_ids" widget="many2many_tags"/>                
                 <field name="state" optional="hide"/>
@@ -34,6 +34,10 @@
                     
                 </header>
                 <sheet>
+                    <widget name="web_ribbon" title="Available" bg_color="text-bg-success" invisible="state != 'available'"/>
+                    <widget name="web_ribbon" title="Maintenance" bg_color="text-bg-danger" invisible="state != 'maintenance'"/>
+                    <widget name="web_ribbon" title="Occupied" bg_color="text-bg-info" invisible="state != 'occupied'"/>
+                    
                     <div class="oe_title">
                         <label for="name"/>
                         <h1>
@@ -41,7 +45,7 @@
                         </h1>
                         <label for="state"/>
                         <h1>
-                            <field name="state" readonly="1"/>
+                            <field name="state" readonly="1" invisible="1"/>
                         </h1>
                     </div>
                     <notebook>
@@ -51,6 +55,7 @@
                                     <field name="floor_id"/>
                                     <field name="bed"/>
                                     <field name="capacity"/>
+                                    <field name="active" invisible="1"/>
                                     
                                                                    
                                 </group>
@@ -70,6 +75,11 @@
                         
                     </notebook>
                 </sheet>
+                 <!-- Chatter -->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
             </form>
         </field>
     </record>

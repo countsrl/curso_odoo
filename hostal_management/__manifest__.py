@@ -7,7 +7,7 @@
     "summary": """ Hostal Management Summary """,
     "author": "",
     "website": "",
-    "depends": ["base","account",'website'],
+    "depends": ["base","account","website","mail"],
     "data": [
         "security/security_groups.xml",
         "security/ir.model.access.csv",
@@ -17,8 +17,8 @@
         "views/res_partner_views.xml",
         "views/hostal_reservation_views.xml",
         "data/hostal_accommodation_sequence_number.xml",
-        "views/hostal_menu.xml",
         "views/templates.xml",
+        "views/hostal_menu.xml",
         
     ],
     "assets": {
