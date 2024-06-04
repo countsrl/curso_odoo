@@ -9,9 +9,16 @@
             <field name="name">Receptionist</field>
             <field name="category_id" ref="hostal_management"/>
         </record>
+
         <record id="hostal_management_manager" model="res.groups">
             <field name="name">Manager</field>
             <field name="category_id" ref="hostal_management"/>
+            <field name="implied_ids" eval="[(4,ref('base.group_user'))]"/>
+        </record>
+
+        <record id="hostal_management_delete_record" model="res.groups">
+            <field name="name">Not delete</field>
+            <field name="category_id" ref="hostal_management"/>            
         </record>
     </data>
 </odoo>

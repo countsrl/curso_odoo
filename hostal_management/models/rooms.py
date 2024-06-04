@@ -70,3 +70,21 @@ class Rooms(models.Model):
     def set_room_status_available(self):
         
         return self.write({"color": 5})
+
+    def unlink(self):
+        if self.env.user.has_group("hostal_management.hostal_management_delete_record"):
+            raise UserError("Not delete group")
+        for rec in self:
+            is_reservation_exist = self.env['hostal.reservation'].search([
+                    ('room_ids', '=', rec.id),])           
+            if is_reservation_exist:                  
+                raise ValidationError(_("Room %s is not available on delete") % (rec.name))
+                
+        
+        return super().unlink()
+
+    def write(self, vals):
+      if 'name' in vals:
+         raise ValidationError("No se puede modificar el nombre")
+         
+      return super(Rooms, self).write(vals)

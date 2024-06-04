@@ -6,13 +6,15 @@
         <field name="name">view.hostal.reservation.tree</field>
         <field name="model">hostal.reservation</field>
         <field name="arch" type="xml">
-            <tree decoration-info="state == 'draft'" decoration-warning="state == 'check_in'" >
+            <tree decoration-info="state == 'booked'" decoration-warning="state == 'check_in'" 
+                    decoration-danger="state == 'check_out'">
                 <field name="name"/>
                 <field name="room_ids" widget="many2many_tags" />
                 <field name="check_in" />
                 <field name="check_out" />
-                <field name="state" optional="hide" decoration-info="state == 'draft'" 
-                            decoration-warning="state == 'check_in'" widget="badge"/>
+                <field name="state" optional="hide" decoration-info="state == 'booked'" 
+                            decoration-warning="state == 'check_in'" decoration-danger="state == 'check_out'"
+                             widget="badge"/>
             </tree>
         </field>
     </record>
@@ -34,7 +36,7 @@
                 </header>
             <sheet>
                 <h2>
-                     <field name="name" />
+                     <field name="name" groups="hostal_management.hostal_management_manager"/>
                 </h2>
                 <widget name="web_ribbon" title="Paid" bg_color="bg-success" invisible= "payment_status == False"/>
                 <group>
@@ -43,7 +45,7 @@
                 <separator/>
                 <group>
                     <group>
-                            <field name="check_in" readonly="state in ['booked', 'check_in', 'check_out']"/>                            
+                           <field name="check_in" readonly="state in ['booked', 'check_in', 'check_out']"/>                            
                            <field name="partner_id" widget="res_partner_many2one" context="{'show_address':'1'}" options="{'always_reload' : 'true','no_open': 'true'}"/>
                             <field name ="number_of_guest"/>
                             
@@ -52,12 +54,12 @@
                             
                             
                     </group>
-                    <group>
-                            <!-- <field name="room_id" string="Room" options="{'no_create_edit': True, 'no_create': True}"
-                                    readonly="state in ['checked_in', 'checked_out']"
-                                    />  -->
+                    <group>                            
                             <field name="check_out" readonly="state in ['booked', 'check_in', 'check_out']"/>
                             <field name="total_price"/>
+                            <field name="room_ids" widget="many2many_tags" options="{'no_create_edit': True, 'no_create': True}"
+                                    readonly="state in ['checked_in', 'checked_out']" domain="[('state', '!=', 'maintenance')]"
+                                    /> 
                             <field name="payment_status" invisible="1"/>                    
                             
                            
@@ -67,22 +69,26 @@
                         <page string="Guest information" name="hostal_accommodation_guest_info">
                             <field name="partner_ids" readonly="state in ['check_in', 'check_out']">
                                 <tree string="Guest Information" editable="bottom">
+                                    <control>
+                                        <create name="add_guest" string="New Guest"/>
+                                    
+                                    </control>
                                     <field name="partner_id"/>
                                     <field name="age"/>
                                     <field name="gender"/>
                                 </tree>
                             </field>
                         </page>
-                        <page name="hostal_rooms_info" string="Rooms">
+                        <!-- <page name="hostal_rooms_info" string="Rooms">
                             <field name="room_ids" readonly="state in ['check_in', 'check_out']"
                                     domain="[('state', '!=', 'maintenance')]">
-                                <tree string="Available Rooms" editable="true" create="false" delete="false" >
+                                <tree string="Available Rooms" editable="true" create="false" delete="false" update="true">
                                     <field name="name"/>
                                     <field name="capacity"/>
                                     <field name="room_amenities_ids" widget="many2many_tags"/>                                
                                 </tree>
                             </field>                     
-                        </page>
+                        </page> -->
                         
                 </notebook>
             </sheet>

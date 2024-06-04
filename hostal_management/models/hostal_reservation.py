@@ -102,6 +102,13 @@ class HostalReservation(models.Model):
     def onchange_room(self):        
         self._check_availability()
 
+    # @api.constrains('room_ids')
+    # def check_room(self):        
+    #     self._check_availability()
+        
+
+                
+
     def select_check_out(self):     
 
         self.state = 'check_out'
@@ -136,8 +143,24 @@ class HostalReservation(models.Model):
                 'reservation_sequence') or _('New')
 
         vals['state'] = 'booked'
+
+        # selected_room_ids = vals['room_ids']
+            
+        # is_reservation_exist = self.env['hostal.reservation'].search([
+        #     ('room_ids', 'in', selected_room_ids),            
+        #     ('check_in', '<=', vals['check_in']),
+        #     ('check_out', '>=', vals['check_out']),
+        #     ('state', 'in', ['booked', 'check_in']),
+        # ])           
+        # if is_reservation_exist:                  
+        #     raise ValidationError(_("Room %s is not available on %s") % (vals['room_ids'], vals['check_in']))
+            
         
         res = super().create(vals)
+
+        
+
+        
 
         return res
         
@@ -172,17 +195,29 @@ class HostalReservation(models.Model):
         pass        
         selected_room_ids = self.room_ids
         for rooms in selected_room_ids:
-            #value= rooms.ids
+            
             is_reservation_exist = self.env['hostal.reservation'].search([
                 ('room_ids', '=', rooms.ids),            
                 ('check_in', '<=', self.check_in),
                 ('check_out', '>=', self.check_in),
                 ('state', 'in', ['booked', 'check_in']),
-            ])
-            # value = rooms.id.origin
-            # is_reservation_rooms_exist = self.env['hostal.reservation'].search([                
-            #     ('room_ids.rooms_id', '=', rooms.id),
+            ])           
+            if is_reservation_exist:                  
+                raise ValidationError(_("Room %s is not available on %s") % (rooms.name, self.check_in))
                 
-            # ])
-            if is_reservation_exist:
-                raise ValidationError(_("Room %s is not available on %s") % (rooms.name, self.check_in))                        
+            
+        # return {
+        # 'type': 'ir.actions.client',
+        # 'tag': 'soft_reload',
+        # }
+
+    def unlink(self):
+        if self.env.user.has_group("hostal_management.hostal_management_delete_record"):
+            raise UserError("Not delete group")
+        for rec in self:                     
+            if rec.state != "cancel":                  
+                raise ValidationError(_("Reservation %s is not available on delete") % (rec.name))
+                
+        
+        return super().unlink()
+                                        

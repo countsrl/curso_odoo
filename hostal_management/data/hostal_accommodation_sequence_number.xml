@@ -5,6 +5,7 @@
             <field name="name">Hostal Sequence</field>
             <field name="code">reservation_sequence</field>
             <field name="prefix">HM/ROOM/</field>
+            <field name="suffix">-%(year)s</field>
             <field name="padding">4</field>
             <field name="company_id" eval="False"/>
         </record>
