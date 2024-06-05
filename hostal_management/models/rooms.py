@@ -50,6 +50,18 @@ class Rooms(models.Model):
     
     room_amenities_ids = fields.Many2many('room.amenities', string='Room Amenities')
     floor_id = fields.Many2one('room.floor', string='Floor No', ondelete="restrict")
+    reservation_count = fields.Integer(
+        string='Reservation count',
+        compute='_compute_reservation_count',
+    )
+    reservation_ids = fields.One2many('hostal.reservation', 'room_ids', string='Reservation')
+    
+    
+    @api.depends('reservation_ids')
+    def _compute_reservation_count(self):
+        for record in self:
+            record.reservation_count = len(record.reservation_ids)
+    
 
     # hostal_reservation_ids = fields.One2many('hostal.reservation', 'room_id', string='Hostal Reservation')
       
@@ -88,3 +100,24 @@ class Rooms(models.Model):
          raise ValidationError("No se puede modificar el nombre")
          
       return super(Rooms, self).write(vals)
+
+
+    def action_view_reservation(self):
+        
+        res_action = {
+            'name': _(' Reservation Rooms'),
+            'type': 'ir.actions.act_window',            
+            'res_model': 'hostal.reservation',
+            'target' : 'current' ,            
+        }
+
+        reservations = self.reservation_ids.ids
+        if len(reservations) == 1:
+            res_action['res_id'] = reservations[0]
+            res_action['view_mode'] = 'form'
+        else:
+            res_action['view_mode'] = 'tree,form'
+            res_action['domain'] = [('id', 'in', reservations)]
+        return res_action
+
+        

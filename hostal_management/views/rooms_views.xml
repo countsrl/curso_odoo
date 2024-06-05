@@ -34,6 +34,15 @@
                     
                 </header>
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" name="action_view_reservation"
+                                type="object" icon="fa-external-link"
+                                invisible="reservation_count == 0">
+
+                            <field string="Reservations" name="reservation_count" widget="statinfo" />
+                            
+                        </button>
+                    </div>
                     <widget name="web_ribbon" title="Available" bg_color="text-bg-success" invisible="state != 'available'"/>
                     <widget name="web_ribbon" title="Maintenance" bg_color="text-bg-danger" invisible="state != 'maintenance'"/>
                     <widget name="web_ribbon" title="Occupied" bg_color="text-bg-info" invisible="state != 'occupied'"/>
